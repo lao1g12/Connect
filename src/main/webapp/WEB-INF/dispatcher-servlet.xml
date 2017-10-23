@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/mvc
+                            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<context:component-scan base-package="com.fdmgroup.soloproject.controllers" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<!--  <mvc:resources mapping="/admin/css/**" location="/css/" />
+	<mvc:resources mapping="/developer/css/**" location="/css/" />
+	<mvc:resources mapping="/reporter/css/**" location="/css/" /> -->
+	<mvc:annotation-driven />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+	value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="factory" class="javax.persistence.Persistence"
+		factory-method="createEntityManagerFactory">
+		<constructor-arg value="DemoPersistence" />
+	</bean>
+	
+	<bean id="userDao" class="com.fdmgroup.soloproject.daos.UserDAOImpl"/>
+	<bean id="bugDao" class="com.fdmgroup.soloproject.daos.BugDAOImpl"/>
+	<bean id="projectDao" class="com.fdmgroup.soloproject.daos.ProjectDAOImpl"/>
+	<bean id="projectVersionDao" class="com.fdmgroup.soloproject.daos.ProjectVersionDAOImpl"/>
+	<bean id="noteDao" class="com.fdmgroup.soloproject.daos.NoteDAOImpl"/>
+
+	<!-- <bean id="emf" class="javax.persistence.Persistence" factory-method="createEntityManagerFactory"> 
+		<constructor-arg value="DemoPersistence"/> </bean> -->
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

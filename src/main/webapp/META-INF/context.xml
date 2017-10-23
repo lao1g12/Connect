@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/SecurityAndDataAccessExample" docBase="SecurityAndDataAccessExample"
+	reloadable="true" crossContext="true">
+	<Resource name="jdbc/connection" auth="Container" scope="Shareable"
+		type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver"
+		username="trainee1" password="!QAZSE4"
+		url="jdbc:oracle:thin:@localhost:1521:xe" description=""
+		maxWait="-1" maxActive="1" maxIdle="-1" removeAbandoned="true"
+		removeAbandonedTimeout="36000" logAbandoned="true" />
+
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+		dataSourceName="jdbc/connection" localDataSource="true"
+		userTable="" userNameCol="USERNAME" userCredCol="PASSWORD"
+		userRoleTable="" roleNameCol="ROLE" />
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<WatchedResource>META-INF/context.xml</WatchedResource>
+</Context>
