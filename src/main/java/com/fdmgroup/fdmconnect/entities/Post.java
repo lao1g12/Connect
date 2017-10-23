@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -31,6 +32,7 @@ public class Post {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar postDate = Calendar.getInstance();
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "FC_POST_USER")
 	private User postOwner;
 	
 	
