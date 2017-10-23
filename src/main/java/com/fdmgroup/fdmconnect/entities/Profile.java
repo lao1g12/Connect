@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,8 +44,6 @@ public class Profile {
 	private List<Education> education;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="profile")
 	private List<Experience> experience;
-	
-	
 	
 	public Profile() {}
 
@@ -90,16 +89,18 @@ public class Profile {
 		this.stream = stream;
 	}
 
-	public Calendar getStartDate() {
-		return startDate;
+	public Date getStartDateFormatted(){
+		Date date = this.startDate.getTime();
+		return date;
 	}
 
 	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
 
-	public Calendar getEndDate() {
-		return endDate;
+	public Date getEndDateFormatted(){
+		Date date = this.endDate.getTime();
+		return date;
 	}
 
 	public void setEndDate(Calendar endDate) {
@@ -145,12 +146,5 @@ public class Profile {
 	public void setExperience(List<Experience> experience) {
 		this.experience = experience;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 }

@@ -34,19 +34,8 @@ public class Post {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_POST_USER")
 	private User postOwner;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	public Post() {	}
-
-
 
 	public Post(String title, String bodyText, String link, String category,User postOwner) {
 		super();
@@ -57,8 +46,6 @@ public class Post {
 		this.postOwner = postOwner;
 		postOwner.addPost(this);
 	}
-	
-	
 	
 	public int getPostId() {
 		return postId;

@@ -28,8 +28,6 @@ public class User {
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="postOwner", orphanRemoval=true)
 	private Set<Post> posts;
 	
-	
-	
 	public User() {	}
 
 	public User(String username, String password, String email, String job, String role) {
