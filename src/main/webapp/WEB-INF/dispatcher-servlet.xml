@@ -9,11 +9,8 @@
                             http://www.springframework.org/schema/mvc
                             http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:component-scan base-package="com.fdmgroup.soloproject.controllers" />
+	<context:component-scan base-package="com.fdmgroup.fdmconnect.controllers" />
 	<mvc:resources mapping="/css/**" location="/css/" />
-	<!--  <mvc:resources mapping="/admin/css/**" location="/css/" />
-	<mvc:resources mapping="/developer/css/**" location="/css/" />
-	<mvc:resources mapping="/reporter/css/**" location="/css/" /> -->
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -25,14 +22,14 @@
 	
 	<bean id="factory" class="javax.persistence.Persistence"
 		factory-method="createEntityManagerFactory">
-		<constructor-arg value="DemoPersistence" />
+		<constructor-arg value="PersistenceInCreateMode" />
 	</bean>
 	
-	<bean id="userDao" class="com.fdmgroup.soloproject.daos.UserDAOImpl"/>
-	<bean id="bugDao" class="com.fdmgroup.soloproject.daos.BugDAOImpl"/>
-	<bean id="projectDao" class="com.fdmgroup.soloproject.daos.ProjectDAOImpl"/>
-	<bean id="projectVersionDao" class="com.fdmgroup.soloproject.daos.ProjectVersionDAOImpl"/>
-	<bean id="noteDao" class="com.fdmgroup.soloproject.daos.NoteDAOImpl"/>
+	<bean id="userDao" class="com.fdmgroup.fdmconnect.daos.UserDAOImpl"/>
+	<bean id="postDao" class="com.fdmgroup.fdmconnect.daos.ProfileDAOImpl"/>
+	<bean id="profileDao" class="com.fdmgroup.fdmconnect.daos.PostDAOImpl"/>
+	<bean id="experienceDao" class="com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl"/>
+	<bean id="educationDao" class="com.fdmgroup.fdmconnect.daos.EducationDAOImpl"/>
 
 	<!-- <bean id="emf" class="javax.persistence.Persistence" factory-method="createEntityManagerFactory"> 
 		<constructor-arg value="DemoPersistence"/> </bean> -->

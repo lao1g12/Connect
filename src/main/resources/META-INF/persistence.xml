@@ -20,7 +20,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 
 			<!-- Connection config -->
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.7.9.218:1521:xe" />
 			<property name="javax.persistence.jdbc.user" value="trainee1" />
 			<property name="javax.persistence.jdbc.password" value="!QAZSE4" />
 
@@ -45,7 +45,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 
 			<!-- Connection config -->
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.7.9.218:1521:xe" />
 			<property name="javax.persistence.jdbc.user" value="trainee1" />
 			<property name="javax.persistence.jdbc.password" value="!QAZSE4" />
 

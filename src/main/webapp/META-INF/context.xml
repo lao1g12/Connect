@@ -4,14 +4,14 @@
 	<Resource name="jdbc/connection" auth="Container" scope="Shareable"
 		type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver"
 		username="trainee1" password="!QAZSE4"
-		url="jdbc:oracle:thin:@localhost:1521:xe" description=""
+		url="jdbc:oracle:thin:@10.7.9.218:1521:xe" description=""
 		maxWait="-1" maxActive="1" maxIdle="-1" removeAbandoned="true"
 		removeAbandonedTimeout="36000" logAbandoned="true" />
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
 		dataSourceName="jdbc/connection" localDataSource="true"
-		userTable="" userNameCol="USERNAME" userCredCol="PASSWORD"
-		userRoleTable="" roleNameCol="ROLE" />
+		userTable="FC_USERS" userNameCol="USERNAME" userCredCol="PASSWORD"
+		userRoleTable="FC_USERS" roleNameCol="ROLE" />
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 	<WatchedResource>META-INF/context.xml</WatchedResource>
 </Context>
