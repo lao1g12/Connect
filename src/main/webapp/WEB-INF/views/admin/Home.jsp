@@ -8,6 +8,8 @@
 </head>
 <body>
 <a href="admin/goToAddUser">Add User</a> <br /> <br />
+<a href="admin/submitPost">Add Post</a>  <br />
+
 ${userAddedMessage}
 </body>
 </html>

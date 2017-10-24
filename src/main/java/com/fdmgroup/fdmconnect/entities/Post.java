@@ -45,8 +45,8 @@ public class Post {
 		this.link = link;
 		this.category = category;
 		this.imgUrl = imgUrl;
-		this.postOwner = postOwner;
-		postOwner.addPost(this);
+//		this.postOwner = postOwner;
+//		postOwner.addPost(this);
 	}
 	
 	

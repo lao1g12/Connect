@@ -42,7 +42,7 @@ public class AdminController {
 		return "admin/Home";
 	}
 
-	@RequestMapping("/submitPost")
+	@RequestMapping("admin/submitPost")
 	public String submitPost(Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		Post post = new Post();
