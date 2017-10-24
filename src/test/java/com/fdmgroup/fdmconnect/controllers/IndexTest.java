@@ -17,12 +17,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.User;
 
 public class IndexTest {
 	
 	private UserDAOImpl userDao;
+	private PostDAOImpl postDao;
 	private IndexController index;
 	private HttpSession session;
 	private Principal principal;
@@ -31,7 +33,7 @@ public class IndexTest {
 	@Before
 	public void setUp() {
 		userDao = mock(UserDAOImpl.class);
-		index = new IndexController(userDao);
+		index = new IndexController(userDao, postDao);
 		session = mock(HttpSession.class);
 		principal = mock(Principal.class);
 		user = mock(User.class);
