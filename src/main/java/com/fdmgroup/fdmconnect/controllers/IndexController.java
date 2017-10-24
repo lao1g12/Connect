@@ -43,7 +43,7 @@ public class IndexController {
 		
 	}
 	
-	@RequestMapping("/logout")
+	@RequestMapping("/user/logout")
 	public String goToLogout(HttpSession session) {
 		
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged out.");
