@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
@@ -41,10 +42,24 @@ public class AdminController {
 		return "admin/Home";
 	}
 
-	@RequestMapping("/addPost")
-	public String addNewPost() {
+	@RequestMapping("/submitPost")
+	public String submitPost(Model model, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		Post post = new Post();
+		post.setPostOwner(user);
+		model.addAttribute(post);
+		return "AddPost";
+		
+	}
+	
+	@RequestMapping("/admin/addPost")
+	public String addNewPost(Post post) {
+		
 
-		return "Home";
+		postDao.addPost(post);
+
+
+		return "AddPost";
 
 	}
 
