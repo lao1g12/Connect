@@ -119,7 +119,7 @@ public class AdminController {
 		
 	}
 
-	@RequestMapping("/admin/...........")
+	@RequestMapping("/admin/viewAllUsers")
 	public String goToViewAllUsers(Model model) {
 		
 		Logging.Log("trace", "Client request to url : Display All Users");
