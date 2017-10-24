@@ -23,7 +23,7 @@ Title : <sf:input type="text" path="title" /> <br>
 BodyText: <sf:input type="text" path="bodyText" /> <br> 
 Link: <sf:input type="text" path="link" /> <br>
 Category: <sf:input type="text" path="category" />  <br>
-Image : <sf:input> </sf:input>
+Image : <sf:input type="text" path="imgUrl"/> <br>
 <button type="submit" value="Submit Post"/>
 </sf:form>
 
