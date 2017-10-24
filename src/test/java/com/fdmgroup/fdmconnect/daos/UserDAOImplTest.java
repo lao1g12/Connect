@@ -67,4 +67,12 @@ public class UserDAOImplTest {
 		assertEquals(result, users);
 	}
 
+	@Test
+	public void test_addUser_invokesTransactionAndPersistUser(){
+		
+		userDao.addUser(user);
+		
+		verify(manager).persist(user);
+		
+	}
 }
