@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "FC_PROFILES")
 public class Profile {
@@ -31,8 +33,10 @@ public class Profile {
 	@Column(name = "STREAM")
 	private String stream;
 	@Column(name = "STARTDATE")
+	@DateTimeFormat(pattern = "yyyy/mm/dd")
 	private Calendar startDate;
 	@Column(name = "ENDDATE")
+	@DateTimeFormat(pattern = "yyyy/mm/dd")
 	private Calendar endDate;
 	@Column(name = "IMAGEURL")
 	private String imageUrl;

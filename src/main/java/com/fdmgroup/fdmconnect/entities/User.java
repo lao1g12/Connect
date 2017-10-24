@@ -39,6 +39,14 @@ public class User {
 		this.role = role;
 	}
 	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
 	public String getUsername() {
 		return username;
 	}
