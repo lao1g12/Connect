@@ -48,11 +48,11 @@ public class AdminController {
 		Post post = new Post();
 		post.setPostOwner(user);
 		model.addAttribute(post);
-		return "AddPost";
+		return "admin/AddPost";
 		
 	}
 	
-	@RequestMapping("/admin/addPost")
+	@RequestMapping("admin/addPost")
 	public String addNewPost(Post post) {
 		
 
