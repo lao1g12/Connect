@@ -46,6 +46,7 @@
 		</sf:select>
 		<input type="submit" value="Add User" />
 	</sf:form>
+	${passwordErrorMessage}${userErrorMessage}
 
 </body>
 </html>
