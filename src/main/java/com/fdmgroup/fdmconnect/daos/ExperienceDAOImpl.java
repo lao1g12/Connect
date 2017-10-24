@@ -9,11 +9,14 @@ public class ExperienceDAOImpl implements ExperienceDAO {
 	@Autowired
 	private EntityManagerFactory factory;
 
-	public ExperienceDAOImpl() {}
-
 	public ExperienceDAOImpl(EntityManagerFactory factory) {
 		super();
 		this.factory = factory;
+	}
+
+	public ExperienceDAOImpl() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 }

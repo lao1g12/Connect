@@ -8,12 +8,15 @@ public class PostDAOImpl implements PostDAO {
 
 	@Autowired
 	private EntityManagerFactory factory;
-
-	public PostDAOImpl() {}
+	
+	public PostDAOImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public PostDAOImpl(EntityManagerFactory factory) {
 		super();
-		this.factory = factory;
+		this.factory = factory;
 	}
 	
 }

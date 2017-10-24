@@ -9,7 +9,12 @@ public class EducationDAOImpl implements EducationDAO {
 	@Autowired
 	private EntityManagerFactory factory;
 
-	public EducationDAOImpl() {}
+	
+	public EducationDAOImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	public EducationDAOImpl(EntityManagerFactory factory) {
 		super();

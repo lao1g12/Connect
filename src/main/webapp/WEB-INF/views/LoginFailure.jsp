@@ -8,6 +8,6 @@
 </head>
 <body>
 <h4> Incorrect login credentials </h4>
-<a href="/">Try Again</a>
+<a href="">Try Again</a>
 </body>
 </html>

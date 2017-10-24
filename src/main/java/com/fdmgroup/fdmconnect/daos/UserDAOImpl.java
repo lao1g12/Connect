@@ -16,8 +16,6 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private EntityManagerFactory factory;
 
-	public UserDAOImpl() {}
-
 	public UserDAOImpl(EntityManagerFactory factory) {
 		super();
 		this.factory = factory;
