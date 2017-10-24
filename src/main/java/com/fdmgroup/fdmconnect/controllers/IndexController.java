@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
 
@@ -40,8 +41,10 @@ public class IndexController {
 	public String goToHome(HttpSession session, Principal principal) {
 
 		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
 		session.setAttribute("username", principal.getName());
 		session.setAttribute("user", user);
+		session.setAttribute("profile", profile);
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
 		session.setAttribute("allPosts", postDao.getAllPosts());
 		
