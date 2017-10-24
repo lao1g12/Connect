@@ -1,5 +1,6 @@
 package com.fdmgroup.fdmconnect.entities;
 
+import java.util.Calendar;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -23,6 +26,8 @@ public class User {
 	private String email;
 	private String job;
 	private String role;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar lastLogin;
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Profile profile;
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="postOwner", orphanRemoval=true)
@@ -39,6 +44,16 @@ public class User {
 		this.role = role;
 	}
 	
+	
+	
+	public Calendar getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Calendar lastLogin) {
+		this.lastLogin = Calendar.getInstance();
+	}
+
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
