@@ -37,7 +37,7 @@ public class Post {
 		
 	public Post() {	}
 
-	public Post(String title, String bodyText, String link, String category,User postOwner) {
+	public Post(String title, String bodyText, String link, String category, User postOwner) {
 		super();
 		this.title = title;
 		this.bodyText = bodyText;

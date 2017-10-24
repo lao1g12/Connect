@@ -47,14 +47,11 @@ public class Profile {
 	
 	public Profile() {}
 
-	public Profile(String imageUrl, String description, String hobbies, List<Education> education,
-			List<Experience> experience) {
+	public Profile(String imageUrl, String description, String hobbies) {
 		super();
 		this.imageUrl = imageUrl;
 		this.description = description;
 		this.hobbies = hobbies;
-		this.education = education;
-		this.experience = experience;
 	}
 
 	public int getProfileId() {
