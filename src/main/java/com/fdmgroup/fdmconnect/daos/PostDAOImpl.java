@@ -1,12 +1,16 @@
 package com.fdmgroup.fdmconnect.daos;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.controllers.Logging;
 import com.fdmgroup.fdmconnect.entities.Post;
+
 
 public class PostDAOImpl implements PostDAO {
 
@@ -29,6 +33,14 @@ public class PostDAOImpl implements PostDAO {
 		manager.getTransaction().commit();
 		Logging.Log("info", "Post has been added" + post.getPostId());
 
+	}
+	
+	public List<Post> getAllPosts(){
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<Post> query = manager.createQuery("select p from Post p", Post.class);
+		List<Post> posts = query.getResultList();
+		Logging.Log("info", "PostDao: All posts have been retrieved from the database.");
+		return posts;
 	}
 
 }
