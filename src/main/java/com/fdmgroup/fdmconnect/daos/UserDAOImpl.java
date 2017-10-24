@@ -44,4 +44,14 @@ public class UserDAOImpl implements UserDAO {
 		manager.getTransaction().commit();
 		Logging.Log("info",user+" has been added to the database.");
 	}
+	
+	public void removeUser(String username){
+		EntityManager manager = factory.createEntityManager();
+			User user = manager.find(User.class, username);
+			manager.getTransaction().begin();
+			manager.remove(user);
+		manager.getTransaction().commit();
+		Logging.Log("info", user+"have been removed from the database");
+		}
+
 }
