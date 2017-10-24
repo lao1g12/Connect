@@ -53,6 +53,11 @@ html, body{
 .col12{width:99%;}
 
 
+.page-container{
+				max-width: 1300px;
+                margin:auto;
+                margin-top:10px;
+}
 
 .horiz {
     list-style-type: none;
@@ -75,4 +80,10 @@ li {
 }
 .horizl a:hover {
     background-color: #111;
+}
+#Head input[type=text] {
+    width: 102px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+	margin-top: 12px;
 }

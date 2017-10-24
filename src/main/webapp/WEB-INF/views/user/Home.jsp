@@ -11,31 +11,35 @@
 </head>
 <body>
 <div class="page-container">
-		<div id="HeadLog" class="row">
+		<div id="Head" class="row">
 			<div class="col col7">
 				<ul class="horiz">
 					<li class="horizl"><a href="goHome">Home</a></li>
-					<li class="horizl"><a href="www.categories.com">Categories</a></li>
-					<li class="horizl"><a href="www.suggested.com">Suggested</a></li>
-					<li class="horizl"><a href="www.deals.com">Deals</a></li>
-					<li class="horizl"><a href="www.shops.com">Shops</a></li>
+					<c:choose>
+					<c:when test='${user.getRole() == "Admin"}'>
+						<li class="horizl"><a href="admin/goToAdmin">Admin</a></li>
+					</c:when>
+					<c:otherwise>
+					
+					</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 			<div class="col col5 last">
 				<ul class="horiz">
-					<li class="horizl"><a href="signup">Sign Up</a></li>
-					<li class="horizl"><form action="j_security_check"
-							method="post">
-							<input id="login" name="j_username" placeholder="Enter Login" /> <input
-								id="login" type="password" name="j_password" placeholder="Enter Password" />
-							<input id="login" type="submit" value="Login">
-						</form></li>
+					<li class="horizl"> <h4>Welcome ${username}</h4></li>
+					<li class="horizl"><a href="logout">Logout</a></li>
+					<li class="horizl"><a href="account">Account</a></li>
 
 
 				</ul>
 			</div>
-			</div>
+			</div></br>
+			</br>
+			<div class="col col12 last">
 <h1>Welcome ${user.getUsername()}</h1>
+</div>
+			<div class="col col12 last">
 		<c:forEach items="${allPosts}" var="aP">
 			<h3>${aP.title}<br /></h3>
 			${aP.bodyText}<br />
@@ -46,6 +50,7 @@
 			Posted By: ${aP.postOwner}<br />
 			<hr />
 		</c:forEach>
+		</div>
 </div>
 
 </body>

@@ -49,6 +49,12 @@ public class IndexController {
 		
 	}
 	
+	@RequestMapping("goToAdmin")
+	public String goToAdmin(){
+		
+		return "redirect:/admin";
+	}
+	
 	@RequestMapping("/user/logout")
 	public String goToLogout(HttpSession session) {
 		
