@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
@@ -18,12 +19,15 @@ public class IndexController {
 
 	@Autowired
 	private UserDAOImpl userDao;
+	@Autowired
+	private PostDAOImpl postDao;
 
 	public IndexController() {}
 
-	public IndexController(UserDAOImpl userDao) {
+	public IndexController(UserDAOImpl userDao, PostDAOImpl postDao) {
 		super();
 		this.userDao = userDao;
+		this.postDao = postDao;
 	}
 	
 	@RequestMapping("/")
@@ -39,6 +43,7 @@ public class IndexController {
 		session.setAttribute("username", principal.getName());
 		session.setAttribute("user", user);
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
+
 		return "user/Home";
 		
 	}
