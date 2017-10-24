@@ -50,7 +50,7 @@ public class User {
 		return lastLogin;
 	}
 
-	public void setLastLogin(Calendar lastLogin) {
+	public void setLastLogin() {
 		this.lastLogin = Calendar.getInstance();
 	}
 

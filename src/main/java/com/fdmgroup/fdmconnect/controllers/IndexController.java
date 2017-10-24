@@ -49,6 +49,7 @@ public class IndexController {
 		if(user.getLastLogin() == null){
 			return "user/UpdatePassword";
 		}
+		user.setLastLogin();
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
 		session.setAttribute("allPosts", postDao.getAllPosts());
 		
@@ -79,9 +80,10 @@ public class IndexController {
 			if (newPassword.equals(confNewPassword)) {
 				request.setAttribute("UpdatedPass", "Your password has been succesfully changed");
 				user.setPassword(newPassword);
+				user.setLastLogin();
 				userDao.updateUser(user);
 				Logging.Log("info", user.getUsername()+" updated password");
-				return "user/Home";
+				return "redirect:/user/login";
 			} else {
 				request.setAttribute("passNotMatch", "The two passwords you entered do not match!");
 				Logging.Log("info", user.getUsername()+" attempted to change password but the two new passwords were different, redirected to the UpdateInfo page");
