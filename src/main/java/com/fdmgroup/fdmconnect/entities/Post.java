@@ -28,6 +28,7 @@ public class Post {
 	private String bodyText;
 	private String link;
 	private String category;
+	private String imgUrl;
 	private String flagStatus;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar postDate = Calendar.getInstance();
@@ -37,16 +38,31 @@ public class Post {
 		
 	public Post() {	}
 
-	public Post(String title, String bodyText, String link, String category,User postOwner) {
+	public Post(String title, String bodyText, String link, String category, String imgUrl,User postOwner) {
 		super();
 		this.title = title;
 		this.bodyText = bodyText;
 		this.link = link;
 		this.category = category;
+		this.imgUrl = imgUrl;
 		this.postOwner = postOwner;
 		postOwner.addPost(this);
 	}
 	
+	
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public String getFlagStatus() {
+		return flagStatus;
+	}
+
 	public int getPostId() {
 		return postId;
 	}
@@ -77,9 +93,7 @@ public class Post {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String isFlagStatus() {
-		return flagStatus;
-	}
+
 	public void setFlagStatus(String flagStatus) {
 		this.flagStatus = flagStatus;
 	}

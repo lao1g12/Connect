@@ -13,7 +13,8 @@
 		<c:forEach items="${allPosts}" var="aP">
 			<h3>${aP.title}<br /></h3>
 			${aP.bodyText}<br />
-			For more info click :${aP.link}<br />
+			<img src="${aP.imgUrl}">
+			<a href="${aP.link}">For more info click here!</a><br />
 			Category: ${aP.category}<br />
 			Posted: ${aP.postDate}<br />
 			Posted By: ${aP.postOwner}<br />
