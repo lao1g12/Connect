@@ -7,6 +7,6 @@
 <title>Admin Portal</title>
 </head>
 <body>
-<a href="goToAddUser">Add User</a>
+<a href="admin/goToAddUser">Add User</a>
 </body>
 </html>

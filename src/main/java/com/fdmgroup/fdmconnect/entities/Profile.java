@@ -33,10 +33,10 @@ public class Profile {
 	@Column(name = "STREAM")
 	private String stream;
 	@Column(name = "STARTDATE")
-	@DateTimeFormat(pattern = "yyyy/mm/dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar startDate;
 	@Column(name = "ENDDATE")
-	@DateTimeFormat(pattern = "yyyy/mm/dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar endDate;
 	@Column(name = "IMAGEURL")
 	private String imageUrl;
@@ -93,6 +93,18 @@ public class Profile {
 	public Date getStartDateFormatted(){
 		Date date = this.startDate.getTime();
 		return date;
+	}
+
+	public Calendar getStartDate() {
+		return startDate;
+	}
+
+	public Calendar getEndDate() {
+		return endDate;
+	}
+
+	public void setEducation(List<Education> education) {
+		this.education = education;
 	}
 
 	public void setStartDate(Calendar startDate) {

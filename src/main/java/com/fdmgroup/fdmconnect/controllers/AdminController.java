@@ -61,9 +61,8 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/doAddUser")
-	public String doAddUser(HttpSession session, Model model, User user,
-			@RequestParam(name="startDate") String startDate, @RequestParam(name="endDate") String endDate){
-	
+	public String doAddUser(HttpSession session, Model model, User user) {
+		
 		if (!user.getPassword().equals(user.getConfirmPassword())){
 			model.addAttribute("passwordErrorMessage","Passwords do not match");
 			return "admin/AddUser";
