@@ -14,21 +14,21 @@ import com.fdmgroup.fdmconnect.controllers.Logging;
 
 
 @Controller
-public class Index {
+public class IndexController {
 
 	@Autowired
 	private UserDAOImpl userDao;
 
-	public Index() {}
+	public IndexController() {}
 
-	public Index(UserDAOImpl userDao) {
+	public IndexController(UserDAOImpl userDao) {
 		super();
 		this.userDao = userDao;
 	}
 	
 	@RequestMapping("/")
 	public String goToIndex() {
-		return "Index";
+		return "index";
 	}
 	
 	@RequestMapping("/home")

@@ -8,6 +8,8 @@ public class ProfileDAOImpl implements ProfileDAO {
 
 	@Autowired
 	private EntityManagerFactory factory;
+	
+	public ProfileDAOImpl() {}
 
 	public ProfileDAOImpl(EntityManagerFactory factory) {
 		super();

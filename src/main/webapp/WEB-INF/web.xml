@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="2.5">
 	<display-name>fdmconnect</display-name>
 	<welcome-file-list>
-		<welcome-file>Index.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
 	<servlet>
@@ -20,7 +20,7 @@
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>
-			<form-login-page>/WEB-INF/views/Index.jsp</form-login-page>
+			<form-login-page>/WEB-INF/views/index.jsp</form-login-page>
 			<form-error-page>/WEB-INF/views/LoginFailure.jsp</form-error-page>
 		</form-login-config>
 	</login-config>

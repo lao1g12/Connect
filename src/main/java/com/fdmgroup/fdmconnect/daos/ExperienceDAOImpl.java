@@ -14,9 +14,6 @@ public class ExperienceDAOImpl implements ExperienceDAO {
 		this.factory = factory;
 	}
 
-	public ExperienceDAOImpl() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public ExperienceDAOImpl() {}
 	
 }

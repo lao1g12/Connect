@@ -23,7 +23,7 @@ import com.fdmgroup.fdmconnect.entities.User;
 public class IndexTest {
 	
 	private UserDAOImpl userDao;
-	private Index index;
+	private IndexController index;
 	private HttpSession session;
 	private Principal principal;
 	private User user;
@@ -31,7 +31,7 @@ public class IndexTest {
 	@Before
 	public void setUp() {
 		userDao = mock(UserDAOImpl.class);
-		index = new Index(userDao);
+		index = new IndexController(userDao);
 		session = mock(HttpSession.class);
 		principal = mock(Principal.class);
 		user = mock(User.class);
