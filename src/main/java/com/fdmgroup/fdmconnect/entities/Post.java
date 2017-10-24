@@ -28,7 +28,7 @@ public class Post {
 	private String bodyText;
 	private String link;
 	private String category;
-	private boolean flagStatus;
+	private String flagStatus;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar postDate = Calendar.getInstance();
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -77,10 +77,10 @@ public class Post {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public boolean isFlagStatus() {
+	public String isFlagStatus() {
 		return flagStatus;
 	}
-	public void setFlagStatus(boolean flagStatus) {
+	public void setFlagStatus(String flagStatus) {
 		this.flagStatus = flagStatus;
 	}
 	public Calendar getPostDate() {
