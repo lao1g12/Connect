@@ -115,7 +115,9 @@ public class AdminController {
 		Logging.Log("info", "user removed succesfully" + username);
 		userDao.removeUser(username);
 		model.addAttribute("message", "User removed succesfully");
-		return "admin/RemoveUser";
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users", users);
+		return "admin/DisplayAllUsers";
 		
 	}
 
