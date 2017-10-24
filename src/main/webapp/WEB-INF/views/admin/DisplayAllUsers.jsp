@@ -28,6 +28,10 @@
 					<th>${u.role}</th>
 					<th>${u.profile}</th>
 					<th>${u.posts}</th>
+					<form action="processRemoveUser" method="post">
+					<input type="hidden" name="username" value="${u.username }"/>
+			<td> <input type="submit" value="Remove" /> </td>
+			</form>
 					
 				</tr>
 			</c:forEach>
