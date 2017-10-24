@@ -59,7 +59,7 @@ public class AdminController {
 		postDao.addPost(post);
 
 
-		return "AddPost";
+		return "redirect:/user/login";
 
 	}
 
