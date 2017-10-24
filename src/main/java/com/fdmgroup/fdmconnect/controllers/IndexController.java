@@ -44,7 +44,7 @@ public class IndexController {
 		session.setAttribute("user", user);
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
 		
-		return "Home";
+		return "user/Home";
 		
 	}
 	
