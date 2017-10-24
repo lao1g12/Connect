@@ -9,6 +9,16 @@ public class AdminController {
 	
 	@Autowired
 	private PostDAOImpl postDao;
+
+	public AdminController() {}
+	
+	public AdminController(PostDAOImpl postDao) { 
+		super();
+		this.postDao = postDao;
+	}
+	
+
+	
 	
 
 }
