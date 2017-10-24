@@ -49,7 +49,7 @@ public class IndexController {
 		
 	}
 	
-	@RequestMapping("goToAdmin")
+	@RequestMapping("user/goToAdmin")
 	public String goToAdmin(){
 		
 		return "redirect:/admin";

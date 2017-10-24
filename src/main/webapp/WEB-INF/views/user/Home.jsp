@@ -17,7 +17,7 @@
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
 					<c:when test='${user.getRole() == "Admin"}'>
-						<li class="horizl"><a href="admin/goToAdmin">Admin</a></li>
+						<li class="horizl"><a href="goToAdmin">Admin</a></li>
 					</c:when>
 					<c:otherwise>
 					
