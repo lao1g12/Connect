@@ -14,4 +14,5 @@
 		userRoleTable="FC_USERS" roleNameCol="ROLE" />
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 	<WatchedResource>META-INF/context.xml</WatchedResource>
+		<Valve className="org.apache.catalina.authenticator.FormAuthenticator" landingPage="/user/login" />
 </Context>
