@@ -25,8 +25,8 @@
 			<sf:option value="Project Support Office">Project Support Office</sf:option>
 			<sf:option value="Risk, Regulation and Compliance">Risk, Regulation and Compliance</sf:option>
 		</sf:select>
-		Training Start date (yyyy/mm/dd) <sf:input path="profile.startDate" />
-		Training End date (yyyy/mm/dd) <sf:input path="profile.endDate" />
+		Training Start date (dd/MM/yyyy) <sf:input path="profile.startDate" />
+		Training End date (dd/MM/yyyy) <sf:input path="profile.endDate" />
 		Username <sf:input required="1" type="text" path="username" />
 		Password <sf:input required="1" type="text" path="password" />
 		Confirm Password <sf:input required="1" type="text" path="confirmPassword" />

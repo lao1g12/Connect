@@ -61,6 +61,7 @@ public class IndexController {
 	public String goToAdmin(){
 		
 		return "redirect:/admin";
+		
 	}
 	
 	@RequestMapping("/user/logout")
@@ -74,20 +75,26 @@ public class IndexController {
 	
 	@RequestMapping("/user/passwordUpdate")
 	public String doPasswordUpdate(HttpServletRequest request, HttpSession session) {
+		
 		String newPassword = request.getParameter("newPassword");
 		String confNewPassword = request.getParameter("confNewPassword");
 		User user = (User) session.getAttribute("user");
+		
 			if (newPassword.equals(confNewPassword)) {
+				
 				request.setAttribute("UpdatedPass", "Your password has been succesfully changed");
 				user.setPassword(newPassword);
 				user.setLastLogin();
 				userDao.updateUser(user);
 				Logging.Log("info", user.getUsername()+" updated password");
 				return "redirect:/user/login";
+				
 			} else {
+				
 				request.setAttribute("passNotMatch", "The two passwords you entered do not match!");
 				Logging.Log("info", user.getUsername()+" attempted to change password but the two new passwords were different, redirected to the UpdateInfo page");
 				return "user/UpdatePassword";
+				
 			}
 		
 	}
