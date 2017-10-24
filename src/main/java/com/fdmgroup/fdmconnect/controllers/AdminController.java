@@ -55,9 +55,7 @@ public class AdminController {
 	@RequestMapping("admin/addPost")
 	public String addNewPost(Post post) {
 		
-
 		postDao.addPost(post);
-
 
 		return "redirect:/user/login";
 
