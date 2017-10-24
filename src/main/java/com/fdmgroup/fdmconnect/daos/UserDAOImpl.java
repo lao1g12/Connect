@@ -35,4 +35,11 @@ public class UserDAOImpl implements UserDAO {
 		return users;
 	}
 	
+	public void addUser(User user){
+		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
+		manager.persist(user);
+		manager.getTransaction().commit();
+		Logging.Log("info",user+" has been added to the database.");
+	}
 }
