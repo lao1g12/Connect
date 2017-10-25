@@ -116,7 +116,7 @@ public class AdminController {
 		Logging.Log("post", "post removed succesfully" + postId);
 		postDao.removePost(postId);
 		model.addAttribute("message", "post removed succesfully");
-		return "admin/DisplayAllPosts";
+		return "admin/DisplayAllFlags";
 		
 	}
 	
