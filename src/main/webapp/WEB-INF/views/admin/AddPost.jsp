@@ -15,7 +15,7 @@
 <body>
 <h1> Add New Post </h1>
 
-<sf:form method="post" action="admin/addPost" modelAttribute="post">
+<sf:form method="post" action="addPost" modelAttribute="post">
 
 Title : <sf:input type="text" path="title" /> <br> 
 

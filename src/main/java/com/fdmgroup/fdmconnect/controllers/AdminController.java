@@ -1,3 +1,4 @@
+
 package com.fdmgroup.fdmconnect.controllers;
 
 
@@ -46,19 +47,20 @@ public class AdminController {
 	public String submitPost(Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		Post post = new Post();
-		post.setPostOwner(user);
+
 		model.addAttribute(post);
-		return "AddPost";
+		return "admin/AddPost";
 		
 	}
 	
-	@RequestMapping("/admin/addPost")
-	public String addNewPost(Post post) {
+	@RequestMapping("admin/addPost")
+	public String addNewPost(Post post, HttpSession session) {
 		
-
+		User user = (User) session.getAttribute("user");
+		post.setPostOwner(user);
 		postDao.addPost(post);
 
-
+		
 		return "redirect:/user/login";
 
 	}
@@ -115,9 +117,7 @@ public class AdminController {
 		Logging.Log("info", "user removed succesfully" + username);
 		userDao.removeUser(username);
 		model.addAttribute("message", "User removed succesfully");
-		List<User> users = userDao.getAllUsers();
-		model.addAttribute("users", users);
-		return "admin/DisplayAllUsers";
+		return "admin/RemoveUser";
 		
 	}
 

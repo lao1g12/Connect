@@ -48,7 +48,7 @@ public class PostDAOImplTest {
 	}
 
 	@Test
-	public void test_AddPost_invokestransactionMethodsAndPersist() {
+	public void test_addPost_invokesTransactionMethodsAndPersist() {
 		PostDAOImpl postDao = new PostDAOImpl(factory);
 		Post post = new Post();
 		postDao.addPost(post);
@@ -59,7 +59,7 @@ public class PostDAOImplTest {
 	}
 	
 	@Test
-	public void test_GetAllPosts_() { 
+	public void test_getAllPosts_() { 
 		//Arrange 
 		when(manager.createQuery("select p from Post p", Post.class)).thenReturn(query);
 		when(query.getResultList()).thenReturn(posts);
