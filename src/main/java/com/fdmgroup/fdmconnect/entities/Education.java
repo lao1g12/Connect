@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="FC_EDUCATIONS")
 public class Education {
@@ -32,8 +34,10 @@ public class Education {
 	@Column(name="FURTHERINFO")
 	private String furtherInfo;
 	@Column(name = "STARTDATE")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar startDate;
 	@Column(name = "ENDDATE")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar endDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -52,6 +56,17 @@ public class Education {
 		this.furtherInfo = furtherInfo;
 		this.startDate = startDate;
 		this.endDate = endDate;
+	}
+	
+	
+	
+
+	public Calendar getStartDate() {
+		return startDate;
+	}
+
+	public Calendar getEndDate() {
+		return endDate;
 	}
 
 	public int getEducationId() {
