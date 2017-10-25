@@ -18,8 +18,6 @@
 <sf:form method="post" action="addPost" modelAttribute="post">
 
 Title : <sf:input type="text" path="title" /> <br> 
-
-
 BodyText: <sf:input type="text" path="bodyText" /> <br> 
 Link: <sf:input type="text" path="link" /> <br>
 Category: <sf:input type="text" path="category" />  <br>
