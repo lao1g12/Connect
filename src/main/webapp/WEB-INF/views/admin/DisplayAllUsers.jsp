@@ -19,6 +19,7 @@
 				<th>User Role</th>
 				<th>User Profile </th>
 				<th>User Posts </th>
+				<th> Remove</th>
 			</tr>
 			<c:forEach items="${users}" var="u">
 				<tr>
@@ -28,6 +29,8 @@
 					<th>${u.role}</th>
 					<th>${u.profile}</th>
 					<th>${u.posts}</th>
+	               <th><a href="processRemoveUser?username=${u.username}">Remove User</a></th>
+
 					
 				</tr>
 			</c:forEach>
