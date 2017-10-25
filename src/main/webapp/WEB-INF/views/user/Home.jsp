@@ -32,8 +32,6 @@
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
 			
-
-
 				</ul>
 			</div>
 		</div> </br> </br>

@@ -51,4 +51,10 @@ public class PostDAOImpl implements PostDAO {
 		manager.getTransaction().commit();
 		Logging.Log("info",  post + "have been removed from the database");
 	}
+	
+	public Post getPost(int postId) {
+		EntityManager manager = factory.createEntityManager();
+		Post post = manager.find(Post.class, postId);
+		return post;
+	}
 }
