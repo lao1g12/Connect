@@ -33,6 +33,5 @@ public class FlagDAOImpl implements FlagDAO {
 		Flag flag = manager.find(Flag.class, id);
 		return flag;
 	}
-	
 
 }
