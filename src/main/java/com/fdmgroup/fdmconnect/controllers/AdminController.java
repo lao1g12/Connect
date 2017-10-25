@@ -142,6 +142,16 @@ public class AdminController {
 		
 	//}
 	
+	@RequestMapping("/admin/viewAllFlags")
+	public String goToViewAllFlags(Model model) {
+		
+		Logging.Log("trace", "Client request to url : Display All Flags");
+		List<Flag> flags = flagDao.getAllFlags();
+		model.addAttribute("flags", flags);
+		return "admin/DisplayAllFlags";
+		
+	}
+	
 	@RequestMapping("/admin/goToAddUser")
 	public String goToAddUser(HttpSession session, Model model) {
 
