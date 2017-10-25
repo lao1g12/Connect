@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.entities.User;
 
 public class FlagDAOImpl implements FlagDAO {
 
