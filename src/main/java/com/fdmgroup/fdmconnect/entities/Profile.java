@@ -2,7 +2,9 @@ package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,9 +47,9 @@ public class Profile {
 	@Column(name = "HOBBIES")
 	private String hobbies;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="profile")
-	private List<Education> education;
+	private Set<Education> educations=new HashSet<Education>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="profile")
-	private List<Experience> experience;
+	private Set<Experience> experiences=new HashSet<Experience>();
 	
 	public Profile() {}
 
@@ -103,8 +105,8 @@ public class Profile {
 		return endDate;
 	}
 
-	public void setEducation(List<Education> education) {
-		this.education = education;
+	public void setEducation(Set<Education> educations) {
+		this.educations = educations;
 	}
 
 	public void setStartDate(Calendar startDate) {
@@ -144,20 +146,24 @@ public class Profile {
 		this.hobbies = hobbies;
 	}
 
-	public List<Education> getEducation() {
-		return education;
+	public Set<Education> getEducation() {
+		return educations;
 	}
 
 	public void addEducation(Education education) {
-		this.education.add(education);
+		this.educations.add(education);
 	}
 
-	public List<Experience> getExperience() {
-		return experience;
+	public Set<Experience> getExperiences() {
+		return experiences;
 	}
 
-	public void setExperience(List<Experience> experience) {
-		this.experience = experience;
+	public void setExperiences(Set<Experience> experiences) {
+		this.experiences = experiences;
+	}
+	
+	public void addExperience(Experience experience){
+		this.experiences.add(experience);
 	}
 	
 }

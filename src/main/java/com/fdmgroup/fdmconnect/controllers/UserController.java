@@ -132,12 +132,7 @@ public class UserController {
 	@RequestMapping("user/doUpdateProfile")
 	public String updateProfile(Principal principal, Profile profile, HttpSession session) {
 
-		User user = userDao.getUser(principal.getName());
-		Profile oldProfile = user.getProfile();
-		profile.setEducation(oldProfile.getEducation());
-		profile.setExperience(oldProfile.getExperience());
-		profile.setHobbies(oldProfile.getHobbies());
-		session.setAttribute("profile", profile);
+
 		profileDao.updateProfile(profile);
 
 		return "user/ViewAccount";
