@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.persistence.PersistenceException;
@@ -13,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Education;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
@@ -33,12 +36,15 @@ public class UserController {
 	private FlagDAOImpl flagDao;
 	@Autowired
 	private PostDAOImpl postDao;
+	@Autowired
+	private EducationDAOImpl educationDao;
 	
 	Logger logger = Logger.getLogger(getClass());
 		
 	public UserController() {}
 	
-	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao) {
+	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao,
+			EducationDAOImpl educationDao) {
 		super();
 		this.userDao = userDao;
 		this.profileDao = profileDao;
@@ -90,4 +96,58 @@ public class UserController {
 		return "user/Home";
 		
 	}
+	
+	@RequestMapping("/user/viewAllUsers")
+	public String goToViewAllUsers(HttpSession session, Model model){
+		
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users", users);
+		return "user/ViewAllUsers";
+		
+	}
+	
+	@RequestMapping("/user/addEducation")
+	public String addEducation(Model model) {
+		Education education = new Education();
+		model.addAttribute(education);
+		return "user/AddEducation";
+
+	}
+
+	@RequestMapping("/user/doAddEducation")
+	public String doAddEducation(Education education, HttpSession session, Principal principal,Model model) {
+		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
+		education.setProfile(profile);
+		model.addAttribute(profile);
+		educationDao.addEducation(education);
+
+
+		return "user/EditAccount";
+
+	}
+
+	@RequestMapping("user/doUpdateProfile")
+	public String updateProfile(Principal principal, Profile profile, HttpSession session) {
+
+		User user = userDao.getUser(principal.getName());
+		Profile oldProfile = user.getProfile();
+		profile.setEducation(oldProfile.getEducation());
+		profile.setExperience(oldProfile.getExperience());
+		profile.setHobbies(oldProfile.getHobbies());
+		session.setAttribute("profile", profile);
+		profileDao.updateProfile(profile);
+
+		return "user/ViewAccount";
+
+	}
+
+	@RequestMapping("user/editProfile")
+	public String editProfile(Model model, Principal principal) {
+		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
+		model.addAttribute("profile", profile);
+		return "user/EditAccount";
+	}
+	
 }

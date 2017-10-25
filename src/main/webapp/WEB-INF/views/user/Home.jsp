@@ -29,6 +29,7 @@
 					<li class="horizl">
 						<h4>Welcome ${username}</h4>
 					</li>
+					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
 				</ul>

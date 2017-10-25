@@ -32,8 +32,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public List<User> getAllUsers() {
 		EntityManager manager = factory.createEntityManager();
-		TypedQuery<User> query = manager.createQuery("select u from User u",
-				User.class);
+		TypedQuery<User> query = manager.createQuery("select u from User u", User.class);
 		List<User> users = query.getResultList();
 		Logging.Log("info",
 				"UserDao: All users have been retrieved from the database.");
