@@ -110,10 +110,31 @@ public class AdminController {
 		Logging.Log("post", "post removed succesfully" + postId);
 		postDao.removePost(postId);
 		model.addAttribute("message", "post removed succesfully");
-		return "admin/...";
+		return "admin/DisplayAllPosts";
 		
 	}
 	
+	
+	//@RequestMapping("/admin/processFlagPostAdmin")
+	//public String processFlagPostAdmin(@RequestParam int postId, Model model) {
+		
+		
+		//postDao.removePost(postId);
+		//model.addAttribute("message", "flag printed succesfully");
+		//return "admin/DisplayAllPosts";
+		
+	//}
+	
+	
+	//@RequestMapping("/admin/processFlagPostUser")
+	//public String processFlagPostUser(@RequestParam int postId, Model model) {
+		
+		
+		//postDao.removePost(postId);
+	//	model.addAttribute("message", "flag printed succesfully");
+	//	return "user/DisplayAllPosts";
+		
+	//}
 	
 	@RequestMapping("/admin/goToAddUser")
 	public String goToAddUser(HttpSession session, Model model) {
