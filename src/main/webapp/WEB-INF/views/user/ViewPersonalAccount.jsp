@@ -7,11 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Welcome ${username}</h2>
+<h2>Welcome ${profile.firstName}</h2>
 
 
-
-First Name : ${profile.firstName}
+First Name : ${profile.firstName} <br>
 Last Name : ${profile.lastName}
 
 

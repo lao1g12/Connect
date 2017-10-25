@@ -1,7 +1,10 @@
 package com.fdmgroup.fdmconnect.controllers;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,8 @@ public class UserController {
 	@Autowired
 	private ProfileDAOImpl profileDao;
 	
+	Logger logger = Logger.getLogger(getClass());
+	
 	public UserController() {}
 
 	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao) {
@@ -29,13 +34,14 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value={"user/createProfile","admin/createProfile"})
-	public String createPofile(Model model, HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		Profile profile = new Profile(); 
+	@RequestMapping("user/account")
+	public String createPofile(Model model, HttpSession session, Principal principal) {
 		
-		
-		return null; 
+		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
+		model.addAttribute("profile", profile);
+		logger.info(session.getAttribute("username")+"going to profile");
+		return "user/ViewPersonalAccount"; 
 		
 	}
 	
