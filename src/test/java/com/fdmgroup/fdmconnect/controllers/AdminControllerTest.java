@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.verify;
@@ -27,6 +28,7 @@ public class AdminControllerTest {
 	private FlagDAOImpl flagDao;
 	private AdminController adminController;
 	private HttpSession session;
+	private HttpServletRequest request;
 	private Model model;
 	private User user;
 	private List<User> users;
@@ -38,6 +40,7 @@ public class AdminControllerTest {
 		userDao = mock(UserDAOImpl.class);
 		postDao = mock(PostDAOImpl.class);
 		flagDao = mock(FlagDAOImpl.class);
+		request = mock(HttpServletRequest.class);
 		adminController = new AdminController(postDao, userDao, flagDao);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
@@ -69,7 +72,7 @@ public class AdminControllerTest {
 	public void test_addNewPost_returnsMappingToUserLogin(){
 		
 		when(session.getAttribute("user")).thenReturn(user);
-		String result = adminController.addNewPost(post, session);
+		String result = adminController.addNewPost(post, session, request);
 		
 		assertEquals(result, "redirect:/user/login");
 	}
