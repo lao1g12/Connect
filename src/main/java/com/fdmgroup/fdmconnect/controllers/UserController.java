@@ -129,6 +129,7 @@ public class UserController {
 		profile.setExperience(oldProfile.getExperience());
 		profile.setHobbies(oldProfile.getHobbies());
 		session.setAttribute("profile", profile);
+		profileDao.updateProfile(profile);
 
 		return "user/ViewAccount";
 
