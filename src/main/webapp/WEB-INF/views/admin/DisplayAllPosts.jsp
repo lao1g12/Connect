@@ -4,13 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Admin Portal</title>
+<title>Insert title here</title>
 </head>
 <body>
-<a href="admin/goToAddUser">Add User</a> <br /> <br />
-<a href="admin/submitPost">Add Post</a>  <br />
-<a href="admin/viewAllUsers">View All Users</a>  <br />
-<a href="admin/viewAllPosts"> View All Posts</a>
-${userAddedMessage}
+
 </body>
 </html>

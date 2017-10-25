@@ -92,6 +92,29 @@ public class AdminController {
 
 	}
 
+	
+	@RequestMapping("/admin/viewAllPosts")
+	public String goToViewAllPosts(Model model) {
+		
+		Logging.Log("trace", "Client request to url : Display All Users");
+		List<Post> posts =postDao.getAllPosts();
+		model.addAttribute("post", posts);
+		return "admin/DisplayAllPosts";
+		
+	}
+	
+	
+	@RequestMapping("/admin/processRemovePost")
+	public String processRemovePost(@RequestParam int postId, Model model) {
+		
+		Logging.Log("post", "post removed succesfully" + postId);
+		postDao.removePost(postId);
+		model.addAttribute("message", "post removed succesfully");
+		return "admin/...";
+		
+	}
+	
+	
 	@RequestMapping("/admin/goToAddUser")
 	public String goToAddUser(HttpSession session, Model model) {
 
@@ -158,14 +181,6 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping("/admin/processRemovePost")
-	public String processRemovePost(@RequestParam int postId, Model model) {
-		
-		Logging.Log("post", "post removed succesfully" + postId);
-		postDao.removePost(postId);
-		model.addAttribute("message", "post removed succesfully");
-		return "admin/...";
-		
-	}
+	
 
 }
