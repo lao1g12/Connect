@@ -16,7 +16,7 @@
 <h1> Add New Post </h1>
 
 <sf:form method="post" action="addPost" modelAttribute="post">
-
+<h2>${badPost}</h2>
 Title : <sf:input type="text" path="title" /> <br> 
 BodyText: <sf:input type="text" path="bodyText" /> <br> 
 Link: <sf:input type="text" path="link" /> <br>
