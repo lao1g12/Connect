@@ -46,15 +46,17 @@ public class AdminController {
 	public String submitPost(Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		Post post = new Post();
-		post.setPostOwner(user);
+		
 		model.addAttribute(post);
 		return "admin/AddPost";
 		
 	}
 	
 	@RequestMapping("admin/addPost")
-	public String addNewPost(Post post) {
+	public String addNewPost(Post post, HttpSession session) {
 		
+		User user = (User) session.getAttribute("user");
+		post.setPostOwner(user);
 		postDao.addPost(post);
 
 		return "redirect:/user/login";

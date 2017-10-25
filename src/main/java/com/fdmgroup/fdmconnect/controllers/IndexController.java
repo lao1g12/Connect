@@ -46,9 +46,11 @@ public class IndexController {
 		session.setAttribute("username", principal.getName());
 		session.setAttribute("user", user);
 		session.setAttribute("profile", profile);
+		
 		if(user.getLastLogin() == null){
 			return "user/UpdatePassword";
 		}
+		
 		user.setLastLogin();
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
 		session.setAttribute("allPosts", postDao.getAllPosts());
