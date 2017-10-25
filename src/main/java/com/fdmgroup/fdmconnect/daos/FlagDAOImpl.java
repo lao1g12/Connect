@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.entities.User;
 
 public class FlagDAOImpl implements FlagDAO {
 
@@ -26,6 +27,12 @@ public class FlagDAOImpl implements FlagDAO {
 		manager.persist(flag);
 		manager.getTransaction().commit();
 		
+	}
+	
+	public Flag getFlag(int id) {
+		EntityManager manager = factory.createEntityManager();
+		Flag flag = manager.find(Flag.class, id);
+		return flag;
 	}
 
 }

@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
+import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Post;
@@ -23,6 +24,7 @@ public class AdminControllerTest {
 
 	private UserDAOImpl userDao;
 	private PostDAOImpl postDao;
+	private FlagDAOImpl flagDao;
 	private AdminController adminController;
 	private HttpSession session;
 	private Model model;
@@ -35,7 +37,8 @@ public class AdminControllerTest {
 	public void setUp() {
 		userDao = mock(UserDAOImpl.class);
 		postDao = mock(PostDAOImpl.class);
-		adminController = new AdminController(postDao, userDao);
+		flagDao = mock(FlagDAOImpl.class);
+		adminController = new AdminController(postDao, userDao, flagDao);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
 		user = mock(User.class);
