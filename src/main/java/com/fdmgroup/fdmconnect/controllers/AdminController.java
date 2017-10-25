@@ -2,8 +2,12 @@ package com.fdmgroup.fdmconnect.controllers;
 
 
 import javax.persistence.PersistenceException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +50,37 @@ public class AdminController {
 	public String submitPost(Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		Post post = new Post();
-
 		model.addAttribute(post);
 		return "admin/AddPost";
 		
 	}
 	
 	@RequestMapping("admin/addPost")
-	public String addNewPost(Post post, HttpSession session) {
+	public String addNewPost(Post post, HttpSession session,HttpServletRequest request) {
 		
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		postDao.addPost(post);
-
+		StringBuffer sb = new StringBuffer();
+		SearchMethod sm= new SearchMethod();
+		sb.append(post.getBodyText()+" "+post.getTitle()+" "+" "+post.getImgUrl()+" "+post.getLink());
+		String checkString = sb.toString();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getInfo();
+		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords.split(" ")));
+		List<String> checkedBadWords = sm.searchForListings(badWordList, checkString);
+		if(checkedBadWords.size() > 0){
+			StringBuffer sbReturn = new StringBuffer();
+			for(String badWord : checkedBadWords){
+				sbReturn.append(badWord+" ");
+			}
+			String badWordString = sbReturn.toString();
+			request.setAttribute("badPost", "You just tried to post an article with the following inappropriate words :"+badWordString);
+			return "admin/AddPost";
+		}
 		
+		
+		
+		postDao.addPost(post);
 		return "redirect:/user/login";
 
 	}
