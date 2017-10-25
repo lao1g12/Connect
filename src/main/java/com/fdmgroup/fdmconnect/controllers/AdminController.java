@@ -46,7 +46,7 @@ public class AdminController {
 	public String submitPost(Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		Post post = new Post();
-		
+
 		model.addAttribute(post);
 		return "admin/AddPost";
 		
@@ -59,6 +59,7 @@ public class AdminController {
 		post.setPostOwner(user);
 		postDao.addPost(post);
 
+		
 		return "redirect:/user/login";
 
 	}
