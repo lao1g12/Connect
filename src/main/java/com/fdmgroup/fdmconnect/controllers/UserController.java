@@ -13,10 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Education;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
@@ -33,17 +35,20 @@ public class UserController {
 	private FlagDAOImpl flagDao;
 	@Autowired
 	private PostDAOImpl postDao;
+	@Autowired
+	private EducationDAOImpl educationDao;
 	
 	Logger logger = Logger.getLogger(getClass());
 		
 	public UserController() {}
 	
-	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao) {
+	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao, EducationDAOImpl educationDao) {
 		super();
 		this.userDao = userDao;
 		this.profileDao = profileDao;
 		this.flagDao = flagDao;
 		this.postDao = postDao;
+		this.educationDao = educationDao;
 	}
 
 	@RequestMapping("user/account")
@@ -88,6 +93,24 @@ public class UserController {
 		model.addAttribute("flagSubmittedMessage", "Post successfully flagged, an admin has been notified.");
 		model.addAttribute("postId", postId);
 		return "user/Home";
+		
+	}
+	
+	@RequestMapping("/user/addEducation")
+	public String addEducation(Model model){
+		Education education = new Education();
+		model.addAttribute(education);
+		return "user/AddEducation";
+		
+	}
+	
+	@RequestMapping("/user/doAddEducation")
+	public String doAddEducation(Education education, HttpSession session){
+		Profile profile = (Profile) session.getAttribute("profile");
+		education.setProfile(profile);
+		educationDao.addEducation(education);
+	
+		return "user/EditAccount";
 		
 	}
 }

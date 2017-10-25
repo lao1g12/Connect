@@ -13,7 +13,7 @@
 <body>
 <h2>Enter your Work Experience to your profile below</h2>
 
-	<sf:form method="post" action="addExperience" modelAttribute="experience">
+	<sf:form method="post" action="doAddExperience" modelAttribute="experience">
 		What was the company? : <sf:input type="text" path="company"/>
 		What was the role? : <sf:input type="text" path="role" />
 		Write a short description about your experience : <sf:input type="text" path="description" />

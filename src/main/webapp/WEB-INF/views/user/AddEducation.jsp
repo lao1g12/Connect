@@ -13,7 +13,7 @@
 <body>
 <h2>Enter your Education to your profile below</h2>
 
-	<sf:form method="post" action="addEducation" modelAttribute="education">
+	<sf:form method="post" action="doAddEducation" modelAttribute="education">
 		What was the institution? : <sf:input type="text" path="institution"/>
 		What grades or qualifications did you achieve? : <sf:input type="text" path="qualification"/>
 		Is there any further interesting information to add? : <sf:input type="text" path="furtherInfo"/>
