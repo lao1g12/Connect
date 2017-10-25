@@ -108,24 +108,27 @@ public class UserController {
 	}
 
 	@RequestMapping("/user/doAddEducation")
-	public String doAddEducation(Education education, HttpSession session) {
-		Profile profile = (Profile) session.getAttribute("profile");
+	public String doAddEducation(Education education, HttpSession session, Principal principal,Model model) {
+		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
 		education.setProfile(profile);
+		model.addAttribute(profile);
 		educationDao.addEducation(education);
-		session.setAttribute("profile", profile);
+
 
 		return "user/EditAccount";
 
 	}
 
 	@RequestMapping("user/doUpdateProfile")
-	public String updateProfile(Principal principal, Profile profile) {
+	public String updateProfile(Principal principal, Profile profile, HttpSession session) {
 
 		User user = userDao.getUser(principal.getName());
 		Profile oldProfile = user.getProfile();
 		profile.setEducation(oldProfile.getEducation());
 		profile.setExperience(oldProfile.getExperience());
 		profile.setHobbies(oldProfile.getHobbies());
+		session.setAttribute("profile", profile);
 
 		return "user/ViewAccount";
 
