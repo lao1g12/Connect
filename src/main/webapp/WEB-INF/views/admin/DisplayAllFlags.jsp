@@ -12,31 +12,27 @@
 
 <table>
 			<tr>
-				<th>Post postId</th>
-				<th>Post title</th>
-				<th>Post bodyText</th>
-				<th>Post link</th>
-				<th>Post category </th>
-				<th>Post imgUrl</th>
+				<th>Flag flagId</th>
+				<th>Flag flagInfo</th>
+				<th>Flag dateAdded</th>
+				<th>Flag flaggedPost</th>
+			
 			
 			</tr>
-			<c:forEach items="${posts}" var="p">
+			<c:forEach items="${flags}" var="f">
 				<tr>
-					<th>${p.postId}</th>
-					<th>${p.title}</th>
-					<th>${p.bodyText}</th>
-					<th>${p.link}</th>
-					<th>${p.category}</th>
-					<th>${p.imgUrl}</th>
-	               <th><a href="processRemovePost?postId=${p.postId}">Remove Post</a></th>
+					<th>${f.flagId}</th>
+					<th>${f.flagInfo}</th>
+					<th>${f.dateAddedt}</th>
+					<th>${f.flaggedPost}</th>
+	
+	               <th><a href="processRemovePost?postId=${p.postId}">Remove Flag</a></th>
 				
 					
 				</tr>
 			</c:forEach>
 		</table>
 ${message }
-
-
 
 </body>
 </html>
