@@ -144,7 +144,7 @@ public class AdminController {
 		Logging.Log("info", "user removed succesfully" + username);
 		userDao.removeUser(username);
 		model.addAttribute("message", "User removed succesfully");
-		return "admin/RemoveUser";
+		return "admin/DisplayAllUsers";
 		
 	}
 
@@ -155,6 +155,16 @@ public class AdminController {
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
 		return "admin/DisplayAllUsers";
+		
+	}
+	
+	@RequestMapping("/admin/processRemovePost")
+	public String processRemovePost(@RequestParam int postId, Model model) {
+		
+		Logging.Log("post", "post removed succesfully" + postId);
+		postDao.removePost(postId);
+		model.addAttribute("message", "post removed succesfully");
+		return "admin/...";
 		
 	}
 
