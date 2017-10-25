@@ -49,7 +49,7 @@
 				<a href="${aP.link}">For more info click here!</a>
 				<br />
 			Category: ${aP.category}<br />
-			Posted: ${aP.postDate}<br />
+			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner}<br />
 				<hr />
 			</c:forEach>
