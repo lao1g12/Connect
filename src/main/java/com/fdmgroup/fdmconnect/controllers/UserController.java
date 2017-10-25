@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.persistence.PersistenceException;
 
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,7 @@ import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserDAOImpl userDao;
 	@Autowired
@@ -39,6 +38,7 @@ public class UserController {
 	@Autowired
 	private EducationDAOImpl educationDao;
 	
+
 	Logger logger = Logger.getLogger(getClass());
 		
 	public UserController() {}
@@ -50,51 +50,53 @@ public class UserController {
 		this.profileDao = profileDao;
 		this.flagDao = flagDao;
 		this.postDao = postDao;
+		this.educationDao = educationDao;
 	}
 
 	@RequestMapping("user/account")
 	public String createProfile(Model model, HttpSession session, Principal principal) {
-		
+
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		model.addAttribute("profile", profile);
-		logger.info(session.getAttribute("username")+"going to profile");
-		return "user/ViewAccount";  
+		logger.info(session.getAttribute("username") + "going to profile");
+		return "user/ViewAccount";
 
 	}
-	
+
 	@RequestMapping("/user/goToFlagPost")
-	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name="postId") int postId){
-				
+	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
+
 		Flag flag = new Flag();
-		
+
 		model.addAttribute("flagPost", "flagged");
 		model.addAttribute("postId", postId);
 		model.addAttribute("flag", flag);
 		return "user/Home";
-		
+
 	}
-	
+
 	@RequestMapping("/user/doFlagPost")
-	public String doFlagPost(HttpSession session, Model model, Flag flag, @RequestParam(name="postId") int postId){
-		
+	public String doFlagPost(HttpSession session, Model model, Flag flag, @RequestParam(name = "postId") int postId) {
+
 		Post flaggedPost = postDao.getPost(postId);
 		flag.setReporter((User) session.getAttribute("user"));
 		flag.setFlaggedPost(flaggedPost);
-		
+
 		try {
-			flagDao.addFlag(flag);;
+			flagDao.addFlag(flag);
+			;
 		} catch (PersistenceException pe) {
 			model.addAttribute("flagErrorMessage", "Flag ID already exists.");
 			return "user/Home";
 		}
-		
-		Logging.Log("info", "User Controller: "+session.getAttribute("username")+" submitted flag "
-				+flag.getFlagId());
+
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " submitted flag " + flag.getFlagId());
 		model.addAttribute("flagSubmittedMessage", "Post successfully flagged, an admin has been notified.");
 		model.addAttribute("postId", postId);
 		return "user/Home";
-		
+
 	}
 	
 	@RequestMapping("/user/viewAllUsers")
@@ -149,5 +151,5 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		return "user/EditAccount";
 	}
-	
+
 }

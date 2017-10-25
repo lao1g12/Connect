@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.entities.Education;
 import com.fdmgroup.fdmconnect.controllers.Logging;
-import com.fdmgroup.fdmconnect.entities.Post;
 
 
 public class EducationDAOImpl implements EducationDAO {

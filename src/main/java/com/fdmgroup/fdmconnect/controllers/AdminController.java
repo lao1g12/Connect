@@ -111,36 +111,17 @@ public class AdminController {
 	
 	
 	@RequestMapping("/admin/processRemovePost")
-	public String processRemovePost(@RequestParam int postId, Model model) {
+	public String processRemovePost(@RequestParam(name="postId") int postId, Model model) {
 		
 		Logging.Log("post", "post removed succesfully" + postId);
 		postDao.removePost(postId);
 		model.addAttribute("message", "post removed succesfully");
-		return "admin/DisplayAllPosts";
+		return "redirect:/admin/viewAllFlags";
 		
 	}
 	
 	
-	//@RequestMapping("/admin/processFlagPostAdmin")
-	//public String processFlagPostAdmin(@RequestParam int postId, Model model) {
-		
-		
-		//postDao.removePost(postId);
-		//model.addAttribute("message", "flag printed succesfully");
-		//return "admin/DisplayAllPosts";
-		
-	//}
 	
-	
-	//@RequestMapping("/admin/processFlagPostUser")
-	//public String processFlagPostUser(@RequestParam int postId, Model model) {
-		
-		
-		//postDao.removePost(postId);
-	//	model.addAttribute("message", "flag printed succesfully");
-	//	return "user/DisplayAllPosts";
-		
-	//}
 	
 	@RequestMapping("/admin/viewAllFlags")
 	public String goToViewAllFlags(Model model) {

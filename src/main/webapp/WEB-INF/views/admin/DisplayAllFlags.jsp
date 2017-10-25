@@ -21,13 +21,14 @@
 			</tr>
 			<c:forEach items="${flags}" var="f">
 				<tr>
+				<c:if test="${f.flagId != 1}">
 					<th>${f.flagId}</th>
 					<th>${f.flagInfo}</th>
-					<th>${f.dateAddedt}</th>
+					<th>${f.getFlagDateFormatted()}</th>
 					<th>${f.flaggedPost}</th>
 	
-	               <th><a href="processRemovePost?postId=${p.postId}">Remove Flag</a></th>
-				
+	               <th><a href="processRemovePost?postId=${f.flaggedPost.postId}">Remove Flag</a></th>
+				</c:if>
 					
 				</tr>
 			</c:forEach>

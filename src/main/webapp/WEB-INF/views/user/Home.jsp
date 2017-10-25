@@ -34,7 +34,7 @@
 					<li class="horizl"><a href="account">Account</a></li>
 				</ul>
 			</div>
-		</div>
+		</div> 
 		</br> </br>
 		<div class="col col12 last">
 			<h1>Welcome ${user.getUsername()}</h1>
@@ -43,15 +43,15 @@
 			<c:forEach items="${allPosts}" var="aP">
 				<h3>${aP.title}<br />
 				</h3>
-					${aP.bodyText}<br />
+			${aP.bodyText}<br />
 				<img src="${aP.imgUrl}">
 				<a href="${aP.link}">For more info click here!</a>
 				<br />
-					Category: ${aP.category}<br />
-					Posted: ${aP.getPostDateFormatted()}<br />
-					Posted By: ${aP.postOwner}<br />
-				<br />
-				<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+			Category: ${aP.category}<br />
+			Posted: ${aP.getPostDateFormatted()}<br />
+			Posted By: ${aP.postOwner}<br /> 
+			<br />
+			<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
 				<br />
 				<br />
 				<c:if test="${postId == aP.postId and flagPost == 'flagged'}">

@@ -20,7 +20,7 @@ public class ProfileDAOImpl implements ProfileDAO {
 		super();
 		this.factory = factory;
 	}
-	
+
 	public void updateProfile(Profile profile) {
 		EntityManager manager = factory.createEntityManager();
 		manager.getTransaction().begin();
@@ -29,4 +29,5 @@ public class ProfileDAOImpl implements ProfileDAO {
 		Logging.Log("info", profile + " has been updated in the database.");
 		
 	}
+	
 }
