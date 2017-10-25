@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -33,6 +34,9 @@ public class AdminControllerTest {
 	private User user;
 	private List<User> users;
 	private Post post;
+	private List<Post> posts;
+	private Flag flag;
+	private List<Flag> flags;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -46,6 +50,9 @@ public class AdminControllerTest {
 		model = mock(Model.class);
 		user = mock(User.class);
 		post = mock(Post.class);
+		flag = mock(Flag.class);
+		flags = mock(ArrayList.class);
+		posts = mock(ArrayList.class);
 		users = mock(ArrayList.class);
 	}
 
@@ -69,12 +76,17 @@ public class AdminControllerTest {
 	}
 	
 	@Test
+	public void test_goToViewAllFlags_returnsAdminDisplayAllFlags(){
+		
+		when(flagDao.getAllFlags()).thenReturn(flags);
+		String result = adminController.goToViewAllFlags(model);
+		
+		assertEquals(result, "admin/DisplayAllFlags");
+	}
+	
+	@Test
 	public void test_addNewPost_returnsMappingToUserLogin(){
 		
-		when(session.getAttribute("user")).thenReturn(user);
-		String result = adminController.addNewPost(post, session, request);
-		
-		assertEquals(result, "redirect:/user/login");
 	}
 
 	@Test
@@ -113,7 +125,7 @@ public class AdminControllerTest {
 		
 		String result = adminController.processRemoveUser("username", model);
 		
-		assertEquals(result, "admin/RemoveUser");
+		assertEquals(result, "admin/DisplayAllUsers");
 		
 	}
 	
@@ -124,5 +136,14 @@ public class AdminControllerTest {
 		String result = adminController.goToViewAllUsers(model);
 		
 		assertEquals(result, "admin/DisplayAllUsers");
+	}
+	
+	@Test
+	public void test_goToViewAllPosts_returnsAdminDisplayAllPosts(){
+		
+		when(postDao.getAllPosts()).thenReturn(posts);
+		String result = adminController.goToViewAllPosts(model);
+		
+		assertEquals(result, "admin/DisplayAllPosts");
 	}
 }
