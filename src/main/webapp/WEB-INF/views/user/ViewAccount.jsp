@@ -6,34 +6,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View User Account</title>
 </head>
-<h2>Welcome ${username}</h2>
+<h2>Welcome ${profile.firstName}</h2>
 <body>
+<div>
+ID: ${profile.profileId} <br><br>
 
-ID: 
+ImageURL: ${profile.imageUrl } <br><br>
 
-ImageURL: 
+First Name : ${profile.firstName} <br><br>
+Last Name : ${profile.lastName} <br><br>
 
-FirstName: 
-LastName: 
+Stream: ${profile.stream} <br><br>
 
-Stream: 
+Description: ${profile.description} <br><br>
 
-Description: 
+Hobbies: ${profile.hobbies } <br><br>
 
-Hobbies: 
+StartDate: ${profile.startDate } <br><br>
 
-StartDate: 
+EndDate: ${profile.endDate } <br><br>
+</div>
 
-EndDate: 
-
-
-<h2>Welcome ${username}</h2>
-
-
-
-First Name : ${profile.firstName}
-Last Name : ${profile.lastName}
-
+<br>
+<a href="editProfile">Edit Profile</a>
 
 </body>
 </html>
