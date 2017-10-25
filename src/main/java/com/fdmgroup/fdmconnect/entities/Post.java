@@ -2,6 +2,7 @@ package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,12 +31,13 @@ public class Post {
 	private String link;
 	private String category;
 	private String imgUrl;
-	private String flagStatus;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar postDate = Calendar.getInstance();
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_POST_USER")
 	private User postOwner;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
+	private List<Flag> flags;
 		
 	public Post() {	}
 
@@ -49,7 +52,17 @@ public class Post {
 //		postOwner.addPost(this);
 	}
 	
+	public void addFlag(Flag flag) {
+		this.flags.add(flag);
+	}
 	
+	public List<Flag> getFlags() {
+		return flags;
+	}
+	
+	public void setFlags(List<Flag> flags) {
+		this.flags = flags;
+	}
 	
 	public String getImgUrl() {
 		return imgUrl;
@@ -57,10 +70,6 @@ public class Post {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
-	}
-
-	public String getFlagStatus() {
-		return flagStatus;
 	}
 
 	public int getPostId() {
@@ -94,9 +103,6 @@ public class Post {
 		this.category = category;
 	}
 
-	public void setFlagStatus(String flagStatus) {
-		this.flagStatus = flagStatus;
-	}
 	public Calendar getPostDate() {
 		return postDate;
 	}
@@ -116,10 +122,5 @@ public class Post {
 	public void setPostOwner(User postOwner) {
 		this.postOwner = postOwner;
 	}
-	
-	
-	
-	
-	
 
 }

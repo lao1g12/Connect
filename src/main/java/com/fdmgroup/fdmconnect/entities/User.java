@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,10 +29,13 @@ public class User {
 	private String role;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar lastLogin;
+
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Profile profile;
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="postOwner", orphanRemoval=true)
 	private Set<Post> posts;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="reporter", cascade = CascadeType.REMOVE)
+	private List<Flag> flags;
 	
 	public User() {	}
 
@@ -45,6 +49,17 @@ public class User {
 	}
 	
 	
+	public List<Flag> getFlags() {
+		return flags;
+	}
+	
+	public void setFlags(List<Flag> flags) {
+		this.flags = flags;
+	}
+	
+	public void addFlag(Flag flag) {
+		this.flags.add(flag);
+	}
 	
 	public Calendar getLastLogin() {
 		return lastLogin;
