@@ -85,7 +85,6 @@ public class UserController {
 
 		try {
 			flagDao.addFlag(flag);
-			;
 		} catch (PersistenceException pe) {
 			model.addAttribute("flagErrorMessage", "Flag ID already exists.");
 			return "user/Home";
