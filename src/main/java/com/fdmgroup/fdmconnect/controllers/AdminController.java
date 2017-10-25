@@ -3,8 +3,12 @@ package com.fdmgroup.fdmconnect.controllers;
 
 
 import javax.persistence.PersistenceException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
@@ -27,14 +33,17 @@ public class AdminController {
 	private PostDAOImpl postDao;
 	@Autowired
 	private UserDAOImpl userDao;
+	@Autowired
+	private FlagDAOImpl flagDao;
 
 	public AdminController() {
 	}
 
-	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao) {
+	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
 		super();
 		this.postDao = postDao;
 		this.userDao = userDao;
+		this.flagDao = flagDao;
 	}
 
 	@RequestMapping("/admin")
@@ -54,13 +63,31 @@ public class AdminController {
 	}
 	
 	@RequestMapping("admin/addPost")
-	public String addNewPost(Post post, HttpSession session) {
+	public String addNewPost(Post post, HttpSession session,HttpServletRequest request) {
 		
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		postDao.addPost(post);
-
+		StringBuffer sb = new StringBuffer();
+		SearchMethod sm= new SearchMethod();
+		sb.append(post.getBodyText()+" "+post.getTitle()+" "+" "+post.getImgUrl()+" "+post.getLink());
+		String checkString = sb.toString();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords.split(" ")));
+		List<String> checkedBadWords = sm.searchForListings(badWordList, checkString);
+		if(checkedBadWords.size() > 0){
+			StringBuffer sbReturn = new StringBuffer();
+			for(String badWord : checkedBadWords){
+				sbReturn.append(badWord+" ");
+			}
+			String badWordString = sbReturn.toString();
+			request.setAttribute("badPost", "You just tried to post an article with the following inappropriate words :"+badWordString);
+			return "admin/AddPost";
+		}
 		
+		
+		
+		postDao.addPost(post);
 		return "redirect:/user/login";
 
 	}

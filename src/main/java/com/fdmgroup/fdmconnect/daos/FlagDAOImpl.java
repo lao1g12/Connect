@@ -18,7 +18,7 @@ public class FlagDAOImpl implements FlagDAO {
 		super();
 		this.factory = factory;
 	}
-	
+
 	public void addFlag(Flag flag) {
 		
 		EntityManager manager = factory.createEntityManager();
@@ -28,6 +28,11 @@ public class FlagDAOImpl implements FlagDAO {
 		
 	}
 	
+	public Flag getFlag(int id) {
+		EntityManager manager = factory.createEntityManager();
+		Flag flag = manager.find(Flag.class, id);
+		return flag;
+	}
 	
 
 }

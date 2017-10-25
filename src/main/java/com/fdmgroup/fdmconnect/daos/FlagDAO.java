@@ -6,4 +6,5 @@ public interface FlagDAO {
 
 	public void addFlag(Flag flag);
 	
+	
 }
