@@ -41,7 +41,7 @@ public class UserController {
 		Profile profile = user.getProfile();
 		model.addAttribute("profile", profile);
 		logger.info(session.getAttribute("username")+"going to profile");
-		return "user/ViewPersonalAccount"; 
+		return "user/ViewAccount"; 
 		
 	}
 	

@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View User Account</title>
 </head>
+<h2>Welcome ${username}</h2>
 <body>
 
 ID: 
@@ -24,6 +25,14 @@ Hobbies:
 StartDate: 
 
 EndDate: 
+
+
+<h2>Welcome ${username}</h2>
+
+
+
+First Name : ${profile.firstName}
+Last Name : ${profile.lastName}
 
 
 </body>
