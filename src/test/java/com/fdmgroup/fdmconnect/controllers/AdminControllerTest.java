@@ -3,13 +3,11 @@ package com.fdmgroup.fdmconnect.controllers;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
-import java.security.Principal;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.junit.Before;
@@ -18,6 +16,7 @@ import org.springframework.ui.Model;
 
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
 public class AdminControllerTest {
@@ -27,11 +26,11 @@ public class AdminControllerTest {
 	private AdminController adminController;
 	private HttpSession session;
 	private Model model;
-	private HttpServletRequest request;
-	private Principal principal;
-	private Calendar calendar;
 	private User user;
+	private List<User> users;
+	private Post post;
 
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		userDao = mock(UserDAOImpl.class);
@@ -39,10 +38,9 @@ public class AdminControllerTest {
 		adminController = new AdminController(postDao, userDao);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
-		request = mock(HttpServletRequest.class);
-		principal = mock(Principal.class);
 		user = mock(User.class);
-		calendar = mock(Calendar.class);
+		post = mock(Post.class);
+		users = mock(ArrayList.class);
 	}
 
 	@Test
@@ -62,6 +60,15 @@ public class AdminControllerTest {
 
 		assertEquals(result, "admin/AddPost");
 
+	}
+	
+	@Test
+	public void test_addNewPost_returnsMappingToUserLogin(){
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		String result = adminController.addNewPost(post, session);
+		
+		assertEquals(result, "redirect:/user/login");
 	}
 
 	@Test
@@ -93,5 +100,23 @@ public class AdminControllerTest {
 		verify(userDao).addUser(user);
 		assertEquals(result, "admin/Home");
 		
+	}
+	
+	@Test
+	public void test_processRemoveUser_returnsAdminRemoveUser(){
+		
+		String result = adminController.processRemoveUser("username", model);
+		
+		assertEquals(result, "admin/RemoveUser");
+		
+	}
+	
+	@Test
+	public void test_gotToViewAllUsers_returnsAdminDisplayAllUsers(){
+		
+		when(userDao.getAllUsers()).thenReturn(users);
+		String result = adminController.goToViewAllUsers(model);
+		
+		assertEquals(result, "admin/DisplayAllUsers");
 	}
 }

@@ -75,4 +75,27 @@ public class UserDAOImplTest {
 		verify(manager).persist(user);
 		
 	}
+	
+	@Test
+	public void test_removeUser_invokesTransactionAndRemove(){
+		
+		when(manager.find(User.class, "username")).thenReturn(user);
+		userDao.removeUser("username");
+		
+		verify(manager.getTransaction()).begin();
+		verify(manager).remove(user);
+		verify(manager.getTransaction()).commit();
+		
+	}
+	
+	@Test
+	public void test_updateUser_invokesTransactionAndMerge(){
+		
+		userDao.updateUser(user);
+		
+		verify(manager.getTransaction()).begin();
+		verify(manager).merge(user);
+		verify(manager.getTransaction()).commit();
+		
+	}
 }
