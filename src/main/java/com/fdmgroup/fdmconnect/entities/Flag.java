@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Flag {
 	
 	@Id
-	@SequenceGenerator(name="flagId_sequence", sequenceName="flagId_sequence", initialValue=1, allocationSize=1)
+	@SequenceGenerator(name="flagId_sequence", sequenceName="flagId_sequence", initialValue=2, allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="flagId_sequence")
 	@Column(name="ID")
 	private int flagId;

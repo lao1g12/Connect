@@ -31,10 +31,10 @@
 					</li>
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
-			
 				</ul>
 			</div>
-		</div> </br> </br>
+		</div> 
+		</br> </br>
 		<div class="col col12 last">
 			<h1>Welcome ${user.getUsername()}</h1>
 		</div>
@@ -48,7 +48,22 @@
 				<br />
 			Category: ${aP.category}<br />
 			Posted: ${aP.getPostDateFormatted()}<br />
-			Posted By: ${aP.postOwner}<br />
+			Posted By: ${aP.postOwner}<br /> 
+			<br />
+			<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+				<br />
+				<br />
+				<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
+					<sf:form method="post" action="doFlagPost?postId=${aP.postId}"
+						modelAttribute="flag">
+							Reason for flagging: <sf:input type="text" path="flagInfo" />
+						<br />
+						<input type="submit" value="Send Report" />
+					</sf:form>
+				</c:if>
+				<c:if test="${postId == aP.postId}">
+				${flagErrorMessage}${flagSubmittedMessage}
+				</c:if>
 				<hr />
 			</c:forEach>
 		</div>
