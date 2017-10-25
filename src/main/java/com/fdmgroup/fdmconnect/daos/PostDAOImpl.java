@@ -17,13 +17,11 @@ public class PostDAOImpl implements PostDAO {
 	@Autowired
 	private EntityManagerFactory factory;
 
-	public PostDAOImpl() {
-	}
+	public PostDAOImpl() {}
 
 	public PostDAOImpl(EntityManagerFactory factory) {
 		super();
 		this.factory = factory;
-
 	}
 
 	public void addPost(Post post) {
@@ -44,11 +42,17 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	public void removePost(int postId){
-		EntityManager manager =factory.createEntityManager();
-		Post post =manager.find(Post.class, postId);
+		EntityManager manager = factory.createEntityManager();
+		Post post = manager.find(Post.class, postId);
 		manager.getTransaction().begin();
 		manager.remove(postId);
 		manager.getTransaction().commit();
 		Logging.Log("info",  post + "have been removed from the database");
+	}
+
+	public Post getPost(int postId) {
+		EntityManager manager = factory.createEntityManager();
+		Post post = manager.find(Post.class, postId);
+		return post;
 	}
 }

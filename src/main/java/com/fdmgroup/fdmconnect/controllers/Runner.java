@@ -10,6 +10,7 @@ import com.fdmgroup.fdmconnect.entities.User;
 public class Runner {
 
 	public static void main(String[] args) {
+		
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("DemoPersistence");
 		UserDAOImpl userDao = new UserDAOImpl(factory);
 		
