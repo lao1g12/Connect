@@ -39,9 +39,9 @@ public class FlagDAOImpl implements FlagDAO {
 	}
 
 	
-	public List<Flag>getAllFlags(){
+	public List<Flag> getAllFlags(){
 		EntityManager manager = factory.createEntityManager();
-		TypedQuery<Flag> query = manager.createQuery("select f fromFlag g", Flag.class);
+		TypedQuery<Flag> query = manager.createQuery("select f from Flag f", Flag.class);
 		List<Flag> flags=query.getResultList();
 		return flags;
 		

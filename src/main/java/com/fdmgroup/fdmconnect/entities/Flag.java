@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -59,8 +60,9 @@ public class Flag {
 		this.flagInfo = flagInfo;
 	}
 
-	public Calendar getDateAdded() {
-		return dateAdded;
+	public Date getFlagDateFormatted(){
+		Date date = this.dateAdded.getTime();
+		return date;
 	}
 
 	public void setDateAdded(Calendar dateAdded) {
