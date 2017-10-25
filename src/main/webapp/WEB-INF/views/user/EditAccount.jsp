@@ -13,19 +13,19 @@
 <body>
 <h2>Welcome ${username} to your edit profile page!</h2>
 <h3>Please enter all your information below to make your personal profile!</h3>
-	<sf:form method="post" action="doUpdateProfile" modelAttribute="profile">
-		Add a picture : <sf:input type="text" path="imgUrl" value="${imgUrl}"/>
-		Edit your personal profile : <sf:input type="text" path="description" value="${description}"/>
-		What are your hobbies? : <sf:input type="text" path="hobbies" value="${hobbies}"/>
-		<a href="addEducation">Click here to add to your education</a>
-		<a href="addExperience">Click here to add to your work experience</a>
-		<sf:hidden path="profielId" value="${profileId}"/>
-		<sf:hidden path="firstName" value="${firstName}"/>
-		<sf:hidden path="lastName" value="${lastName}"/>
-		<sf:hidden path="String" value="${String}"/>
-		<sf:hidden path="startDate" value="${startDate}"/>
-		<sf:hidden path="endDate" value="${endDate}"/>
-		<input type="submit" value="Update Profile!"/>
+	<sf:form method="post" action="doUpdateProfile" modelAttribute="profile"> <br>
+		Add a picture : <sf:input type="text" path="imageUrl" value="${imageUrl}"/> <br>
+		Edit your personal profile : <sf:input type="text" path="description" value="${description}"/> <br>
+		What are your hobbies? : <sf:input type="text" path="hobbies" value="${hobbies}"/> <br>
+		<a href="addEducation">Click here to add to your education</a> <br>
+		<a href="addExperience">Click here to add to your work experience</a> <br>
+		<sf:hidden path="profileId" value="${profileId}"/> <br>
+		<sf:hidden path="firstName" value="${firstName}"/> <br>
+		<sf:hidden path="lastName" value="${lastName}"/> <br>
+		<sf:hidden path="Stream" value="${stream}"/> <br>
+		<sf:hidden path="startDate" value="${startDate}"/> <br>
+		<sf:hidden path="endDate" value="${endDate}"/> <br>
+		<input type="submit" value="Update Profile!"/> <br>
 	</sf:form>
 
 
