@@ -26,7 +26,7 @@ import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserDAOImpl userDao;
 	@Autowired
@@ -37,12 +37,14 @@ public class UserController {
 	private PostDAOImpl postDao;
 	@Autowired
 	private EducationDAOImpl educationDao;
-	
+
 	Logger logger = Logger.getLogger(getClass());
-		
-	public UserController() {}
-	
-	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao, EducationDAOImpl educationDao) {
+
+	public UserController() {
+	}
+
+	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao,
+			EducationDAOImpl educationDao) {
 		super();
 		this.userDao = userDao;
 		this.profileDao = profileDao;
@@ -53,64 +55,87 @@ public class UserController {
 
 	@RequestMapping("user/account")
 	public String createProfile(Model model, HttpSession session, Principal principal) {
-		
+
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		model.addAttribute("profile", profile);
-		logger.info(session.getAttribute("username")+"going to profile");
-		return "user/ViewAccount";  
+		logger.info(session.getAttribute("username") + "going to profile");
+		return "user/ViewAccount";
 
 	}
-	
+
 	@RequestMapping("/user/goToFlagPost")
-	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name="postId") int postId){
-				
+	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
+
 		Flag flag = new Flag();
-		
+
 		model.addAttribute("flagPost", "flagged");
 		model.addAttribute("postId", postId);
 		model.addAttribute("flag", flag);
 		return "user/Home";
-		
+
 	}
-	
+
 	@RequestMapping("/user/doFlagPost")
-	public String doFlagPost(HttpSession session, Model model, Flag flag, @RequestParam(name="postId") int postId){
-		
+	public String doFlagPost(HttpSession session, Model model, Flag flag, @RequestParam(name = "postId") int postId) {
+
 		Post flaggedPost = postDao.getPost(postId);
 		flag.setReporter((User) session.getAttribute("user"));
 		flag.setFlaggedPost(flaggedPost);
-		
+
 		try {
-			flagDao.addFlag(flag);;
+			flagDao.addFlag(flag);
+			;
 		} catch (PersistenceException pe) {
 			model.addAttribute("flagErrorMessage", "Flag ID already exists.");
 			return "user/Home";
 		}
-		
-		Logging.Log("info", "User Controller: "+session.getAttribute("username")+" submitted flag "
-				+flag.getFlagId());
+
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " submitted flag " + flag.getFlagId());
 		model.addAttribute("flagSubmittedMessage", "Post successfully flagged, an admin has been notified.");
 		model.addAttribute("postId", postId);
 		return "user/Home";
-		
+
 	}
-	
+
 	@RequestMapping("/user/addEducation")
-	public String addEducation(Model model){
+	public String addEducation(Model model) {
 		Education education = new Education();
 		model.addAttribute(education);
 		return "user/AddEducation";
-		
+
 	}
-	
+
 	@RequestMapping("/user/doAddEducation")
-	public String doAddEducation(Education education, HttpSession session){
+	public String doAddEducation(Education education, HttpSession session) {
 		Profile profile = (Profile) session.getAttribute("profile");
 		education.setProfile(profile);
 		educationDao.addEducation(education);
-	
+
 		return "user/EditAccount";
-		
+
 	}
+
+	@RequestMapping("user/doUpdateProfile")
+	public String updateProfile(Principal principal, Profile profile) {
+
+		User user = userDao.getUser(principal.getName());
+		Profile oldProfile = user.getProfile();
+		profile.setEducation(oldProfile.getEducation());
+		profile.setExperience(oldProfile.getExperience());
+		profile.setHobbies(oldProfile.getHobbies());
+
+		return "user/ViewAccount";
+
+	}
+
+	@RequestMapping("user/editProfile")
+	public String editProfile(Model model, Principal principal) {
+		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
+		model.addAttribute("profile", profile);
+		return "user/EditAccount";
+	}
+
 }
