@@ -35,7 +35,7 @@
 			</c:forEach>
 		</table>
 ${message }
-${message }
+
 
 
 </body>
