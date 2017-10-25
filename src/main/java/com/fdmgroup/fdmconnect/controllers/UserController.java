@@ -112,6 +112,7 @@ public class UserController {
 		Profile profile = (Profile) session.getAttribute("profile");
 		education.setProfile(profile);
 		educationDao.addEducation(education);
+		session.setAttribute("profile", profile);
 
 		return "user/EditAccount";
 
