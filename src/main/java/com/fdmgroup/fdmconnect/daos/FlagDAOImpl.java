@@ -1,7 +1,10 @@
 package com.fdmgroup.fdmconnect.daos;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,4 +38,13 @@ public class FlagDAOImpl implements FlagDAO {
 		return flag;
 	}
 
+	
+	public List<Flag>getAllFlags(){
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<Flag> query = manager.createQuery("select f fromFlag g", Flag.class);
+		List<Flag> flags=query.getResultList();
+		return flags;
+		
+	}
+	
 }

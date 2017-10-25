@@ -2,6 +2,7 @@ package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
 import javax.persistence.PersistenceException;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +35,7 @@ public class UserController {
 	private PostDAOImpl postDao;
 	
 	Logger logger = Logger.getLogger(getClass());
-	
+		
 	public UserController() {}
 	
 	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao) {
@@ -45,7 +46,7 @@ public class UserController {
 		this.postDao = postDao;
 	}
 
-	@RequestMapping(value={"/user/createProfile","/admin/createProfile"})
+	@RequestMapping("user/account")
 	public String createProfile(Model model, HttpSession session, Principal principal) {
 		
 		User user = userDao.getUser(principal.getName());
@@ -53,7 +54,7 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		logger.info(session.getAttribute("username")+"going to profile");
 		return "user/ViewAccount";  
-		
+
 	}
 	
 	@RequestMapping("/user/goToFlagPost")

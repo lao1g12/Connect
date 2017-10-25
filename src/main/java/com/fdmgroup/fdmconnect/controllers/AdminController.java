@@ -71,8 +71,14 @@ public class AdminController {
 		SearchMethod sm= new SearchMethod();
 		sb.append(post.getBodyText()+" "+post.getTitle()+" "+" "+post.getImgUrl()+" "+post.getLink());
 		String checkString = sb.toString();
+		checkString = checkString.replaceAll("[^a-zA-Z\\s]", " ");
+		checkString = checkString.toLowerCase();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
+		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
+		badWords = badWords.toLowerCase();
+		System.out.println(badWords);
+		System.out.println(checkString);
 		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords.split(" ")));
 		List<String> checkedBadWords = sm.searchForListings(badWordList, checkString);
 		if(checkedBadWords.size() > 0){
@@ -92,6 +98,60 @@ public class AdminController {
 
 	}
 
+	
+	@RequestMapping("/admin/viewAllPosts")
+	public String goToViewAllPosts(Model model) {
+		
+		Logging.Log("trace", "Client request to url : Display All Users");
+		List<Post> posts =postDao.getAllPosts();
+		model.addAttribute("post", posts);
+		return "admin/DisplayAllPosts";
+		
+	}
+	
+	
+	@RequestMapping("/admin/processRemovePost")
+	public String processRemovePost(@RequestParam int postId, Model model) {
+		
+		Logging.Log("post", "post removed succesfully" + postId);
+		postDao.removePost(postId);
+		model.addAttribute("message", "post removed succesfully");
+		return "admin/DisplayAllPosts";
+		
+	}
+	
+	
+	//@RequestMapping("/admin/processFlagPostAdmin")
+	//public String processFlagPostAdmin(@RequestParam int postId, Model model) {
+		
+		
+		//postDao.removePost(postId);
+		//model.addAttribute("message", "flag printed succesfully");
+		//return "admin/DisplayAllPosts";
+		
+	//}
+	
+	
+	//@RequestMapping("/admin/processFlagPostUser")
+	//public String processFlagPostUser(@RequestParam int postId, Model model) {
+		
+		
+		//postDao.removePost(postId);
+	//	model.addAttribute("message", "flag printed succesfully");
+	//	return "user/DisplayAllPosts";
+		
+	//}
+	
+	@RequestMapping("/admin/viewAllFlags")
+	public String goToViewAllFlags(Model model) {
+		
+		Logging.Log("trace", "Client request to url : Display All Flags");
+		List<Flag> flags = flagDao.getAllFlags();
+		model.addAttribute("flags", flags);
+		return "admin/DisplayAllFlags";
+		
+	}
+	
 	@RequestMapping("/admin/goToAddUser")
 	public String goToAddUser(HttpSession session, Model model) {
 
@@ -158,14 +218,6 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping("/admin/processRemovePost")
-	public String processRemovePost(@RequestParam int postId, Model model) {
-		
-		Logging.Log("post", "post removed succesfully" + postId);
-		postDao.removePost(postId);
-		model.addAttribute("message", "post removed succesfully");
-		return "admin/...";
-		
-	}
+	
 
 }
