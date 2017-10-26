@@ -100,6 +100,11 @@ public class IndexController {
 			}
 		
 	}
+	@RequestMapping(value = { "/admin/goHome", "/user/goHome"})
+	public String goHome(){
+		return "redirect:/user/login";
+		
+	}
 	
 	
 	

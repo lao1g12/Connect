@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
@@ -112,14 +113,15 @@ public class AdminController {
 	
 	
 	@RequestMapping("/admin/processRemovePost")
-	public String processRemovePost(@RequestParam int postId, Model model) {
-		
-		Logging.Log("post", "post removed succesfully" + postId);
-		postDao.removePost(postId);
-		model.addAttribute("message", "post removed succesfully");
-		return "redirect:/admin/viewAllFlaggedPosts";
-		
-	}
+    public String processRemovePost(@RequestParam int postId, Model model, RedirectAttributes ra) {
+                    
+                    Logging.Log("post", "post removed succesfully" + postId);
+                    postDao.removePost(postId);
+                    ra.addFlashAttribute("message", "Post removed succesfully.");
+                    return "redirect:/admin/viewAllFlaggedPosts";
+                    
+    }
+
 	
 	
 	
