@@ -6,13 +6,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="css/FDMConnect.css" />
 <title>Welcome</title>
 </head>
+
+
+
 <body>
+<div class="center">
+<img src="img/.jpg" alt="FDM Connect">
 	<form action="j_security_check" method="post">
 			Username: <input name="j_username" /> <br /> <br /> 
 			Password: <input type="password" name="j_password" /> <br /> <br /> 
-			<input type="Submit" value="Login" />
+	
+			<input  class="loginbutton" type="Submit" value="Login" />
+
 	</form>
+	
+	 </div>
+	
 </body>
 </html>
