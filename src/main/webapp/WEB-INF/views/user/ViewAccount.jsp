@@ -51,7 +51,14 @@ EndDate: ${profile.endDate } <br><br>
 </div>
 
 <br>
-<a href="editProfile">Edit Profile</a>
+					<c:choose>
+						<c:when test='${request.user == session.user}'>
+							<a href="editProfile">Edit Profile</a>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
 
 </body>
 </html>

@@ -61,7 +61,7 @@ public class UserController {
 	}
 
 	@RequestMapping("user/account")
-	public String createProfile(Model model, HttpSession session, Principal principal) {
+	public String createProfile(Model model, HttpSession session, Principal principal, HttpServletRequest request) {
 
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
@@ -70,6 +70,7 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
+		request.setAttribute("user", user);
 		logger.info(session.getAttribute("username") + "going to profile");
 		return "user/ViewAccount";
 
@@ -161,12 +162,11 @@ public class UserController {
 	}
 
 	@RequestMapping("user/doUpdateProfile")
-	public String updateProfile(Principal principal, Profile profile, HttpSession session) {
-
+	public String updateProfile(Principal principal, Profile profile, HttpSession session, HttpServletRequest request) {
 
 		profileDao.updateProfile(profile);
 
-		return "user/ViewAccount";
+		return "redirect:/user/account";
 
 	}
 

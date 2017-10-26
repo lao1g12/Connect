@@ -13,6 +13,7 @@
 <body>
 <h2>Welcome ${username} to your edit profile page!</h2>
 <h3>Please enter all your information below to make your personal profile!</h3>
+<h4>${message}</h4>
 	<sf:form method="post" action="doUpdateProfile" modelAttribute="profile"> <br>
 		<a href="addEducation">Click here to add to your education</a> <br>
 		<a href="addExperience">Click here to add to your work experience</a> <br>
