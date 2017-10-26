@@ -163,7 +163,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	public void test_doPasswordUpdate_returnsUserEditAccountIfNewPasswordEqualsConfPassword(){
+	public void test_doPasswordChange_returnsUserEditAccountIfNewPasswordEqualsConfPassword(){
 		
 		String password = ""; String oldPassword = "";
 		String newPassword = ""; String confNewPassword = "";
@@ -174,14 +174,14 @@ public class UserControllerTest {
 		when(request.getParameter("confNewPassword")).thenReturn(confNewPassword);
 		when(session.getAttribute("user")).thenReturn(user);
 		when(user.getProfile()).thenReturn(profile);
-		String result = userController.doPasswordUpdate(request, session, model);
+		String result = userController.doPasswordChange(request, session, model);
 		
 		assertEquals(result, "user/EditAccount");
 		
 	}
 	
 	@Test
-	public void test_doPasswordUpdate_returnsUserEditAccountIfOldPasswordDoesNotEqualUserGetPassword(){
+	public void test_doPasswordChange_returnsUserEditAccountIfOldPasswordDoesNotEqualUserGetPassword(){
 		
 		String password = ""; String oldPassword = "a";
 		String newPassword = ""; String confNewPassword = "";
@@ -192,14 +192,14 @@ public class UserControllerTest {
 		when(request.getParameter("confNewPassword")).thenReturn(confNewPassword);
 		when(session.getAttribute("user")).thenReturn(user);
 		when(user.getProfile()).thenReturn(profile);
-		String result = userController.doPasswordUpdate(request, session, model);
+		String result = userController.doPasswordChange(request, session, model);
 		
 		assertEquals(result, "user/EditAccount");
 		
 	}
 	
 	@Test
-	public void test_doPasswordUpdate_returnsUserEditAccountIfNewPasswordDoesNotMatchConfPassword(){
+	public void test_doPasswordChange_returnsUserEditAccountIfNewPasswordDoesNotMatchConfPassword(){
 		
 		String password = ""; String oldPassword = "";
 		String newPassword = ""; String confNewPassword = "a";
@@ -210,7 +210,7 @@ public class UserControllerTest {
 		when(request.getParameter("confNewPassword")).thenReturn(confNewPassword);
 		when(session.getAttribute("user")).thenReturn(user);
 		when(user.getProfile()).thenReturn(profile);
-		String result = userController.doPasswordUpdate(request, session, model);
+		String result = userController.doPasswordChange(request, session, model);
 		
 		assertEquals(result, "user/EditAccount");
 		
