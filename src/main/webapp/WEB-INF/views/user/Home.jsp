@@ -10,14 +10,14 @@
 </head>
 <body>
 
-<!-- Top Menu --> 
+	<!-- Top Menu -->
 
 	<div class="page-container">
-	<div id="logodiv">
-	<img class="img" src="img/fdmConnect.jpg" >
-	</div>
+		<div id="logodiv">
+			<img class="img" src="img/fdmConnect.jpg">
+		</div>
 		<div id="Head" class="row">
-			<div class ="col12">
+			<div class="col12">
 				<ul class="horiz">
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
@@ -33,18 +33,19 @@
 					<li class="horizl"><a href="account">Account</a></li>
 				</ul>
 			</div>
-		</div> 
+		</div>
 		</br> </br>
-		
-															<!--  welcome User  -->		
+
+		<!--  welcome User  -->
 		<div class="col col12 last">
 			<h1>Welcome ${user.getUsername()}</h1>
 		</div>
-		
-															<!-- Notice Board -->		
+
+		<!-- Notice Board -->
 		<div class="col col12 last">
 			<c:forEach items="${allPosts}" var="aP">
-				<h3>${aP.title}<br />
+				<h3>
+					${aP.title}<br />
 				</h3>
 			${aP.bodyText}<br />
 				<img src="${aP.imgUrl}">
@@ -52,9 +53,9 @@
 				<br />
 			Category: ${aP.category}<br />
 			Posted: ${aP.getPostDateFormatted()}<br />
-			Posted By: ${aP.postOwner}<br /> 
-			<br />
-			<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+			Posted By: ${aP.postOwner}<br />
+				<br />
+				<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
 				<br />
 				<br />
 				<c:if test="${postId == aP.postId and flagPost == 'flagged'}">

@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
@@ -216,6 +216,40 @@ public class UserController {
 		model.addAttribute("education", profile.getEducation());
 		
 		return "user/ViewProfile";
+		
+	}
+	
+	@RequestMapping("/user/goToUserSearch")
+	public String goToUserSearch(HttpSession session, Model model) {
+
+		model.addAttribute("userSearch", "search");
+		return "user/ViewAllUsers";
+
+	}
+	
+	@RequestMapping("/user/doUserSearch")
+	public String doUserSearch(HttpSession session, Model model, @RequestParam(name="profileName") String name){
+		
+		List<Profile> profiles = new ArrayList<Profile>();
+		String lowerCaseName = name.toLowerCase();
+		
+		for(Profile profile : profileDao.getAllProfiles()){
+			if( profile.getFirstName().toLowerCase().equals(lowerCaseName) || 
+				profile.getLastName().toLowerCase().equals(lowerCaseName) ||
+			    (profile.getFirstName().toLowerCase()+" "+profile.getLastName().toLowerCase()).equals(lowerCaseName)){
+				
+				profiles.add(profile);
+				
+			} else {
+				
+				model.addAttribute("nullSearchMessage", "No results found!");
+				return "redirect:/user/viewAllUsers";
+				
+			}
+		}
+		
+		model.addAttribute("profiles", profiles);
+		return "user/SearchResults";
 		
 	}
 

@@ -1,7 +1,10 @@
 package com.fdmgroup.fdmconnect.daos;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +39,17 @@ public class ProfileDAOImpl implements ProfileDAO {
 		EntityManager manager = factory.createEntityManager();
 		Profile profile = manager.find(Profile.class, profileId);
 		return profile;
+		
+	}
+	
+	public List<Profile> getAllProfiles(){
+		
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<Profile> query = manager.createQuery("select pr from Profile pr", Profile.class);
+		List<Profile> profiles = query.getResultList();
+		Logging.Log("info", "ProfileDao: All profiles have been retrieved from the database.");
+		
+		return profiles;
 		
 	}
 	

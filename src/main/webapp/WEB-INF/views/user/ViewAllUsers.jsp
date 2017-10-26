@@ -9,6 +9,17 @@
 </head>
 <body>
 	<h2>FDM Connect Users</h2>
+	<br />
+	<br />
+	<a href="goToUserSearch">Search for User</a> <br /> 
+	${nullSearchMessage} <br /> <br />
+	<c:if test="${userSearch == 'search'}">
+		<form action="doUserSearch" method="post">
+			Search by Name: <input type="text" name="profileName" /> <br /> <br /> 
+			<input	type="submit" value="Search" />
+		</form>
+	</c:if>
+	<br />
 	<h3>Trainees</h3>
 	<br />
 	<c:forEach items="${users}" var="u">
@@ -31,7 +42,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Consultant'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 		Stream: ${u.profile.stream} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
@@ -44,7 +57,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Trainer'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
@@ -56,7 +71,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Account Manager'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
@@ -68,7 +85,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Recruiter'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
@@ -80,7 +99,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Management'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
@@ -92,7 +113,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'IT'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
@@ -104,7 +127,9 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Alumni'}">
-		<img src="${u.profile.imageUrl}"/> <br><br>
+			<img src="${u.profile.imageUrl}" />
+			<br>
+			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 			<a href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
