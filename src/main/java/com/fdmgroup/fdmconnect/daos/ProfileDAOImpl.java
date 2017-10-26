@@ -22,11 +22,20 @@ public class ProfileDAOImpl implements ProfileDAO {
 	}
 
 	public void updateProfile(Profile profile) {
+		
 		EntityManager manager = factory.createEntityManager();
 		manager.getTransaction().begin();
 		manager.merge(profile);
 		manager.getTransaction().commit();
 		Logging.Log("info", profile + " has been updated in the database.");
+		
+	}
+
+	public Profile getProfile(int profileId) {
+		
+		EntityManager manager = factory.createEntityManager();
+		Profile profile = manager.find(Profile.class, profileId);
+		return profile;
 		
 	}
 	

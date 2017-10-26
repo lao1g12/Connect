@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
@@ -204,6 +205,18 @@ public class UserController {
 
 			return "user/EditAccount";
 		}
+	}
+	
+	@RequestMapping("/user/viewProfile")
+	public String goToViewProfile(HttpSession session, Model model, @RequestParam(name="profileId") int profileId) {
+		
+		Profile profile = profileDao.getProfile(profileId);
+		model.addAttribute("profile", profile);
+		model.addAttribute("experience", profile.getExperiences());
+		model.addAttribute("education", profile.getEducation());
+		
+		return "user/ViewProfile";
+		
 	}
 
 }
