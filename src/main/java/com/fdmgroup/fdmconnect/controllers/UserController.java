@@ -2,6 +2,7 @@ package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,7 +65,11 @@ public class UserController {
 
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
+		Set<Education> education= profile.getEducation();
+		Set<Experience> experience = profile.getExperiences();
 		model.addAttribute("profile", profile);
+		model.addAttribute("education", education);
+		model.addAttribute("experience", experience);
 		logger.info(session.getAttribute("username") + "going to profile");
 		return "user/ViewAccount";
 
