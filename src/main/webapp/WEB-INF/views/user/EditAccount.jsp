@@ -28,6 +28,17 @@
 		<sf:hidden path="startDate" value="${startDate}"/> <br>
 		<sf:hidden path="endDate" value="${endDate}"/> <br>
 	</sf:form>
+	
+		<h2>Would you like to set a new password instead?</h2></br>
+		<h2>${passNotMatch}</h2>
+		<h2>${incorrectPass}</h2>
+		<h2>${UpdatedPass}</h2>
+			<form method="post" action="passwordUpdate">
+			Enter Original password : <input required type="password" name="password"/>
+			Enter Your new password : <input required type="password" name="newPassword"/>
+			Please confirm your NEW password : <input required type="password" name="confNewPassword"/>
+			<input type="submit" value="Update details"/>
+		</form>
 
 
 

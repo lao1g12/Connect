@@ -177,5 +177,33 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		return "user/EditAccount";
 	}
+	
+	@RequestMapping("/user/passwordUpdate")
+	public String doPasswordUpdate(HttpServletRequest request, HttpSession session, Model model) {
+		String oldPassword = request.getParameter("password");
+		String newPassword = request.getParameter("newPassword");
+		String confNewPassword = request.getParameter("confNewPassword");
+		User user = (User) session.getAttribute("user");
+		Profile profile = user.getProfile();
+		model.addAttribute("profile", profile);
+		if (oldPassword.equals(user.getPassword())) {
+			if (newPassword.equals(confNewPassword)) {
+				request.setAttribute("UpdatedPass", "Your password has been succesfully changed");
+				user.setPassword(newPassword);
+				userDao.updateUser(user);
+				logger.info(user.getUsername()+" updated password");
+				return "user/EditAccount";
+			} else {
+				request.setAttribute("passNotMatch", "The two new passwords you entered do not match!");
+				logger.info(user.getUsername()+" attempted to change password but the two new passwords were different, redirected to the UpdateInfo page");
+				return "user/EditAccount";
+			}
+		} else {
+			request.setAttribute("incorrectPass", "The password you entered is not correct");
+			logger.info(user.getUsername()+" attempted to change password but the current password was wrong, redirected to the UpdateInfo page");
+
+			return "user/EditAccount";
+		}
+	}
 
 }
