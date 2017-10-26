@@ -38,7 +38,6 @@
 	<br />
 	<br />
 	<a href="goToUserSearch">Search for User</a> <br /> 
-	${nullSearchMessage} <br /> <br />
 	<c:if test="${userSearch == 'search'}">
 		<form action="doUserSearch" method="post">
 			Search by Name: <input type="text" name="profileName" /> <br /> <br /> 

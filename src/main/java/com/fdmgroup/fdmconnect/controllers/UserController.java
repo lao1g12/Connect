@@ -2,6 +2,7 @@ package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -230,7 +231,7 @@ public class UserController {
 	@RequestMapping("/user/doUserSearch")
 	public String doUserSearch(HttpSession session, Model model, @RequestParam(name="profileName") String name){
 		
-		List<Profile> profiles = new ArrayList<Profile>();
+		Set<Profile> profiles = new HashSet<Profile>();
 		String lowerCaseName = name.toLowerCase();
 		
 		for(Profile profile : profileDao.getAllProfiles()){
@@ -243,7 +244,7 @@ public class UserController {
 			} else {
 				
 				model.addAttribute("nullSearchMessage", "No results found!");
-				return "redirect:/user/viewAllUsers";
+				return "user/SearchResults";
 				
 			}
 		}

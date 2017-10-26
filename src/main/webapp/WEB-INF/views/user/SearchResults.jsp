@@ -9,14 +9,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- Top Menu --> 
+	<!-- Top Menu -->
 
 	<div class="page-container">
-	<div id="logodiv">
-	<img class="img" src="img/fdmConnect.jpg" >
-	</div>
+		<div id="logodiv">
+			<img class="img" src="img/fdmConnect.jpg">
+		</div>
 		<div id="Head" class="row">
-			<div class ="col12">
+			<div class="col12">
 				<ul class="horiz">
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
@@ -32,30 +32,31 @@
 					<li class="horizl"><a href="account">Account</a></li>
 				</ul>
 			</div>
-		</div> 
+		</div>
 		</br> </br>
-	<h2>User Search Results</h2>
-	<br />
-	<br />
-	<c:forEach items="${profiles}" var="p">
-		<img src="${p.imageUrl}" />
-		<br>
-		<br>
+		<h2>User Search Results</h2>
+		<br /> <br /> ${nullSearchMessage} <br /> <br />
+		<c:forEach items="${profiles}" var="p">
+			<img src="${p.imageUrl}" />
+			<br>
+			<br>
 		${p.firstName} ${p.lastName} <br />
-		<br />
-		<a href="viewProfile?profileId=${p.profileId}">View Profile</a>
-	</c:forEach>
-	
-			<br><br>
-		
-					<footer>
-			<ul class="horiz">
-				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
-				<li class="horizl"><a href="www.Help.com">Help</a></li>
-				<li class="horizl"><a href="www.language.com">Language</a></li>
-				<li class="horizl"><a href="www.about.com">About</a></li>
-				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
-			</ul>
+			<br />
+			<a href="viewProfile?profileId=${p.profileId}">View Profile</a>
+			<br />
+		</c:forEach>
+
+		<br>
+		<br>
+
+		<footer>
+		<ul class="horiz">
+			<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+			<li class="horizl"><a href="www.Help.com">Help</a></li>
+			<li class="horizl"><a href="www.language.com">Language</a></li>
+			<li class="horizl"><a href="www.about.com">About</a></li>
+			<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+		</ul>
 		</footer>
 	</div>
 </body>
