@@ -44,8 +44,7 @@
 		<!-- Notice Board -->
 		<div class="col col12 last">
 			<c:forEach items="${allPosts}" var="aP">
-				<h3>
-					${aP.title}<br />
+				<h3>${aP.title}<br />
 				</h3>
 			${aP.bodyText}<br />
 				<img src="${aP.imgUrl}">
@@ -53,9 +52,9 @@
 				<br />
 			Category: ${aP.category}<br />
 			Posted: ${aP.getPostDateFormatted()}<br />
-			Posted By: ${aP.postOwner}<br />
-				<br />
-				<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+			Posted By: ${aP.postOwner.username}<br /> 
+			<br />
+			<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
 				<br />
 				<br />
 				<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
