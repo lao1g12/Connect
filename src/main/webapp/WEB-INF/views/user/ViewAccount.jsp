@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="css/FDMConnect.css" type="text/css" />
 <title>View User Account</title>
 </head>
-<h2>Welcome ${profile.firstName}</h2>
 <body>
 	<!-- Top Menu -->
 
