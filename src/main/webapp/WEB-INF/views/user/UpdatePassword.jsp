@@ -7,14 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="center">
+<img src="img/fdmConnect.jpg" >
 <h2>Oh it looks like it is your first time to FDM Connect, please update your password below!</h2>
 <h3>${passNotMatch}</h3>
 	<form method="post" action="passwordUpdate">
- Enter Your new password : <input required
-			type="password" name="newPassword" /> Please confirm your NEW
-		password : <input required type="password" name="confNewPassword" /> <input
-			type="submit" value="Update details" />
+ 			 Enter Your new password : <input required type="password" name="newPassword" /><br>
+			 Please confirm your NEW password : <input required type="password" name="confNewPassword" /><br>
+			  <input type="submit" value="Update details" />
 	</form>
-
+</div>
 </body>
 </html>
