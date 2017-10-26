@@ -9,12 +9,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="css/FDMConnect.css" type="text/css" />
 
 <title>Add New Post</title>
 </head>
 <body>
-<h1> Add New Post </h1>
+<!-- Top Menu --> 
 
+	<div class="page-container">
+	<div id="logodiv">
+	<img class="img" src="img/fdmConnect.jpg" >
+	</div>
+		<div id="Head" class="row">
+			<div class ="col12">
+				<ul class="horiz">
+					<li class="horizl"><a href="goHome">Home</a></li>
+					<c:choose>
+						<c:when test='${user.getRole() == "Admin"}'>
+							<li class="horizl"><a href="goToAdmin">Admin</a></li>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
+					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
+					<li class="horizl"><a href="logout">Logout</a></li>
+					<li class="horizl"><a href="account">Account</a></li>
+				</ul>
+			</div>
+		</div> 
+		</br> </br>
+<h1> Add New Post </h1>
+<br>
 <sf:form method="post" action="addPost" modelAttribute="post">
 <h2>${badPost}</h2>
 Title : <sf:input type="text" path="title" /> <br> 
@@ -24,6 +50,17 @@ Category: <sf:input type="text" path="category" />  <br>
 Image : <sf:input type="text" path="imgUrl"/> <br>
 <button type="submit" value="Submit Post"/>
 </sf:form>
+	<br><br>
+			<footer>
+			<ul class="horiz">
+				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+				<li class="horizl"><a href="www.Help.com">Help</a></li>
+				<li class="horizl"><a href="www.language.com">Language</a></li>
+				<li class="horizl"><a href="www.about.com">About</a></li>
+				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+			</ul>
+		</footer>
+	</div>
 
 </body>
 </html>
