@@ -21,13 +21,13 @@ import com.fdmgroup.fdmconnect.entities.Post;
 
 public class PostDAOImplTest {
 	
-	private UserDAOImpl userDao;
 	private PostDAOImpl postDao;
 	private EntityManagerFactory factory;
 	private EntityManager manager;
 	private EntityTransaction transaction;
 	private TypedQuery<Post> query;
 	private List<Post> posts;
+	private Post post;
 
 
 
@@ -38,10 +38,10 @@ public class PostDAOImplTest {
 		factory = mock(EntityManagerFactory.class);
 		manager = mock(EntityManager.class);
 		transaction = mock(EntityTransaction.class);
-		userDao = new UserDAOImpl(factory);
 		postDao = new PostDAOImpl(factory);
 		query = mock(TypedQuery.class);
 		posts = mock(List.class);
+		post = mock(Post.class);
 		
 		when(factory.createEntityManager()).thenReturn(manager);
 		when(manager.getTransaction()).thenReturn(transaction);
@@ -70,6 +70,32 @@ public class PostDAOImplTest {
 		
 		assertEquals(query.getResultList(), posts);
 		
+		
+	}
+	
+	@Test
+	public void test_removePost_invokesGetTransactionAndRemove(){
+		
+		int postId = 0;
+		
+		when(manager.find(Post.class, postId)).thenReturn(post);
+		postDao.removePost(postId);
+		
+		verify(manager.getTransaction()).begin();
+		verify(manager).remove(post);
+		verify(manager.getTransaction()).commit();
+		
+	}
+	
+	@Test
+	public void test_getPost_returnsPost(){
+		
+		int postId = 0;
+		
+		when(manager.find(Post.class, postId)).thenReturn(post);
+		Post retrievedPost = postDao.getPost(postId);
+		
+		assertEquals(retrievedPost, post);
 		
 	}
 

@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
@@ -16,11 +17,13 @@ import static org.mockito.Mockito.when;
 import org.springframework.ui.Model;
 
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
+import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Education;
+import com.fdmgroup.fdmconnect.entities.Experience;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
@@ -41,8 +44,11 @@ public class UserControllerTest {
 	private Profile profile;
 	private ProfileDAOImpl profileDao;
 	private EducationDAOImpl educationDao;
+	private ExperienceDAOImpl experienceDao;
 	private Post flaggedPost;
 	private Education education;
+	private HttpServletRequest request;
+	private Experience experience;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -51,6 +57,7 @@ public class UserControllerTest {
 		postDao = mock(PostDAOImpl.class);
 		profileDao = mock(ProfileDAOImpl.class);
 		educationDao = mock(EducationDAOImpl.class);
+		experienceDao = mock(ExperienceDAOImpl.class);
 		flagDao = mock(FlagDAOImpl.class);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
@@ -60,9 +67,11 @@ public class UserControllerTest {
 		principal = mock(Principal.class);
 		profile = mock(Profile.class);
 		userController = new UserController(userDao, profileDao, flagDao,
-				postDao, educationDao);
+				postDao, educationDao, experienceDao);
 		flaggedPost = mock(Post.class);
 		education = mock(Education.class);
+		request = mock(HttpServletRequest.class);
+		experience = mock(Experience.class);
 	}
 
 	@Test
@@ -71,7 +80,7 @@ public class UserControllerTest {
 		when(principal.getName()).thenReturn("username");
 		when(userDao.getUser("username")).thenReturn(user);
 		when(user.getProfile()).thenReturn(profile);
-		String result = userController.createProfile(model, session, principal);
+		String result = userController.createProfile(model, session, principal, request);
 
 		assertEquals(result, "user/ViewAccount");
 
@@ -127,7 +136,7 @@ public class UserControllerTest {
 		when(userDao.getUser("username")).thenReturn(user);
 		when(user.getProfile()).thenReturn(profile);
 		String result = userController.doAddEducation(education, session,
-				principal, model);
+				principal, model, request);
 
 		assertEquals(result, "user/EditAccount");
 	}
@@ -135,9 +144,9 @@ public class UserControllerTest {
 	@Test
 	public void test_updateProfile_returnsMappingToUserViewAccount() {
 
-		String result = userController.updateProfile(principal, profile, session);
+		String result = userController.updateProfile(principal, profile, session, request);
 
-		assertEquals(result, "user/ViewAccount");
+		assertEquals(result, "redirect:/user/account");
 		
 	}
 	
@@ -149,6 +158,82 @@ public class UserControllerTest {
 		when(user.getProfile()).thenReturn(profile);
 		String result = userController.editProfile(model, principal);
 
+		assertEquals(result, "user/EditAccount");
+		
+	}
+	
+	@Test
+	public void test_doPasswordUpdate_returnsUserEditAccountIfNewPasswordEqualsConfPassword(){
+		
+		String password = ""; String oldPassword = "";
+		String newPassword = ""; String confNewPassword = "";
+		
+		when(user.getPassword()).thenReturn(password);
+		when(request.getParameter("password")).thenReturn(oldPassword);
+		when(request.getParameter("newPassword")).thenReturn(newPassword);
+		when(request.getParameter("confNewPassword")).thenReturn(confNewPassword);
+		when(session.getAttribute("user")).thenReturn(user);
+		when(user.getProfile()).thenReturn(profile);
+		String result = userController.doPasswordUpdate(request, session, model);
+		
+		assertEquals(result, "user/EditAccount");
+		
+	}
+	
+	@Test
+	public void test_doPasswordUpdate_returnsUserEditAccountIfOldPasswordDoesNotEqualUserGetPassword(){
+		
+		String password = ""; String oldPassword = "a";
+		String newPassword = ""; String confNewPassword = "";
+		
+		when(user.getPassword()).thenReturn(password);
+		when(request.getParameter("password")).thenReturn(oldPassword);
+		when(request.getParameter("newPassword")).thenReturn(newPassword);
+		when(request.getParameter("confNewPassword")).thenReturn(confNewPassword);
+		when(session.getAttribute("user")).thenReturn(user);
+		when(user.getProfile()).thenReturn(profile);
+		String result = userController.doPasswordUpdate(request, session, model);
+		
+		assertEquals(result, "user/EditAccount");
+		
+	}
+	
+	@Test
+	public void test_doPasswordUpdate_returnsUserEditAccountIfNewPasswordDoesNotMatchConfPassword(){
+		
+		String password = ""; String oldPassword = "";
+		String newPassword = ""; String confNewPassword = "a";
+		
+		when(user.getPassword()).thenReturn(password);
+		when(request.getParameter("password")).thenReturn(oldPassword);
+		when(request.getParameter("newPassword")).thenReturn(newPassword);
+		when(request.getParameter("confNewPassword")).thenReturn(confNewPassword);
+		when(session.getAttribute("user")).thenReturn(user);
+		when(user.getProfile()).thenReturn(profile);
+		String result = userController.doPasswordUpdate(request, session, model);
+		
+		assertEquals(result, "user/EditAccount");
+		
+	}
+	
+	@Test
+	public void test_addExperience_returnsUserAddExperience(){
+		
+		String result = userController.addExperience(model);
+		
+		assertEquals(result, "user/AddExperience");
+		
+	}
+	
+	@Test
+	public void testDoAddExperience_returnsUserEditAccount(){
+		
+		when(principal.getName()).thenReturn("username");
+		when(userDao.getUser("username")).thenReturn(user);
+		when(user.getProfile()).thenReturn(profile);
+		String result = userController.doAddExperience(experience, session,
+				principal, model, request);
+		
 		assertEquals(result, "user/EditAccount");
 		
 	}
