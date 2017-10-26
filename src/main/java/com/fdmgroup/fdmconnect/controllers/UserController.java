@@ -178,8 +178,8 @@ public class UserController {
 		return "user/EditAccount";
 	}
 	
-	@RequestMapping("/user/passwordUpdate")
-	public String doPasswordUpdate(HttpServletRequest request, HttpSession session, Model model) {
+	@RequestMapping("/user/passwordChange")
+	public String doPasswordChange(HttpServletRequest request, HttpSession session, Model model) {
 		String oldPassword = request.getParameter("password");
 		String newPassword = request.getParameter("newPassword");
 		String confNewPassword = request.getParameter("confNewPassword");
