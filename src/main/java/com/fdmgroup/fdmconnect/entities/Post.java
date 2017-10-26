@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.entities;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,7 +38,7 @@ public class Post {
 	@JoinTable(name = "FC_POST_USER")
 	private User postOwner;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
-	private List<Flag> flags;
+	private Set<Flag> flags;
 		
 	public Post() {	}
 
@@ -56,11 +57,11 @@ public class Post {
 		this.flags.add(flag);
 	}
 	
-	public List<Flag> getFlags() {
+	public Set<Flag> getFlags() {
 		return flags;
 	}
 	
-	public void setFlags(List<Flag> flags) {
+	public void setFlags(Set<Flag> flags) {
 		this.flags = flags;
 	}
 	

@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+${message}
 <table>
 			<tr>
 				<th>Post postId</th>

@@ -7,6 +7,7 @@ import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -111,12 +112,12 @@ public class AdminController {
 	
 	
 	@RequestMapping("/admin/processRemovePost")
-	public String processRemovePost(@RequestParam(name="postId") int postId, Model model) {
+	public String processRemovePost(@RequestParam int postId, Model model) {
 		
 		Logging.Log("post", "post removed succesfully" + postId);
 		postDao.removePost(postId);
 		model.addAttribute("message", "post removed succesfully");
-		return "redirect:/admin/viewAllFlags";
+		return "redirect:/admin/viewAllFlaggedPosts";
 		
 	}
 	
@@ -124,11 +125,14 @@ public class AdminController {
 	
 	
 	@RequestMapping("/admin/viewAllFlags")
-	public String goToViewAllFlags(Model model) {
+	public String goToViewAllFlags(Model model, @RequestParam int postId, HttpServletRequest request) {
 		
 		Logging.Log("trace", "Client request to url : Display All Flags");
-		List<Flag> flags = flagDao.getAllFlags();
-		model.addAttribute("flags", flags);
+		Post post = postDao.getPost(postId);
+		Set<Flag> flagList = post.getFlags();
+		System.out.println(flagList.size());
+		request.setAttribute("flagList", flagList);
+		request.setAttribute("post", post);
 		return "admin/DisplayAllFlags";
 		
 	}

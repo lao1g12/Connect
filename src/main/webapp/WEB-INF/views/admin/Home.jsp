@@ -10,7 +10,7 @@
 <a href="admin/goToAddUser">Add User</a> <br /> <br />
 <a href="admin/submitPost">Add Post</a>  <br />
 <a href="admin/viewAllUsers">View All Users</a>  <br />
-<a href="admin/viewAllFlags"> View All Flags</a>
+<a href="admin/viewAllFlaggedPosts"> View All Flagged Post</a>
 ${userAddedMessage}
 </body>
 </html>
