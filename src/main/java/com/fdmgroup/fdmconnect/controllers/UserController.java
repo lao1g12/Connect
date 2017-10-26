@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
+import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Education;
+import com.fdmgroup.fdmconnect.entities.Experience;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
@@ -37,6 +39,8 @@ public class UserController {
 	private PostDAOImpl postDao;
 	@Autowired
 	private EducationDAOImpl educationDao;
+	@Autowired
+	private ExperienceDAOImpl experienceDao;
 	
 
 	Logger logger = Logger.getLogger(getClass());
@@ -44,13 +48,14 @@ public class UserController {
 	public UserController() {}
 	
 	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao,
-			EducationDAOImpl educationDao) {
+			EducationDAOImpl educationDao, ExperienceDAOImpl experienceDao) {
 		super();
 		this.userDao = userDao;
 		this.profileDao = profileDao;
 		this.flagDao = flagDao;
 		this.postDao = postDao;
 		this.educationDao = educationDao;
+		this.experienceDao= experienceDao;
 	}
 
 	@RequestMapping("user/account")
@@ -122,6 +127,25 @@ public class UserController {
 		education.setProfile(profile);
 		model.addAttribute(profile);
 		educationDao.addEducation(education);
+
+
+		return "user/EditAccount";
+
+	}
+	@RequestMapping("/user/addExperience")
+	public String addExperience(Model model) {
+		Experience experience = new Experience();
+		model.addAttribute(experience);
+		return "user/AddExperience";
+
+	}
+	@RequestMapping("/user/doAddExperience")
+	public String doAddExperience(Experience experience, HttpSession session, Principal principal,Model model) {
+		User user = userDao.getUser(principal.getName());
+		Profile profile = user.getProfile();
+		experience.setProfile(profile);
+		model.addAttribute(profile);
+		experienceDao.addExperience(experience);
 
 
 		return "user/EditAccount";
