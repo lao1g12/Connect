@@ -52,7 +52,7 @@
 				<br />
 			Category: ${aP.category}<br />
 			Posted: ${aP.getPostDateFormatted()}<br />
-			Posted By: ${aP.postOwner}<br /> 
+			Posted By: ${aP.postOwner.username}<br /> 
 			<br />
 			<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
 				<br />

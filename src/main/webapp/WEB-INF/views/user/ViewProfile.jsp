@@ -41,8 +41,8 @@
 
 		<h2>FDM Training</h2>
 		Stream: ${profile.stream} <br>
-		<br> StartDate: ${profile.startDate } <br>
-		<br> EndDate: ${profile.endDate } <br>
+		<br> StartDate: ${profile.getStartDateFormatted()} <br>
+		<br> EndDate: ${profile.getEndDateFormatted()} <br>
 		<br>
 
 
