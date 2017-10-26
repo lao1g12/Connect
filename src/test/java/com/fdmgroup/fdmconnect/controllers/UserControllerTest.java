@@ -5,7 +5,9 @@ import static org.mockito.Mockito.mock;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,6 +51,7 @@ public class UserControllerTest {
 	private Education education;
 	private HttpServletRequest request;
 	private Experience experience;
+	private Set<Profile> profiles;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -72,6 +75,7 @@ public class UserControllerTest {
 		education = mock(Education.class);
 		request = mock(HttpServletRequest.class);
 		experience = mock(Experience.class);
+		profiles = mock(HashSet.class);
 	}
 
 	@Test
@@ -226,7 +230,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	public void testDoAddExperience_returnsUserEditAccount(){
+	public void test_doAddExperience_returnsUserEditAccount(){
 		
 		when(principal.getName()).thenReturn("username");
 		when(userDao.getUser("username")).thenReturn(user);
@@ -235,6 +239,61 @@ public class UserControllerTest {
 				principal, model, request);
 		
 		assertEquals(result, "user/EditAccount");
+		
+	}
+	
+	@Test
+	public void test_goToViewProfile_returnsUserViewProfile(){
+		
+		int profileId = 0;
+		
+		when(profileDao.getProfile(profileId)).thenReturn(profile);
+		String result = userController.goToViewProfile(session, model, profileId);
+		
+		assertEquals(result, "user/ViewProfile");
+		
+	}
+	
+	@Test
+	public void test_goToUserSearch_returnsUserViewAllUsers(){
+		
+		String result = userController.goToUserSearch(session, model);
+		
+		assertEquals(result, "user/ViewAllUsers");
+	}
+	
+	@Test
+	public void test_doUserSearch_invokesAddProfileAndReturnsUserSearchResultsIfProfileInSet(){
+		
+		String name = "a";
+		Set<Profile> profiles = new HashSet<Profile>();
+		List<Profile> profileDaoProfiles = new ArrayList<Profile>();
+		Profile profile = new Profile();
+		profile.setFirstName("a"); profile.setLastName("b");
+		
+		profiles.add(profile); profileDaoProfiles.add(profile);
+		when(profileDao.getAllProfiles()).thenReturn(profileDaoProfiles);
+		String result = userController.doUserSearch(session, model, name);
+		
+		verify(model).addAttribute("profiles", profiles);
+		assertEquals(result, "user/SearchResults");
+		
+	}
+	
+	@Test
+	public void test_doUserSearch_invokesModelAddAttributeAndReturnsUserSearchResultsIfProfileIsNotInSet(){
+		
+		String name = "";
+		List<Profile> profiles = new ArrayList<Profile>();
+		Profile profile = new Profile();
+		profile.setFirstName("a"); profile.setLastName("b");
+		
+		profiles.add(profile);
+		when(profileDao.getAllProfiles()).thenReturn(profiles);
+		String result = userController.doUserSearch(session, model, name);
+		
+		verify(model).addAttribute("nullSearchMessage", "No results found!");
+		assertEquals(result, "user/SearchResults");
 		
 	}
 	
