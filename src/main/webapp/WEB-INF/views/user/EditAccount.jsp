@@ -34,9 +34,9 @@
 		<h2>${incorrectPass}</h2>
 		<h2>${UpdatedPass}</h2>
 			<form method="post" action="passwordChange">
-			Enter Original password : <input required type="password" name="password"/>
-			Enter Your new password : <input required type="password" name="newPassword"/>
-			Please confirm your NEW password : <input required type="password" name="confNewPassword"/>
+			Enter Original password : <input required type="password" name="password"/><br>
+			Enter Your new password : <input required type="password" name="newPassword"/><br>
+			Please confirm your NEW password : <input required type="password" name="confNewPassword"/><br>
 			<input type="submit" value="Update details"/>
 		</form>
 
