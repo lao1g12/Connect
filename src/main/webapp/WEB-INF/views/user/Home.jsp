@@ -74,10 +74,10 @@
 			</c:forEach>
 		</div>
 		</div>
-		<br>
-			<div>
+		<div class="empty"> </div>
 		<footer>
 			<br>
+		
 			<ul class="horiz">
 				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
 				<li class="horizl"><a href="www.Help.com">Help</a></li>
@@ -86,7 +86,8 @@
 				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
 			</ul>
 		</footer>
-	</div>
+		
+	
 	</div>
 
 </body>
