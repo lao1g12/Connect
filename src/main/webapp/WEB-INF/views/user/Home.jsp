@@ -10,13 +10,12 @@
 </head>
 <body>
 
-
+<!-- Top Menu --> 
 
 	<div class="page-container">
 	<div id="logodiv">
 	<img class="img" src="img/fdmConnect.jpg" >
 	</div>
-	
 		<div id="Head" class="row">
 			<div class ="col12">
 				<ul class="horiz">
@@ -36,9 +35,13 @@
 			</div>
 		</div> 
 		</br> </br>
+		
+															<!--  welcome User  -->		
 		<div class="col col12 last">
 			<h1>Welcome ${user.getUsername()}</h1>
 		</div>
+		
+															<!-- Notice Board -->		
 		<div class="col col12 last">
 			<c:forEach items="${allPosts}" var="aP">
 				<h3>${aP.title}<br />
