@@ -102,7 +102,7 @@ public class IndexController {
 	}
 	@RequestMapping(value = { "/admin/goHome", "/user/goHome"})
 	public String goHome(){
-		return null;
+		return "redirect:/user/login";
 		
 	}
 	

@@ -37,7 +37,6 @@ right: 0;
 
 .img { 
 	position: absolute;
-
 }
 
 #logodiv{ 
@@ -45,6 +44,9 @@ right: 0;
 	margin-left: 35%;
 }
 
+.border {
+	border-style: groove;
+	}
 
 .page-container{
 				max-width: 1200px;
@@ -54,6 +56,17 @@ right: 0;
                 
                 width:100%;
 }
+
+.boardimg { 
+	
+	width: 400px;
+	height: 300px;
+	
+}
+
+.boardtext{ 
+	margin-left: 10%;
+	}
 
 
 

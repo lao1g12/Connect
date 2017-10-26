@@ -10,14 +10,14 @@
 </head>
 <body>
 
-	<!-- Top Menu -->
+<!-- Top Menu --> 
 
 	<div class="page-container">
-		<div id="logodiv">
-			<img class="img" src="img/fdmConnect.jpg">
-		</div>
+	<div id="logodiv">
+	<img class="img" src="img/fdmConnect.jpg" >
+	</div>
 		<div id="Head" class="row">
-			<div class="col12">
+			<div class ="col12">
 				<ul class="horiz">
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
@@ -33,24 +33,26 @@
 					<li class="horizl"><a href="account">Account</a></li>
 				</ul>
 			</div>
-		</div>
+		</div> 
 		</br> </br>
-
-		<!--  welcome User  -->
+		
+															<!--  welcome User  -->		
 		<div class="col col12 last">
-			<h1>Welcome ${user.getUsername()}</h1>
+			<h3>Welcome ${user.getUsername()}</h3>
 		</div>
-
-		<!-- Notice Board -->
-		<div class="col col12 last">
+		
+															<!-- Notice Board -->		
+		<div class="col col12 last, border">
+			<div class="boardtext"> 
 			<c:forEach items="${allPosts}" var="aP">
-				<h3>${aP.title}<br />
-				</h3>
-			${aP.bodyText}<br />
-				<img src="${aP.imgUrl}">
+				<h3>${aP.title}<br /></h3>
+				
+				Category: ${aP.category}<br />
+				<img class="boardimg" src="${aP.imgUrl}"><br>
+				${aP.bodyText}<br />
 				<a href="${aP.link}">For more info click here!</a>
 				<br />
-			Category: ${aP.category}<br />
+			
 			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner.username}<br /> 
 			<br />
@@ -71,6 +73,19 @@
 				<hr />
 			</c:forEach>
 		</div>
+		</div>
+		
+			<div>
+		<footer>
+			<ul class="horiz">
+				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+				<li class="horizl"><a href="www.Help.com">Help</a></li>
+				<li class="horizl"><a href="www.language.com">Language</a></li>
+				<li class="horizl"><a href="www.about.com">About</a></li>
+				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+			</ul>
+		</footer>
+	</div>
 	</div>
 
 </body>
