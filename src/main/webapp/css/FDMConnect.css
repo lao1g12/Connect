@@ -73,9 +73,26 @@ right: 0;
 	
 }
 
-.boardtext{ 
-	margin-left: 10%;
-	}
+/*** View Account **/ 
+
+.profileImg { 
+	
+	height: 200px;
+	width: 150px;
+	
+}
+
+.boardtext { 
+	
+	margin-left: 100px;
+	
+}
+
+.profileinfo { 
+	
+	margin-top: 50px;
+}
+
 
 
 

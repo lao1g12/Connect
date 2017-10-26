@@ -37,14 +37,27 @@
 		<h2>Welcome ${profile.firstName}</h2>
 		<br>
 		<div>
-
-			<img src="${profile.imageUrl}" /> <br>
-			<br> First Name : ${profile.firstName} <br>
-			<br> Last Name : ${profile.lastName} <br>
-			<br> Description: ${profile.description} <br>
-			<br> Hobbies: ${profile.hobbies } <br>
+		
+			<!-- Profile -->
+		
+	<div class = "row">
+                    <div class = "col3 ">
+			<img class="profileImg" src="${profile.imageUrl}" /> <br>
+			</div>
+					<div class = "col6 last, profileinfo">
+			<br> First Name : ${profile.firstName} 
+			<br> Last Name : ${profile.lastName} 
+			<br> Description: ${profile.description} 
+			<br> Hobbies: ${profile.hobbies } 
 			<br>
+			</div>
+			</div>
 
+
+<!--  other Information  -->
+
+<div class = "row">
+<div class = "col12">
 			<h2>Education</h2>
 			<c:forEach items="${education}" var="edu">
 	Institution: ${edu.institution}<br>
@@ -71,6 +84,8 @@
 			<br> EndDate: ${profile.endDate } <br>
 			<br>
 
+</div>
+</div>
 
 		</div>
 
