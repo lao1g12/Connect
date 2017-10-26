@@ -14,15 +14,12 @@
 
 <body>
 <div class="center">
-<img src="img/.jpg" alt="FDM Connect">
+<img src="img/fdmConnect.jpg" >
 	<form action="j_security_check" method="post">
 			Username: <input name="j_username" /> <br /> <br /> 
 			Password: <input type="password" name="j_password" /> <br /> <br /> 
-	
 			<input  class="loginbutton" type="Submit" value="Login" />
-
 	</form>
-	
 	 </div>
 	
 </body>

@@ -9,9 +9,16 @@
 <title>Home Page</title>
 </head>
 <body>
+
+
+
 	<div class="page-container">
+	<div id="logodiv">
+	<img class="img" src="img/fdmConnect.jpg" >
+	</div>
+	
 		<div id="Head" class="row">
-			<div class="col col7">
+			<div class ="col12">
 				<ul class="horiz">
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
@@ -22,13 +29,6 @@
 
 						</c:otherwise>
 					</c:choose>
-				</ul>
-			</div>
-			<div class="col col5 last">
-				<ul class="horiz">
-					<li class="horizl">
-						<h4>Welcome ${username}</h4>
-					</li>
 					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
