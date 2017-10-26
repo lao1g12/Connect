@@ -27,7 +27,8 @@
 					<th>${f.getFlagDateFormatted()}</th>
 					<th>${f.flaggedPost}</th>
 	
-	               <th><a href="processRemovePost?postId=${f.flaggedPost.postId}">Remove Flag</a></th>
+		
+	               <th><a href="processRemovePost?postId=${f.flaggedPost.postId}">Remove Post</a></th>
 				</c:if>
 					
 				</tr>

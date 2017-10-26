@@ -199,6 +199,21 @@ public class AdminController {
 		
 	}
 	
-	
+
+	@RequestMapping("/admin/viewAllFlaggedPosts")
+	public String goToViewAllFlaggedPosts(Model model, HttpServletRequest request) {
+		
+		Logging.Log("trace", "Client request to url : Display All Users");
+		List<Post> posts =postDao.getAllPosts();
+		ArrayList<Post> flaggedPosts = new ArrayList<Post>();
+		for(Post post : posts){
+			if(post.getFlags().size()>0){
+				flaggedPosts.add(post);
+			}
+		}
+		request.setAttribute("flaggedPosts", flaggedPosts);
+		return "admin/DisplayAllFlaggedPosts";
+		
+	}
 
 }
