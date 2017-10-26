@@ -7,10 +7,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
@@ -23,13 +26,16 @@ public class IndexController {
 	private UserDAOImpl userDao;
 	@Autowired
 	private PostDAOImpl postDao;
+	@Autowired
+	private FlagDAOImpl flagDao;
 
 	public IndexController() {}
 
-	public IndexController(UserDAOImpl userDao, PostDAOImpl postDao) {
+	public IndexController(UserDAOImpl userDao, PostDAOImpl postDao, FlagDAOImpl flagDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
+		this.flagDao = flagDao;
 	}
 	
 	@RequestMapping("/")
@@ -60,8 +66,9 @@ public class IndexController {
 	}
 	
 	@RequestMapping("user/goToAdmin")
-	public String goToAdmin(){
-		
+	public String goToAdmin(Model model){
+		Flag flag = flagDao.getFlag(1);
+		model.addAttribute("flag", flag);
 		return "redirect:/admin";
 		
 	}

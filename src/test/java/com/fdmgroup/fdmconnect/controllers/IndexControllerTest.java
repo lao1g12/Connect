@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.User;
@@ -33,12 +34,14 @@ public class IndexControllerTest {
 	private Principal principal;
 	private Calendar calendar;
 	private User user;
+	private FlagDAOImpl flagDao;
 
 	@Before
 	public void setUp() {
 		userDao = mock(UserDAOImpl.class);
 		postDao = mock(PostDAOImpl.class);
-		index = new IndexController(userDao, postDao);
+		flagDao = mock(FlagDAOImpl.class);
+		index = new IndexController(userDao, postDao, flagDao);
 		session = mock(HttpSession.class);
 		request = mock(HttpServletRequest.class);
 		principal = mock(Principal.class);

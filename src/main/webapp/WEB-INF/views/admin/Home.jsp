@@ -37,6 +37,10 @@
 <a href="admin/submitPost">Add Post</a>  <br />
 <a href="admin/viewAllUsers">View All Users</a>  <br />
 <a href="admin/viewAllFlaggedPosts"> View All Flagged Post</a>
+	<form method="post" action="addBadWords">
+ 			 Enter Your new badwords : <input required type="text" name="badWords" value="${flag.flagInfo}" /><br>
+			 <input type="submit" value="Update details" />
+	</form>
 ${userAddedMessage}
 
 	<br><br>

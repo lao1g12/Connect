@@ -56,8 +56,8 @@
 		Training Start date (dd/MM/yyyy) <sf:input path="profile.startDate" /><br>
 		Training End date (dd/MM/yyyy) <sf:input path="profile.endDate" /><br>
 		Username <sf:input required="1" type="text" path="username" /><br>
-		Password <sf:password required="1" type="text" path="password" /><br>
-		Confirm Password <sf:password required="1" type="text" path="confirmPassword" /><br>
+		Password <sf:password required="1" path="password" /><br>
+		Confirm Password <sf:password required="1" path="confirmPassword" /><br>
 		Current Job <sf:select path="job">
 			<sf:option value="Trainee">Trainee</sf:option>
 			<sf:option value="Consultant">Consultant</sf:option>
