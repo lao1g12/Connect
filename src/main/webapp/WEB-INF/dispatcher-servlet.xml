@@ -14,6 +14,8 @@
 	<mvc:resources mapping="/user/css/**" location="/css/" />
 	<mvc:resources mapping="/admin/css/**" location="/css/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
+	<mvc:resources mapping="/user/img/**" location="/img/" />
+	<mvc:resources mapping="/admin/img/**" location="/img/" />
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.controllers;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.persistence.PersistenceException;
 
@@ -121,12 +122,13 @@ public class UserController {
 	}
 
 	@RequestMapping("/user/doAddEducation")
-	public String doAddEducation(Education education, HttpSession session, Principal principal,Model model) {
+	public String doAddEducation(Education education, HttpSession session, Principal principal,Model model, HttpServletRequest request) {
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		education.setProfile(profile);
 		model.addAttribute(profile);
 		educationDao.addEducation(education);
+		request.setAttribute("message", "Your Education information has been added!");
 
 
 		return "user/EditAccount";
@@ -140,12 +142,13 @@ public class UserController {
 
 	}
 	@RequestMapping("/user/doAddExperience")
-	public String doAddExperience(Experience experience, HttpSession session, Principal principal,Model model) {
+	public String doAddExperience(Experience experience, HttpSession session, Principal principal,Model model,HttpServletRequest request) {
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		experience.setProfile(profile);
 		model.addAttribute(profile);
 		experienceDao.addExperience(experience);
+		request.setAttribute("message", "Your work experience has been added!");
 
 
 		return "user/EditAccount";
