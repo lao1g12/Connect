@@ -56,5 +56,28 @@ public class ProfileDAOImplTest {
 		verify(transaction).commit();
 		
 	}
+	
+	@Test
+	public void test_getProfile_returnsProfile(){
+		
+		int profileId = 0;
+		
+		when(manager.find(Profile.class, profileId)).thenReturn(profile);
+		Profile retrievedProfile = profileDao.getProfile(profileId);
+		
+		assertEquals(retrievedProfile, profile);
+		
+	}
+	
+	@Test
+	public void test_getAllProfiles_returnsProfiles() {
+		
+		when(manager.createQuery("select pr from Profile pr", Profile.class)).thenReturn(query);
+		when(query.getResultList()).thenReturn(profiles);
+		List<Profile> retrievedProfiles = profileDao.getAllProfiles();
+		
+		assertEquals(retrievedProfiles, profiles);
+		
+	}
 
 }
