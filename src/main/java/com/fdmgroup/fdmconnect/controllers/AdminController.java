@@ -49,8 +49,9 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin")
-	public String admin() {
-
+	public String admin(Model model) {
+		Flag flag = flagDao.getFlag(1);
+		model.addAttribute("flag", flag);
 		return "admin/Home";
 	}
 
@@ -219,6 +220,15 @@ public class AdminController {
 		}
 		request.setAttribute("flaggedPosts", flaggedPosts);
 		return "admin/DisplayAllFlaggedPosts";
+		
+	}
+	@RequestMapping("admin/addBadWords")
+	public String addBadWords(@RequestParam String badWords){
+		Flag flag = flagDao.getFlag(1);
+		flag.setFlagInfo(badWords);
+		flagDao.updateFlag(flag);
+		System.out.println("hello");
+		return "redirect:/admin";
 		
 	}
 

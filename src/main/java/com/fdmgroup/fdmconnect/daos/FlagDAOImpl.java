@@ -46,6 +46,14 @@ public class FlagDAOImpl implements FlagDAO {
 		return flags;
 		
 	}
+
+	public void updateFlag(Flag flag) {
+		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
+		manager.merge(flag);
+		manager.getTransaction().commit();
+		
+	}
 	
 
 	

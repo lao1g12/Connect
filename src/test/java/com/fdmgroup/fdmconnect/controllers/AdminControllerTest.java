@@ -61,7 +61,7 @@ public class AdminControllerTest {
 	@Test
 	public void test_admin_returnsAdminHome() {
 
-		String result = adminController.admin();
+		String result = adminController.admin(model);
 
 		assertEquals(result, "admin/Home");
 

@@ -62,7 +62,7 @@ public class UserController {
 		this.experienceDao= experienceDao;
 	}
 
-	@RequestMapping("user/account")
+	@RequestMapping(value = { "/admin/account", "/user/account"})
 	public String createProfile(Model model, HttpSession session, Principal principal, HttpServletRequest request) {
 
 		User user = userDao.getUser(principal.getName());

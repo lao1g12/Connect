@@ -65,15 +65,14 @@ public class IndexController {
 		
 	}
 	
-	@RequestMapping("user/goToAdmin")
+	@RequestMapping(value = { "/admin/goToAdmin", "/user/goToAdmin"})
 	public String goToAdmin(Model model){
-		Flag flag = flagDao.getFlag(1);
-		model.addAttribute("flag", flag);
+
 		return "redirect:/admin";
 		
 	}
 	
-	@RequestMapping("/user/logout")
+	@RequestMapping(value = { "/admin/logout", "/user/logout"})
 	public String goToLogout(HttpSession session) {
 		
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged out.");

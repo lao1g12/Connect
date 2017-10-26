@@ -20,15 +20,15 @@
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
 						<c:when test='${user.getRole() == "Admin"}'>
-							<li class="horizl"><a href="goToAdmin">Admin</a></li>
+							<li class="horizl"><a href="admin/goToAdmin">Admin</a></li>
 						</c:when>
 						<c:otherwise>
 
 						</c:otherwise>
 					</c:choose>
-					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
-					<li class="horizl"><a href="logout">Logout</a></li>
-					<li class="horizl"><a href="account">Account</a></li>
+					<li class="horizl"><a href="admin/viewAllUsers">All Users</a></li>
+					<li class="horizl"><a href="admin/logout">Logout</a></li>
+					<li class="horizl"><a href="admin/account">Account</a></li>
 				</ul>
 			</div>
 		</div> 
@@ -37,7 +37,7 @@
 <a href="admin/submitPost">Add Post</a>  <br />
 <a href="admin/viewAllUsers">View All Users</a>  <br />
 <a href="admin/viewAllFlaggedPosts"> View All Flagged Post</a>
-	<form method="post" action="addBadWords">
+	<form method="post" action="admin/addBadWords">
  			 Enter Your new badwords : <input required type="text" name="badWords" value="${flag.flagInfo}" /><br>
 			 <input type="submit" value="Update details" />
 	</form>
