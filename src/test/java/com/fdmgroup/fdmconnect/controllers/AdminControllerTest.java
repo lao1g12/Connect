@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.verify;
@@ -32,7 +35,10 @@ public class AdminControllerTest {
 	private User user;
 	private List<User> users;
 	private List<Post> posts;
-	private List<Flag> flags;
+	private HttpServletRequest request;
+	private Post post;
+	private Set<Flag> flagList;
+	private Flag flag;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -44,9 +50,12 @@ public class AdminControllerTest {
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
 		user = mock(User.class);
-		flags = mock(ArrayList.class);
 		posts = mock(ArrayList.class);
 		users = mock(ArrayList.class);
+		request = mock(HttpServletRequest.class);
+		post = mock(Post.class);
+		flagList = mock(HashSet.class);
+		flag = mock(Flag.class);
 	}
 
 	@Test
@@ -68,18 +77,37 @@ public class AdminControllerTest {
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
-	public void test_goToViewAllFlags_returnsAdminDisplayAllFlags(){
+	public void test_addNewPost_returnsAdminAddPostIfBadWordsNumberGreaterThanZero(){
 		
-		when(flagDao.getAllFlags()).thenReturn(flags);
-		String result = adminController.goToViewAllFlags(model);
+		StringBuffer sb = new StringBuffer();
+		String checkString = sb.toString();
+		SearchMethod sm = mock(SearchMethod.class);
+		String badWords = "";
+		List<String> badWordList = new ArrayList<String>();
+		List<String> checkedBadWords = mock(ArrayList.class);
 		
-		assertEquals(result, "admin/DisplayAllFlags");
+		when(session.getAttribute("user")).thenReturn(user);
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(sm.searchForListings(badWordList, checkString)).thenReturn(checkedBadWords);
+		when(checkedBadWords.size()).thenReturn(1);
+		String result = adminController.addNewPost(post, session, request);
+		
+		assertEquals(result, "admin/AddPost");
+		
 	}
 	
 	@Test
-	public void test_addNewPost_returnsMappingToUserLogin(){
+	public void test_goToViewAllFlags_returnsAdminDisplayAllFlags(){
+		int postId = 0;
+
+		when(postDao.getPost(postId)).thenReturn(post);
+		when(post.getFlags()).thenReturn(flagList);
+		String result = adminController.goToViewAllFlags(model, postId, request);
 		
+		assertEquals(result, "admin/DisplayAllFlags");
 	}
 
 	@Test
@@ -138,5 +166,21 @@ public class AdminControllerTest {
 		String result = adminController.goToViewAllPosts(model);
 		
 		assertEquals(result, "admin/DisplayAllPosts");
+	}
+	
+	@Test
+	public void test_goToViewAllFlaggedPosts_returnsAdminDisplayAllFlaggedPosts(){
+		
+		List<Post> posts = new ArrayList<Post>();
+		Set<Flag> flags = new HashSet<Flag>();
+		
+		flags.add(new Flag());
+		posts.add(post);
+		when(post.getFlags()).thenReturn(flags);
+		when(postDao.getAllPosts()).thenReturn(posts);
+		String result = adminController.goToViewAllFlaggedPosts(model, request);
+		
+		assertEquals(result, "admin/DisplayAllFlaggedPosts");
+		
 	}
 }
