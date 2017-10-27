@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="css/FDMConnect.css" type="text/css" />
+<link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -40,7 +40,6 @@ ${message}
 			<tr>
 				<th>Post postId</th>
 				<th>Post title</th>
-				<th>Post bodyText</th>
 				<th>Post link</th>
 				<th>Post category </th>
 				<th>Post imgUrl</th>
@@ -50,7 +49,6 @@ ${message}
 				<tr>
 					<th>${p.postId}</th>
 					<th>${p.title}</th>
-					<th>${p.bodyText}</th>
 					<th>${p.link}</th>
 					<th>${p.category}</th>
 					<th>${p.imgUrl}</th>
