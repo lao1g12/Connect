@@ -116,7 +116,7 @@ public class UserController {
 	public String goToViewAllUsers(HttpSession session, Model model){
 		
 		List<User> users = userDao.getAllUsers();
-		model.addAttribute("users", users);
+		session.setAttribute("users", users);
 		return "user/ViewAllUsers";
 		
 	}
@@ -235,18 +235,25 @@ public class UserController {
 		String lowerCaseName = name.toLowerCase();
 		
 		for(Profile profile : profileDao.getAllProfiles()){
-			if( profile.getFirstName().toLowerCase().equals(lowerCaseName) || 
-				profile.getLastName().toLowerCase().equals(lowerCaseName) ||
-			    (profile.getFirstName().toLowerCase()+" "+profile.getLastName().toLowerCase()).equals(lowerCaseName)){
+			
+			String firstNameLower = profile.getFirstName().toLowerCase();
+			String lastNameLower = profile.getLastName().toLowerCase();
+			
+			if( firstNameLower.contains(lowerCaseName) || 
+				lastNameLower.contains(lowerCaseName) ||
+			    (firstNameLower+" "+lastNameLower).contains(lowerCaseName)){
 				
 				profiles.add(profile);
 				
-			} else {
-				
-				model.addAttribute("nullSearchMessage", "No results found!");
-				return "user/SearchResults";
-				
-			}
+			} 
+			
+		}
+		
+		if (profiles.size() < 1){
+			
+			model.addAttribute("nullSearchMessage", "No results found!");
+			return "user/SearchResults";
+			
 		}
 		
 		model.addAttribute("profiles", profiles);
