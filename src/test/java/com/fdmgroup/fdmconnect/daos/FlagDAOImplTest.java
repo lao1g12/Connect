@@ -77,4 +77,14 @@ public class FlagDAOImplTest {
 		
 		assertEquals(retrievedFlags, flags);
 	}
+	
+	@Test
+	public void test_updateFlag_invokesTransactionMethodsAndMerge() {
+	
+		flagDao.updateFlag(flag);
+		
+		verify(transaction).begin();
+		verify(manager).merge(flag);
+		verify(transaction).commit();
+	}
 }
