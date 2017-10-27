@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="css/FDMConnect.css" type="text/css" />
+<link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
 <title>Add User</title>
 </head>
 <body>
@@ -39,7 +39,7 @@
 		</br> </br>
 		<h2>Add a user below</h2>
 		<br>
-	<sf:form method="post" action="doAddUser" modelAttribute="user">
+	<sf:form method="post" action="doAddUser" modelAttribute="newUser">
 		First Name <sf:input required="1" type="text" path="profile.firstName" />
 		<br> 
 		Last Name <sf:input required="1" type="text" path="profile.lastName" />

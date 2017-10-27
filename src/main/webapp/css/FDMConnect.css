@@ -68,17 +68,16 @@ right: 0;
 
 .boardimg { 
 	
-	width: 400px;
-	height: 300px;
+	width: 50%;
 	
 }
+	
 
 /*** View Account **/ 
 
 .profileImg { 
 	
-	height: 200px;
-	width: 150px;
+	width: 70%;
 	
 }
 

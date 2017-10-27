@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="css/FDMConnect.css" type="text/css" />
+<link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
 <title>View User Account</title>
 </head>
 <body>
@@ -80,8 +80,8 @@
 
 			<h2>FDM Training</h2>
 			Stream: ${profile.stream} <br>
-			<br> StartDate: ${profile.startDate } <br>
-			<br> EndDate: ${profile.endDate } <br>
+			<br> StartDate: ${profile.getStartDateFormatted()} <br>
+			<br> EndDate: ${profile.getEndDateFormatted()} <br>
 			<br>
 
 </div>
