@@ -39,7 +39,7 @@
 		</br> </br>
 		<h2>Add a user below</h2>
 		<br>
-	<sf:form method="post" action="doAddUser" modelAttribute="user">
+	<sf:form method="post" action="doAddUser" modelAttribute="newUser">
 		First Name <sf:input required="1" type="text" path="profile.firstName" />
 		<br> 
 		Last Name <sf:input required="1" type="text" path="profile.lastName" />

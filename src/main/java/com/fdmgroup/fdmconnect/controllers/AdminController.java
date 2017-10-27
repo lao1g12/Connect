@@ -147,7 +147,7 @@ public class AdminController {
 		Profile profile = new Profile();
 		user.setProfile(profile);
 
-		model.addAttribute("user", user);
+		model.addAttribute("newUser", user);
 		return "admin/AddUser";
 
 	}
@@ -182,7 +182,7 @@ public class AdminController {
 		Logging.Log("info", "Admin Controller: "+session.getAttribute("username")+" added user "
 				+user.getUsername());
 		model.addAttribute("userAddedMessage", "User successfully added, they can now update their profile.");
-		return "admin/Home";
+		return "redirect:/admin";
 		
 	}
 		
