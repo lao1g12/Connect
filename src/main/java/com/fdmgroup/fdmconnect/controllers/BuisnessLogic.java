@@ -33,9 +33,6 @@ public class BuisnessLogic {
 		
 	}
 	
-	public void badWordCheck(){
-		
-	}
 
 
 	public List<Post> searchForPostKeyWords(List<String> keyWordList, int listSize, List<Post> allPosts) {

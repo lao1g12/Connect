@@ -318,7 +318,7 @@ public class UserControllerTest {
 		when(session.getAttribute("user")).thenReturn(user);
 		when(flagDao.getFlag(1)).thenReturn(flag);
 		when(flag.getFlagInfo()).thenReturn(badWords);
-		when(sm.searchForListings(badWordList, checkString)).thenReturn(checkedBadWords);
+		when(sm.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
 		when(checkedBadWords.size()).thenReturn(1);
 		String result = userController.addNewPost(post, session, request);
 		
