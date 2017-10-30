@@ -32,15 +32,22 @@
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
 					<li class="horizl"><a href="submitPost">Add Post</a><li> 
+
 				</ul>
+
 			</div>
 		</div> 
-		</br> </br>
+		</br>
+		 </br>
 		
 															<!--  welcome User  -->		
 		<div class="col col12 last">
 			<h3>Welcome ${user.getUsername()}</h3>
 		</div>
+		<form action="searchPosts" method="get">
+			Search for post: <input type="text" name="input"/>
+			<input type="submit" value="Search!"/>
+		</form>
 		
 															<!-- Notice Board -->		
 		<div class="col col12 last, border">
@@ -58,6 +65,9 @@
 			Posted By: ${aP.postOwner.username}<br /> 
 			<br />
 			<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+			<br>
+			
+			<a href="processRemovePostAdmin?postId=${aP.postId}">Remove  Post</a>
 				<br />
 				<br />
 				<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
@@ -78,6 +88,10 @@
 		<div class="empty"> </div>
 		<footer>
 			<br>
+			
+           ${postRemovedByAdmin }
+			              
+			
 		
 			<ul class="horiz">
 				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>

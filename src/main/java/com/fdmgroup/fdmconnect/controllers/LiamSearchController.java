@@ -46,10 +46,12 @@ public class LiamSearchController {
 			HttpServletRequest request, @RequestParam String input) {
 
 		SearchMethod sm = new SearchMethod();
+		System.out.println(input);
 		input = input.replaceAll("[^a-zA-Z\\s]", " ");
 		input = input.toLowerCase();
 		List<String> keyWordList = new ArrayList<String>(Arrays.asList(input
 				.split(" ")));
+		System.out.println(keyWordList +"KJFOHEAFOHAEJUHAWJUWAOJDNBAWOJNDWJ");
 		List<Post> allPosts = postDao.getAllPosts();
 		int listSize = allPosts.size();
 

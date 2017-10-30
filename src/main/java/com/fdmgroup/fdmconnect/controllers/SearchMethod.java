@@ -36,6 +36,7 @@ public class SearchMethod {
 		for (Post post : allPosts) {
 			int count = 0;
 			for (String keyword : keyWordList) {
+				System.out.println(post.getListOfKeyWords());
 				if(post.getListOfKeyWords().contains(keyword)){
 					count += 1;
 					System.out.println(listSize);

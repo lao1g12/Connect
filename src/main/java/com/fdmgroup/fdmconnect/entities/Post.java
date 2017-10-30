@@ -57,8 +57,10 @@ public class Post {
 	}
 	public String getListOfKeyWords(){
 		StringBuffer sb = new StringBuffer();
-		sb.append(title+" "+bodyText+" "+category+" "+postOwner);
+		sb.append(title+" "+bodyText+" "+category);
 		String searchString = sb.toString();
+		searchString = searchString.replaceAll("[^a-zA-Z\\s]", " ");
+		searchString = searchString.toLowerCase();
 		return searchString;
 	}
 	
