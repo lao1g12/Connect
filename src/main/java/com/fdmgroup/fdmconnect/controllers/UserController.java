@@ -1,6 +1,8 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,12 +73,62 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
+		model.addAttribute("posts", posts);
 		request.setAttribute("user", user);
 		
 		Logging.Log("info", "User Controller: "+session.getAttribute("username") + "viewed their profile.");
 		return "user/ViewAccount";
 
 	}
+	
+	@RequestMapping("user/submitPost")
+	public String submitPost(Model model, HttpSession session) {
+		
+		Post post = new Post();
+
+		model.addAttribute(post);
+		return "user/AddPost";
+
+	}
+	
+	@RequestMapping(value = {"user/addPost"} )
+	public String addNewPost(Post post, HttpSession session,
+			HttpServletRequest request) {
+
+		User user = (User) session.getAttribute("user");
+		post.setPostOwner(user);
+		StringBuffer sb = new StringBuffer();
+		SearchMethod sm = new SearchMethod();
+		sb.append(post.getBodyText() + " " + post.getTitle() + " " + " "
+				+ post.getImgUrl() + " " + post.getLink());
+		String checkString = sb.toString();
+		checkString = checkString.replaceAll("[^a-zA-Z\\s]", " ");
+		checkString = checkString.toLowerCase();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
+		badWords = badWords.toLowerCase();
+		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords.split(" ")));
+		List<String> checkedBadWords = sm.searchForListings(badWordList,
+				checkString);
+
+		if (checkedBadWords.size() > 0) {
+			StringBuffer sbReturn = new StringBuffer();
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
+			}
+			String badWordString = sbReturn.toString();
+			request.setAttribute("badPost",
+					"You just tried to post an article with the following inappropriate words :"
+							+ badWordString);
+			return "user/AddPost";
+		}
+
+		postDao.addPost(post);
+		return "redirect:/user/login";
+
+	}
+	
 
 	@RequestMapping("/user/goToFlagPost")
 	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
