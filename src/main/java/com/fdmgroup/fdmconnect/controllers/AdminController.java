@@ -38,8 +38,7 @@ public class AdminController {
 	public AdminController() {
 	}
 
-	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao,
-			FlagDAOImpl flagDao) {
+	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
 		super();
 		this.postDao = postDao;
 		this.userDao = userDao;
@@ -48,13 +47,21 @@ public class AdminController {
 
 	@RequestMapping("/admin")
 	public String admin(Model model) {
-		
+
 		Flag flag = flagDao.getFlag(1);
 		model.addAttribute("flag", flag);
 		return "admin/Home";
 	}
 
-	
+	@RequestMapping("/admin/processRemovePostAdmin")
+	public String processRemovePostAdmin(@RequestParam int postId, Model model) {
+
+		Logging.Log("post", "post removed succesfully by admin" + postId);
+		postDao.removePost(postId);
+		model.addAttribute("postRemovedByAdmin", "Post removed succesfully.");
+		return "user/home";
+
+	}
 
 	@RequestMapping("/admin/viewAllPosts")
 	public String goToViewAllPosts(Model model) {
@@ -67,20 +74,17 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/processRemovePost")
-	public String processRemovePost(@RequestParam int postId, Model model,
-			RedirectAttributes ra) {
+	public String processRemovePost(@RequestParam int postId, Model model, RedirectAttributes ra) {
 
 		postDao.removePost(postId);
 		ra.addFlashAttribute("message", "Post removed succesfully.");
-		Logging.Log("info", "Admin Controller: Post removed succesfully "
-				+ postId);
+		Logging.Log("info", "Admin Controller: Post removed succesfully " + postId);
 		return "redirect:/admin/viewAllFlaggedPosts";
 
 	}
 
 	@RequestMapping("/admin/viewAllFlags")
-	public String goToViewAllFlags(Model model, @RequestParam int postId,
-			HttpServletRequest request) {
+	public String goToViewAllFlags(Model model, @RequestParam int postId, HttpServletRequest request) {
 
 		Post post = postDao.getPost(postId);
 		Set<Flag> flagList = post.getFlags();
@@ -98,7 +102,7 @@ public class AdminController {
 		Profile profile = new Profile();
 		user.setProfile(profile);
 
-		model.addAttribute("user", user);		
+		model.addAttribute("user", user);
 		Logging.Log("info", "Admin Controller: Add user called.");
 		return "admin/AddUser";
 
@@ -107,7 +111,7 @@ public class AdminController {
 	@RequestMapping("/admin/doAddUser")
 	public String doAddUser(HttpSession session, Model model, User user) {
 
-		if (! user.getPassword().equals(user.getConfirmPassword())) {
+		if (!user.getPassword().equals(user.getConfirmPassword())) {
 			model.addAttribute("passwordErrorMessage", "Passwords do not match");
 			return "admin/AddUser";
 		}
@@ -122,10 +126,8 @@ public class AdminController {
 		}
 
 		Logging.Log("info",
-				"Admin Controller: " + session.getAttribute("username")
-						+ " added user " + user.getUsername());
-		model.addAttribute("userAddedMessage",
-				"User successfully added, they can now update their profile.");
+				"Admin Controller: " + session.getAttribute("username") + " added user " + user.getUsername());
+		model.addAttribute("userAddedMessage", "User successfully added, they can now update their profile.");
 		return "redirect:/admin";
 
 	}
@@ -151,8 +153,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/viewAllFlaggedPosts")
-	public String goToViewAllFlaggedPosts(Model model,
-			HttpServletRequest request) {
+	public String goToViewAllFlaggedPosts(Model model, HttpServletRequest request) {
 
 		Logging.Log("info", "Admin Controller: Display all flagged posts called.");
 		List<Post> posts = postDao.getAllPosts();
@@ -169,7 +170,7 @@ public class AdminController {
 
 	@RequestMapping("admin/addBadWords")
 	public String addBadWords(@RequestParam String badWords) {
-		
+
 		Flag flag = flagDao.getFlag(1);
 		flag.setFlagInfo(badWords);
 		flagDao.updateFlag(flag);
