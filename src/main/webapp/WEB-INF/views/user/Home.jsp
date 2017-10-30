@@ -32,6 +32,7 @@
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
 					<li class="horizl"><a href="submitPost">Add Post</a><li> 
+		</ul>
 			</div>
 		</div> 
 		</br> </br>
@@ -77,6 +78,8 @@
 		<div class="empty"> </div>
 		<footer>
 			<br>
+			              
+			
 		
 			<ul class="horiz">
 				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
