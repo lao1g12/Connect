@@ -43,6 +43,7 @@ ${message}
 				<th>Post link</th>
 				<th>Post category </th>
 				<th>Post imgUrl</th>
+				<th>Flag Count </th>
 			
 			</tr>
 			<c:forEach items="${flaggedPosts}" var="p">
@@ -54,7 +55,8 @@ ${message}
 					<th>${p.imgUrl}</th>
 					<th>${p.getFlags().size()}</th>
 					<th><a href="viewAllFlags?postId=${p.postId}">View All Flags</a></th>
-	               <th><a href="processRemovePost?postId=${p.postId}">Remove Post</a></th>
+	               <th><a href="processRemovePost?postId=${p.postId}"
+	               		  onclick="return confirm('Are you sure you want to remove this post?')">Remove Post</a></th>
 				
 					
 				</tr>

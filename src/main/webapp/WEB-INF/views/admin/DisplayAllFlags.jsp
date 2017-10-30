@@ -54,7 +54,8 @@
 					<th>${f.flagDateFormatted}</th>
 					<th>${post.postId}</th>
 	
-	               <th><a href="processRemovePost?postId=${post.postId}">Remove Post</a></th>
+	               <th><a href="processRemovePost?postId=${post.postId}"
+	               		  onclick="return confirm('Are you sure you want to remove this post?')">Remove Post</a></th>
 
 					
 				</tr>

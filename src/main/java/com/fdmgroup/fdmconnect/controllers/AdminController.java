@@ -146,8 +146,8 @@ public class AdminController {
 		Profile profile = new Profile();
 		user.setProfile(profile);
 
-		model.addAttribute("newUser", user);		
-		Logging.Log("info", "Admin Controller: Display all flags called.");
+		model.addAttribute("user", user);		
+		Logging.Log("info", "Admin Controller: Add user called.");
 		return "admin/AddUser";
 
 	}
@@ -155,7 +155,7 @@ public class AdminController {
 	@RequestMapping("/admin/doAddUser")
 	public String doAddUser(HttpSession session, Model model, User user) {
 
-		if (!user.getPassword().equals(user.getConfirmPassword())) {
+		if (! user.getPassword().equals(user.getConfirmPassword())) {
 			model.addAttribute("passwordErrorMessage", "Passwords do not match");
 			return "admin/AddUser";
 		}
@@ -179,12 +179,12 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/processRemoveUser")
-	public String processRemoveUser(@RequestParam String username, Model model) {
+	public String processRemoveUser(@RequestParam String username, Model model, RedirectAttributes ra) {
 
 		userDao.removeUser(username);
-		model.addAttribute("message", "User removed succesfully");
+		ra.addFlashAttribute("message", "User removed succesfully");
 		Logging.Log("info", "Admin Controller: User removed succesfully" + username);
-		return "admin/DisplayAllUsers";
+		return "redirect:/admin/viewAllUsers";
 
 	}
 
