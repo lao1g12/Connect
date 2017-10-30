@@ -69,4 +69,13 @@ public class UserDAOImpl implements UserDAO {
 
 	}
 
+	@Override
+	public User getUserByProfileId(int profileId) {
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<User> query = manager.createQuery("select u from User u where u.profile = ?", User.class);
+		query.setParameter(1,profileId);
+		User user = query.getSingleResult();
+		return user;
+	}
+
 }

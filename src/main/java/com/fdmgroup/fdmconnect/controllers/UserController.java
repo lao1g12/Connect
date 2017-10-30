@@ -209,14 +209,18 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/viewProfile")
-	public String goToViewProfile(HttpSession session, Model model, @RequestParam(name="profileId") int profileId) {
+	public String goToViewProfile(HttpSession session, Model model, @RequestParam(name="profileId") int profileId, HttpServletRequest request) {
 		
 		Profile profile = profileDao.getProfile(profileId);
+		User user = userDao.getUserByProfileId(profileId);
+		Set<Education> education= profile.getEducation();
+		Set<Experience> experience = profile.getExperiences();
 		model.addAttribute("profile", profile);
-		model.addAttribute("experience", profile.getExperiences());
-		model.addAttribute("education", profile.getEducation());
+		model.addAttribute("education", education);
+		model.addAttribute("experience", experience);
+		request.setAttribute("user", user);
 		
-		return "user/ViewProfile";
+		return "user/ViewAccount";
 		
 	}
 	
