@@ -63,6 +63,7 @@
 	Start Date: ${edu.getStartDateFormatted()}<br>
 	End Date: ${edu.getEndDateFormatted()}<br>
 	Further Information: ${edu.furtherInfo}<br>
+	<a href="deleteEducation?educationId=${edu.educationId}">Remove</a>
 						<br>
 					</c:forEach>
 					<br> <br>
