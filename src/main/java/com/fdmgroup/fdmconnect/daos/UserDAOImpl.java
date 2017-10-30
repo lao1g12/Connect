@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
 
@@ -70,10 +71,10 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserByProfileId(int profileId) {
+	public User getUserByProfile(Profile profile) {
 		EntityManager manager = factory.createEntityManager();
 		TypedQuery<User> query = manager.createQuery("select u from User u where u.profile = ?", User.class);
-		query.setParameter(1,profileId);
+		query.setParameter(1, profile);
 		User user = query.getSingleResult();
 		return user;
 	}

@@ -224,7 +224,7 @@ public class UserController {
 	public String goToViewProfile(HttpSession session, Model model, @RequestParam(name="profileId") int profileId, HttpServletRequest request) {
 		
 		Profile profile = profileDao.getProfile(profileId);
-		User user = userDao.getUserByProfileId(profileId);
+		User user = userDao.getUserByProfile(profile);
 		Set<Education> education= profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
 		model.addAttribute("profile", profile);
