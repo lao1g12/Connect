@@ -66,10 +66,13 @@ public class UserController {
 		Profile profile = user.getProfile();
 		Set<Education> education= profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
+		Set<Post> posts = user.getPosts();
+		
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
 		request.setAttribute("user", user);
+		
 		Logging.Log("info", "User Controller: "+session.getAttribute("username") + "viewed their profile.");
 		return "user/ViewAccount";
 
@@ -224,13 +227,13 @@ public class UserController {
 	public String goToViewProfile(HttpSession session, Model model, @RequestParam(name="profileId") int profileId, HttpServletRequest request) {
 		
 		Profile profile = profileDao.getProfile(profileId);
-		User user = userDao.getUserByProfileId(profileId);
+		User user = userDao.getUserByProfile(profile);
 		Set<Education> education= profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
-		request.setAttribute("user", user);
+		request.setAttribute("userCur", user);
 		
 		return "user/ViewAccount";
 		
