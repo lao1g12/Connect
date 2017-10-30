@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.controllers.Logging;
 import com.fdmgroup.fdmconnect.entities.Post;
+import com.fdmgroup.fdmconnect.entities.User;
 
 
 public class PostDAOImpl implements PostDAO {
@@ -20,8 +21,10 @@ public class PostDAOImpl implements PostDAO {
 	public PostDAOImpl() {}
 
 	public PostDAOImpl(EntityManagerFactory factory) {
+		
 		super();
 		this.factory = factory;
+		
 	}
 
 	public void addPost(Post post) {
@@ -35,25 +38,43 @@ public class PostDAOImpl implements PostDAO {
 	}
 	
 	public List<Post> getAllPosts(){
+		
 		EntityManager manager = factory.createEntityManager();
 		TypedQuery<Post> query = manager.createQuery("select p from Post p", Post.class);
 		List<Post> posts = query.getResultList();
 		Logging.Log("info", "PostDAOImpl: All posts have been retrieved from the database.");
 		return posts;
+		
+	}
+	
+	public List<Post> getAllPostsByUser(String username){
+		
+		EntityManager manager = factory.createEntityManager();
+		User user = manager.find(User.class, username);
+		TypedQuery<Post> query = manager.createQuery("select p from Post as p where :user = p.user", Post.class);
+		query.setParameter("user", user);
+		List<Post> posts = query.getResultList();
+		
+		return posts;
+		
 	}
 
 	public void removePost(int postId){
+		
 		EntityManager manager = factory.createEntityManager();
 		Post post = manager.find(Post.class, postId);
 		manager.getTransaction().begin();
 		manager.remove(post);
 		manager.getTransaction().commit();
 		Logging.Log("info",  "PostDAOImpl: "+post+" has been removed from the database");
+		
 	}
 
 	public Post getPost(int postId) {
+		
 		EntityManager manager = factory.createEntityManager();
 		Post post = manager.find(Post.class, postId);
 		return post;
+		
 	}
 }
