@@ -100,8 +100,6 @@
 						<c:if test="${userCur == session.user}">
 							<a href="goToEditPost?postId=${p.postId}">Edit Post</a>
 							<br />
-							
-							<br />
 							<c:if test="${postId == p.postId and editPost == 'doEdit'}">
 								<form method="post" action="doEditPost?postId=${p.postId}">
 										Title: <input type="text" name="title" value="${p.title}" />
@@ -116,15 +114,15 @@
 							<c:if test="${postId == p.postId}">
 								${postEditedMessage}${postErrorMessage}
 							</c:if>
-					 	<hr />	
 						</c:if>
-
 						<c:if test='${userCur == session.user}'>
-                            <a href="processRemovePostUser?postId=${p.postId}">Remove Post</a>
+                            <a href="processRemovePostUser?postId=${p.postId}"
+                               onclick="return confirm('Are you sure you want to remove this post?')">Remove Post</a>
                             <c:if test="${postId == p.postId}">
                  	           ${postRemovedByUser }                                       
                             </c:if>
                         </c:if>
+					 	<hr />	
 					</c:forEach>
 				</div>
 			</div>

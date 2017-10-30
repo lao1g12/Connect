@@ -68,7 +68,8 @@
 			<br>
 			<c:choose>
 			<c:when test='${user.getRole() == "Admin"}'>
-			<a href="processRemovePostAdmin?postId=${aP.postId}">Remove  Post</a>
+			<a href="processRemovePostAdmin?postId=${aP.postId}"
+			   onclick="return confirm('Are you sure you want to remove this post?')">Remove  Post</a>
 			</c:when>
 			<c:otherwise>
 
