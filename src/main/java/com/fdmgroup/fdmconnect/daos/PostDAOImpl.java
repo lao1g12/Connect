@@ -69,6 +69,15 @@ public class PostDAOImpl implements PostDAO {
 		Logging.Log("info",  "PostDAOImpl: "+post+" has been removed from the database");
 		
 	}
+	
+	public void updatePost(Post post){
+		
+		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
+		manager.merge(post);
+		manager.getTransaction().commit();
+		
+	}
 
 	public Post getPost(int postId) {
 		

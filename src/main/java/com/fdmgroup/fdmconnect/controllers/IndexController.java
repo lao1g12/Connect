@@ -75,8 +75,8 @@ public class IndexController {
 	@RequestMapping(value = { "/admin/logout", "/user/logout"})
 	public String goToLogout(HttpSession session) {
 		
-		session.invalidate();
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged out.");
+		session.invalidate();
 		return "redirect:/";
 		
 	}

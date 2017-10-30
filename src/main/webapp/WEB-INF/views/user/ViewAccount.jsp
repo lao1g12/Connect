@@ -85,16 +85,37 @@
 			<div class="row">
 				<div class="col12">
 					<h2>Your Posts</h2>
-					<c:forEach items="${posts}" var="p">
-						<h3>${p.title}</h3>
+					<c:forEach items="${userPosts}" var="up">
+						<h3>${up.title}</h3>
 						<br />
-					Category: ${p.category}<br />
-						<img class="boardimg" src="${p.imgUrl}">
-						<br>
-				${p.bodyText}<br />
-						<a href="${p.link}">For more info click here!</a>
+					Category: ${up.category}<br />
+						<img class="boardimg" src="${up.imgUrl}">
+						<br>${up.bodyText}<br />
+						<a href="${up.link}">For more info click here!</a>
 						<br />
-						Posted: ${p.getPostDateFormatted()}<br />
+						Posted: ${up.getPostDateFormatted()}<br />
+						<br />
+						<c:if test="${userCur == session.user}">
+							<a href="goToEditPost?postId=${up.postId}">Edit Post</a>
+							<br />
+							<br />
+							<c:if test="${postId == up.postId and editPost == 'doEdit'}">
+								<sf:form method="post" action="doEditPost?postId=${up.postId}"
+									modelAttribute="post">
+										Title: <sf:input type="text" path="title" />
+										Category: <sf:input type="text" path="category" />
+										Description: <sf:input type="text" path="bodyText" />
+										Image URL: <sf:input type="text" path="imgUrl" />
+										Link URL: <sf:input type="text" path="link" />
+									<br />
+									<input type="submit" value="Edit Post" />
+								</sf:form>
+							</c:if>
+							<c:if test="${postId == up.postId}">
+								${postEditedMessage} ${postErrorMessage}
+							</c:if>
+							<hr />
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>

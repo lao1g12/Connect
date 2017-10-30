@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
@@ -73,7 +74,7 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
-		model.addAttribute("posts", posts);
+		session.setAttribute("userPosts", posts);
 		request.setAttribute("user", user);
 		
 		Logging.Log("info", "User Controller: "+session.getAttribute("username") + "viewed their profile.");
@@ -231,6 +232,38 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		return "user/EditAccount";
 		
+	}
+	
+	@RequestMapping("user/goToEditPost")
+	public String goToEditPost(Model model, Principal pricipal, @RequestParam(name = "postId") int postId) {
+		
+		Post post = new Post();
+
+		model.addAttribute("editPost", "doEdit");
+		model.addAttribute("postId", postId);
+		model.addAttribute("post", post);
+		return "user/ViewAccount";
+		
+	}
+	
+	@RequestMapping("/user/doEditPost")
+	public String doEditPost(HttpSession session, Model model, Post post, 
+			@RequestParam(name = "postId") int postId, RedirectAttributes ra) {
+		
+		try {
+			post.setPostId(postId);
+			postDao.updatePost(post);
+		} catch (PersistenceException pe) {
+			model.addAttribute("postErrorMessage", "Error updating post.");
+			return "user/ViewAccount";
+		}
+
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " edited post " + postId);
+		ra.addFlashAttribute("postEditedMessage", "Post successfully edited.");
+		ra.addFlashAttribute("postId", postId);
+		return "redirect:/user/account";
+
 	}
 	
 	@RequestMapping("user/doUpdateProfile")
