@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fdmgroup.fdmconnect.entities.Post;
+
 public class SearchMethod {
 	@Autowired
 	private EntityManagerFactory factory;
@@ -26,8 +28,38 @@ public class SearchMethod {
 		return badReturnList;
 		
 	}
-	
 
-	
 
+	public List<Post> searchForPostKeyWords(List<String> keyWordList, int listSize, List<Post> allPosts) {
+		
+		ArrayList<Post> searchList = new ArrayList<Post>();
+		for (Post post : allPosts) {
+			int count = 0;
+			for (String keyword : keyWordList) {
+				if(post.getListOfKeyWords().contains(keyword)){
+					count += 1;
+					System.out.println(listSize);
+					System.out.println(count);
+					if(count == listSize || count == 7){
+						searchList.add(post);
+						System.out.println(searchList);
+						break;
+					}
+				}
+//				} else
+//					continue;
+
+			}
+			}
+		
+		System.out.println(searchList);
+		return searchList;
+		
+	}
 }
+	
+
+
+	
+
+
