@@ -122,6 +122,17 @@ public class UserController {
 
 	}
 	
+	@RequestMapping("/user/processRemovePostUser")
+    public String processRemovePostUser(@RequestParam int postId, Model model) {
+
+                    Logging.Log("post", "post removed succesfully by admin" + postId);
+                    postDao.removePost(postId);
+                    model.addAttribute("postRemovedByUser", "Post removed succesfully.");
+                    return "user/ViewAccount";
+
+    }                                                              
+
+	
 
 	@RequestMapping("/user/goToFlagPost")
 	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {

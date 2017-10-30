@@ -119,6 +119,17 @@
 							</c:if>
 							<hr />
 						</c:if>
+						
+						           <c:if test='${userCur == session.user}'>
+                                 <a href="processRemovePostUser?postId=${up.postId}">Remove Post</a>
+                                   <c:if test= "${postId == up.postId}">
+                                            ${postRemovedByUser }
+                                                                                
+                                       </c:if>
+                                        </c:if>
+
+                                                <br>
+						
 					</c:forEach>
 				</div>
 			</div>
