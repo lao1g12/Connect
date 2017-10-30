@@ -100,6 +100,7 @@
 						<c:if test="${userCur == session.user}">
 							<a href="goToEditPost?postId=${p.postId}">Edit Post</a>
 							<br />
+							
 							<br />
 							<c:if test="${postId == p.postId and editPost == 'doEdit'}">
 								<form method="post" action="doEditPost?postId=${p.postId}">
@@ -115,8 +116,9 @@
 							<c:if test="${postId == p.postId}">
 								${postEditedMessage}${postErrorMessage}
 							</c:if>
-							<hr />
+					 	<hr />	
 						</c:if>
+
 						<c:if test='${userCur == session.user}'>
                             <a href="processRemovePostUser?postId=${p.postId}">Remove Post</a>
                             <c:if test="${postId == p.postId}">
@@ -132,9 +134,6 @@
 				<c:when test='${userCur == session.user}'>
 					<a href="editProfile">Edit Profile</a>
 				</c:when>
-				<c:otherwise>
-
-				</c:otherwise>
 			</c:choose>
 
 			<br> <br>

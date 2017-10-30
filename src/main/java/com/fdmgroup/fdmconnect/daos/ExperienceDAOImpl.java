@@ -31,4 +31,16 @@ public class ExperienceDAOImpl implements ExperienceDAO {
 
 	}
 	
+	
+public void removeExperience(int experienceId) { 
+		
+		EntityManager manager = factory.createEntityManager();
+		Experience experience = manager.find(Experience.class, experienceId);
+		manager.getTransaction().begin();
+		manager.remove(experience);
+		manager.getTransaction().commit();
+		Logging.Log("info", "ExperienceDAOImpl: "+experience+"has been removed from the database ");
+		
+	}
+	
 }

@@ -32,4 +32,29 @@ public class EducationDAOImpl implements EducationDAO {
 
 	}
 	
+	
+	
+public void removeEducation(int educationId) { 
+		
+		EntityManager manager = factory.createEntityManager();
+		Education education = manager.find(Education.class, educationId);
+		manager.getTransaction().begin();
+		manager.remove(education);
+		manager.getTransaction().commit();
+		Logging.Log("info", "EducationDAOImpl: "+education+"has been removed from the database ");
+		
+	}
+	
+	public Education getEducation(int educationId) {
+		EntityManager manager = factory.createEntityManager();
+		Education education = manager.find(Education.class, educationId);
+		return education; 
+		
+	}
+
+	
+	
+	
+	
+	
 }

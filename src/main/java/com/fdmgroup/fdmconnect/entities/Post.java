@@ -2,7 +2,6 @@ package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -40,8 +39,12 @@ public class Post {
 	private User postOwner;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
 	private Set<Flag> flags;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="post", cascade = CascadeType.REMOVE)
+	private Set<Comment> comments;
 	@Transient
-	private String ListOfWords;
+	private String listOfWords;
+	@Transient
+	private String fullListOfWords;
 		
 	public Post() {	}
 
@@ -63,7 +66,27 @@ public class Post {
 		searchString = searchString.toLowerCase();
 		return searchString;
 	}
+	public String getFullListOfKeyWords(){
+		StringBuffer sb = new StringBuffer();
+		sb.append(title+" "+bodyText+" "+category+" "+link+" "+imgUrl);
+		String searchString = sb.toString();
+		searchString = searchString.replaceAll("[^a-zA-Z\\s]", " ");
+		searchString = searchString.toLowerCase();
+		return searchString;
+	}
 	
+	public void addComment(Comment comment){
+		this.comments.add(comment);
+	}
+	
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
 	public void addFlag(Flag flag) {
 		this.flags.add(flag);
 	}

@@ -130,7 +130,8 @@ public class UserController {
                     model.addAttribute("postRemovedByUser", "Post removed succesfully.");
                     return "user/ViewAccount";
 
-    }   
+    }                                                              
+
 
 	@RequestMapping("/user/goToFlagPost")
 	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
@@ -211,7 +212,6 @@ public class UserController {
 		return "redirect:/user/account";
 	}
 
-	
 	@RequestMapping("/user/addExperience")
 	public String addExperience(Model model) {
 		Experience experience = new Experience();
@@ -245,6 +245,7 @@ public class UserController {
 		return "redirect:/user/account";
 	}
 
+
 	@RequestMapping("user/editProfile")
 	public String editProfile(Model model, Principal principal) {
 		
@@ -258,8 +259,6 @@ public class UserController {
 	@RequestMapping(value = {"user/goToEditPost", "admin/goToEditPost"})
 	public String goToEditPost(RedirectAttributes ra, Principal pricipal, @RequestParam(name = "postId") int postId) {
 		
-		Post post = new Post();
-
 		ra.addFlashAttribute("editPost", "doEdit");
 		ra.addFlashAttribute("postId", postId);
 		return "redirect:/user/account";
@@ -398,3 +397,4 @@ public class UserController {
 	}
 
 }
+

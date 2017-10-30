@@ -12,13 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.entities.Post;
 
-public class SearchMethod {
+public class BuisnessLogic {
 	@Autowired
 	private EntityManagerFactory factory;
 
 	
-	public List<String> searchForListings(List<String> badWordList, String checkString){
-		
+	public List<String> searchForListings(String badWords, String checkString){
+		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
+		badWords = badWords.toLowerCase();
+
+		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords
+				.split(" ")));
 		ArrayList<String> badReturnList = new ArrayList<String>();
 			for (String badWord : badWordList) {
 				if(checkString.contains(badWord)){
@@ -28,6 +32,7 @@ public class SearchMethod {
 		return badReturnList;
 		
 	}
+	
 
 
 	public List<Post> searchForPostKeyWords(List<String> keyWordList, int listSize, List<Post> allPosts) {
@@ -47,8 +52,7 @@ public class SearchMethod {
 						break;
 					}
 				}
-//				} else
-//					continue;
+
 
 			}
 			}

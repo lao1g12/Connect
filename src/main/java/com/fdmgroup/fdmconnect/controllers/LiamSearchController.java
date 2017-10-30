@@ -45,19 +45,17 @@ public class LiamSearchController {
 	public String addNewPost(Post post, HttpSession session,
 			HttpServletRequest request, @RequestParam String input) {
 
-		SearchMethod sm = new SearchMethod();
-		System.out.println(input);
+		BuisnessLogic bl = new BuisnessLogic();
 		input = input.replaceAll("[^a-zA-Z\\s]", " ");
 		input = input.toLowerCase();
 		List<String> keyWordList = new ArrayList<String>(Arrays.asList(input
 				.split(" ")));
-		System.out.println(keyWordList +"KJFOHEAFOHAEJUHAWJUWAOJDNBAWOJNDWJ");
 		List<Post> allPosts = postDao.getAllPosts();
 		int listSize = allPosts.size();
 
 		for (int i = 0; i < keyWordList.size(); i++) {
 			listSize = keyWordList.size() - i;
-			List<Post> searchPosts = sm.searchForPostKeyWords(keyWordList, listSize, allPosts);
+			List<Post> searchPosts = bl.searchForPostKeyWords(keyWordList, listSize, allPosts);
 			if (searchPosts.size() > 0) {
 				request.setAttribute("allPosts", searchPosts);
 				Logging.Log("info", "A search was made and " + searchPosts.size() + " listings were found");

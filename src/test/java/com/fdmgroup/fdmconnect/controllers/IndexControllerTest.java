@@ -56,16 +56,16 @@ public class IndexControllerTest {
 		assertEquals(result, "index");
 	}
 	
-	@Test
-	public void test_goToHome_callsGetUserAndReturnsHomePage(){
-		when(principal.getName()).thenReturn("username");
-		when(userDao.getUser("username")).thenReturn(user);
-		when(user.getLastLogin()).thenReturn(calendar);
-		String result = index.goToHome(session, principal);
-		
-		verify(userDao).getUser("username");
-		assertEquals(result, "user/Home");
-	}
+//	@Test
+//	public void test_goToHome_callsGetUserAndReturnsHomePage(){
+//		when(principal.getName()).thenReturn("username");
+//		when(userDao.getUser("username")).thenReturn(user);
+//		when(user.getLastLogin()).thenReturn(calendar);
+//		String result = index.goToHome(session, principal);
+//		
+//		verify(userDao).getUser("username");
+//		assertEquals(result, "user/Home");
+//	}
 	
 	@Test
 	public void test_goToLogout_callsSessionInvalidateAndReturnsIndexMapping(){
