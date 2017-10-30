@@ -48,8 +48,9 @@
 		End date (dd/MM/yyyy) <sf:input path="endDate" /><br>
 		<input type="submit" value="Add Education to your profile"/><br>
 	</sf:form>
+	${dateFormatErrorMessage}
 	<br><br>
-			<footer>
+		<footer>
 			<ul class="horiz">
 				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
 				<li class="horizl"><a href="www.Help.com">Help</a></li>

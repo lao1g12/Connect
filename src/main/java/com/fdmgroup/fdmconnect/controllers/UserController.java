@@ -98,7 +98,7 @@ public class UserController {
 
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		BuisnessLogic bl = new BuisnessLogic();
+		BusinessLogic bl = new BusinessLogic();
 		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
@@ -187,7 +187,15 @@ public class UserController {
 	}
 
 	@RequestMapping("/user/doAddEducation")
-	public String doAddEducation(Education education, HttpSession session, Principal principal,Model model, HttpServletRequest request) {
+	public String doAddEducation(Education education, HttpSession session, Principal principal,
+			Model model, HttpServletRequest request, @RequestParam(name = "startDate") String startDate) {
+		
+//		if(!startDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4}))")){
+//			
+//			model.addAttribute("dateFormatErrorMessage", "Incorrect date format, try again.");
+//			return "user/AddEducation";
+//			
+//		}
 		
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();

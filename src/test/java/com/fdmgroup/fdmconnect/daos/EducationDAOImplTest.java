@@ -56,5 +56,31 @@ public class EducationDAOImplTest {
 		verify(transaction).commit();
 		
 	}
+	
+	@Test
+	public void test_removeEducation_invokesTransactionMethodsAndRemove() {
+		
+		int educationId = 0;
+		
+		when(manager.find(Education.class, educationId)).thenReturn(education);
+		educationDao.removeEducation(educationId);
+		
+		verify(transaction).begin();
+		verify(manager).remove(education);
+		verify(transaction).commit();
+		
+	}
+	
+	@Test
+	public void test_getEducation_returnsEducationObject() {
+		
+		int educationId = 0;
+
+		when(manager.find(Education.class, educationId)).thenReturn(education);
+		Education retrievedEducation = educationDao.getEducation(educationId);
+		
+		assertEquals(retrievedEducation, education);
+		
+	}
 
 }

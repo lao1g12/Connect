@@ -55,5 +55,19 @@ public class ExperienceDAOImplTest {
 		verify(transaction).commit();
 		
 	}
+	
+	@Test
+	public void test_removeExperience_invokesTransactionMethodsAndRemove() {
+		
+		int experienceId = 0;
+		
+		when(manager.find(Experience.class, experienceId)).thenReturn(experience);
+		experienceDao.removeExperience(experienceId);
+		
+		verify(transaction).begin();
+		verify(manager).remove(experience);
+		verify(transaction).commit();
+		
+	}
 
 }

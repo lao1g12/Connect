@@ -20,6 +20,7 @@ import javax.persistence.TypedQuery;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 
 public class UserDAOImplTest {
@@ -31,6 +32,7 @@ public class UserDAOImplTest {
 	private TypedQuery<User> query;
 	private List<User> users;
 	private User user;
+	private Profile profile;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -41,6 +43,7 @@ public class UserDAOImplTest {
 		query = mock(TypedQuery.class);
 		
 		user = mock(User.class);
+		profile = mock(Profile.class);
 		users = mock(ArrayList.class);
 		userDao = new UserDAOImpl(factory);
 		
@@ -96,6 +99,18 @@ public class UserDAOImplTest {
 		verify(manager.getTransaction()).begin();
 		verify(manager).merge(user);
 		verify(manager.getTransaction()).commit();
+		
+	}
+	
+	@Test
+	public void test_getUserByProfile_returnsUserObject(){
+		
+		when(manager.createQuery("select u from User u where u.profile = ?",
+				User.class)).thenReturn(query);
+		when(query.getSingleResult()).thenReturn(user);
+		User retrievedUser = userDao.getUserByProfile(profile);
+		
+		assertEquals(user, retrievedUser);
 		
 	}
 }

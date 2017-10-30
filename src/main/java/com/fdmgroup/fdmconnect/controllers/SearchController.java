@@ -15,41 +15,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
-import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Post;
-import com.fdmgroup.fdmconnect.entities.User;
-
 
 @Controller
-public class LiamSearchController {
-	
+public class SearchController {
+
 	@Autowired
 	private PostDAOImpl postDao;
-	@Autowired
-	private UserDAOImpl userDao;
-	@Autowired
-	private FlagDAOImpl flagDao;
 
-	public LiamSearchController() {
+	public SearchController() {
 	}
 
-	public LiamSearchController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
+	public SearchController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
 		super();
 		this.postDao = postDao;
-		this.userDao = userDao;
-		this.flagDao = flagDao;
 	}
 
-	
 	@RequestMapping("user/searchPosts")
-	public String addNewPost(Post post, HttpSession session,
-			HttpServletRequest request, @RequestParam String input) {
+	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String input) {
 
-		BuisnessLogic bl = new BuisnessLogic();
+		BusinessLogic bl = new BusinessLogic();
 		input = input.replaceAll("[^a-zA-Z\\s]", " ");
 		input = input.toLowerCase();
-		List<String> keyWordList = new ArrayList<String>(Arrays.asList(input
-				.split(" ")));
+		List<String> keyWordList = new ArrayList<String>(Arrays.asList(input.split(" ")));
 		List<Post> allPosts = postDao.getAllPosts();
 		int listSize = allPosts.size();
 
@@ -64,9 +52,7 @@ public class LiamSearchController {
 			}
 		}
 		Logging.Log("info", "A search was made and no listings were found.");
-			String username = (String) session.getAttribute("username");
-			return ("redirect:/user/login");
-
+		return ("redirect:/user/login");
 
 	}
 }

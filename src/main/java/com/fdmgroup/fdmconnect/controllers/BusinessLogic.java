@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.entities.Post;
 
-public class BuisnessLogic {
+public class BusinessLogic {
 	@Autowired
 	private EntityManagerFactory factory;
 
@@ -33,8 +33,6 @@ public class BuisnessLogic {
 		
 	}
 	
-
-
 	public List<Post> searchForPostKeyWords(List<String> keyWordList, int listSize, List<Post> allPosts) {
 		
 		ArrayList<Post> searchList = new ArrayList<Post>();

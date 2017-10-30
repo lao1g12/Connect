@@ -17,7 +17,9 @@ import javax.persistence.TypedQuery;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fdmgroup.fdmconnect.entities.Experience;
 import com.fdmgroup.fdmconnect.entities.Post;
+import com.fdmgroup.fdmconnect.entities.User;
 
 public class PostDAOImplTest {
 	
@@ -28,6 +30,7 @@ public class PostDAOImplTest {
 	private TypedQuery<Post> query;
 	private List<Post> posts;
 	private Post post;
+	private User user;
 
 
 
@@ -42,6 +45,7 @@ public class PostDAOImplTest {
 		query = mock(TypedQuery.class);
 		posts = mock(List.class);
 		post = mock(Post.class);
+		user = mock(User.class);
 		
 		when(factory.createEntityManager()).thenReturn(manager);
 		when(manager.getTransaction()).thenReturn(transaction);
@@ -96,6 +100,31 @@ public class PostDAOImplTest {
 		Post retrievedPost = postDao.getPost(postId);
 		
 		assertEquals(retrievedPost, post);
+		
+	}
+	
+	@Test
+	public void test_updatePost_invokesTransactionMethodsAndMerge() {
+
+		postDao.updatePost(post);
+		
+		verify(transaction).begin();
+		verify(manager).merge(post);
+		verify(transaction).commit();
+		
+	}
+	
+	@Test
+	public void test_getAllPostsByUser_returnsListOfPosts(){
+		
+		String username = "";
+		
+		when(manager.find(User.class, username)).thenReturn(user);
+		when(manager.createQuery("select p from Post as p where :user = p.user", Post.class)).thenReturn(query);
+		when(query.getResultList()).thenReturn(posts);
+		List<Post> retrievedPosts = postDao.getAllPostsByUser(username);
+		
+		assertEquals(posts, retrievedPosts);
 		
 	}
 

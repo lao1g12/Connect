@@ -138,11 +138,13 @@ public class UserControllerTest {
 	@Test
 	public void test_doAddEducation_returnsMappingToUserEditAccount() {
 
+		String startDate="";
+		
 		when(principal.getName()).thenReturn("username");
 		when(userDao.getUser("username")).thenReturn(user);
 		when(user.getProfile()).thenReturn(profile);
 		String result = userController.doAddEducation(education, session,
-				principal, model, request);
+				principal, model, request, startDate);
 
 		assertEquals(result, "user/EditAccount");
 	}
@@ -310,7 +312,7 @@ public class UserControllerTest {
 		
 		StringBuffer sb = new StringBuffer();
 		String checkString = sb.toString();
-		BuisnessLogic sm = mock(BuisnessLogic.class);
+		BusinessLogic sm = mock(BusinessLogic.class);
 		String badWords = "";
 		List<String> badWordList = new ArrayList<String>();
 		List<String> checkedBadWords = mock(ArrayList.class);
