@@ -284,12 +284,7 @@ public class UserControllerTest {
 	public void test_doUserSearch_invokesModelAddAttributeAndReturnsUserSearchResultsIfProfileIsNotInSet(){
 		
 		String name = "";
-		List<Profile> profiles = new ArrayList<Profile>();
-		Profile profile = new Profile();
-		profile.setFirstName("a"); profile.setLastName("b");
 		
-		profiles.add(profile);
-		when(profileDao.getAllProfiles()).thenReturn(profiles);
 		String result = userController.doUserSearch(session, model, name);
 		
 		verify(model).addAttribute("nullSearchMessage", "No results found!");

@@ -30,7 +30,7 @@ public class ProfileDAOImpl implements ProfileDAO {
 		manager.getTransaction().begin();
 		manager.merge(profile);
 		manager.getTransaction().commit();
-		Logging.Log("info", profile + " has been updated in the database.");
+		Logging.Log("info", "ProfileDAOImpl: "+profile+" has been updated in the database.");
 		
 	}
 
@@ -47,7 +47,7 @@ public class ProfileDAOImpl implements ProfileDAO {
 		EntityManager manager = factory.createEntityManager();
 		TypedQuery<Profile> query = manager.createQuery("select pr from Profile pr", Profile.class);
 		List<Profile> profiles = query.getResultList();
-		Logging.Log("info", "ProfileDao: All profiles have been retrieved from the database.");
+		Logging.Log("info", "ProfileDAOImpl: All profiles have been retrieved from the database.");
 		
 		return profiles;
 		

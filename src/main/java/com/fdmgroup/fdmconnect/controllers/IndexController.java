@@ -75,8 +75,8 @@ public class IndexController {
 	@RequestMapping(value = { "/admin/logout", "/user/logout"})
 	public String goToLogout(HttpSession session) {
 		
-		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged out.");
 		session.invalidate();
+		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged out.");
 		return "redirect:/";
 		
 	}
@@ -94,13 +94,13 @@ public class IndexController {
 				user.setPassword(newPassword);
 				user.setLastLogin();
 				userDao.updateUser(user);
-				Logging.Log("info", user.getUsername()+" updated password");
+				Logging.Log("info", "Index Controller: "+user.getUsername()+" updated their password");
 				return "redirect:/user/login";
 				
 			} else {
 				
 				request.setAttribute("passNotMatch", "The two passwords you entered do not match!");
-				Logging.Log("info", user.getUsername()+" attempted to change password but the two new passwords were different, redirected to the UpdateInfo page");
+				Logging.Log("info", "Index Controller: "+user.getUsername()+" attempted to change password but the two new passwords were different, redirected to the UpdateInfo page");
 				return "user/UpdatePassword";
 				
 			}
@@ -108,6 +108,7 @@ public class IndexController {
 	}
 	@RequestMapping(value = { "/admin/goHome", "/user/goHome"})
 	public String goHome(){
+		
 		return "redirect:/user/login";
 		
 	}

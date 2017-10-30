@@ -1,6 +1,4 @@
-
 package com.fdmgroup.fdmconnect.controllers;
-
 
 import javax.persistence.PersistenceException;
 
@@ -41,7 +39,8 @@ public class AdminController {
 	public AdminController() {
 	}
 
-	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
+	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao,
+			FlagDAOImpl flagDao) {
 		super();
 		this.postDao = postDao;
 		this.userDao = userDao;
@@ -50,29 +49,32 @@ public class AdminController {
 
 	@RequestMapping("/admin")
 	public String admin(Model model) {
+		
 		Flag flag = flagDao.getFlag(1);
 		model.addAttribute("flag", flag);
 		return "admin/Home";
 	}
 
 	@RequestMapping("admin/submitPost")
-	public String submitPost(Model model, HttpSession session){
-		User user = (User) session.getAttribute("user");
+	public String submitPost(Model model, HttpSession session) {
+		
 		Post post = new Post();
 
 		model.addAttribute(post);
 		return "admin/AddPost";
-		
+
 	}
-	
+
 	@RequestMapping("admin/addPost")
-	public String addNewPost(Post post, HttpSession session,HttpServletRequest request) {
-		
+	public String addNewPost(Post post, HttpSession session,
+			HttpServletRequest request) {
+
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
 		StringBuffer sb = new StringBuffer();
-		SearchMethod sm= new SearchMethod();
-		sb.append(post.getBodyText()+" "+post.getTitle()+" "+" "+post.getImgUrl()+" "+post.getLink());
+		SearchMethod sm = new SearchMethod();
+		sb.append(post.getBodyText() + " " + post.getTitle() + " " + " "
+				+ post.getImgUrl() + " " + post.getLink());
 		String checkString = sb.toString();
 		checkString = checkString.replaceAll("[^a-zA-Z\\s]", " ");
 		checkString = checkString.toLowerCase();
@@ -80,66 +82,63 @@ public class AdminController {
 		String badWords = flag.getFlagInfo();
 		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
 		badWords = badWords.toLowerCase();
-		System.out.println(badWords);
-		System.out.println(checkString);
-		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords.split(" ")));
-		List<String> checkedBadWords = sm.searchForListings(badWordList, checkString);
-		if(checkedBadWords.size() > 0){
+		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords
+				.split(" ")));
+		List<String> checkedBadWords = sm.searchForListings(badWordList,
+				checkString);
+
+		if (checkedBadWords.size() > 0) {
 			StringBuffer sbReturn = new StringBuffer();
-			for(String badWord : checkedBadWords){
-				sbReturn.append(badWord+" ");
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
 			}
 			String badWordString = sbReturn.toString();
-			request.setAttribute("badPost", "You just tried to post an article with the following inappropriate words :"+badWordString);
+			request.setAttribute("badPost",
+					"You just tried to post an article with the following inappropriate words :"
+							+ badWordString);
 			return "admin/AddPost";
 		}
-		
-		
-		
+
 		postDao.addPost(post);
 		return "redirect:/user/login";
 
 	}
 
-	
 	@RequestMapping("/admin/viewAllPosts")
 	public String goToViewAllPosts(Model model) {
-		
-		Logging.Log("trace", "Client request to url : Display All Users");
-		List<Post> posts =postDao.getAllPosts();
-		model.addAttribute("post", posts);
-		return "admin/DisplayAllPosts";
-		
-	}
-	
-	
-	@RequestMapping("/admin/processRemovePost")
-    public String processRemovePost(@RequestParam int postId, Model model, RedirectAttributes ra) {
-                    
-                    Logging.Log("post", "post removed succesfully" + postId);
-                    postDao.removePost(postId);
-                    ra.addFlashAttribute("message", "Post removed succesfully.");
-                    return "redirect:/admin/viewAllFlaggedPosts";
-                    
-    }
 
-	
-	
-	
-	
+		List<Post> posts = postDao.getAllPosts();
+		model.addAttribute("post", posts);
+		Logging.Log("trace", "Admin Controller: Display all posts called.");
+		return "admin/DisplayAllPosts";
+
+	}
+
+	@RequestMapping("/admin/processRemovePost")
+	public String processRemovePost(@RequestParam int postId, Model model,
+			RedirectAttributes ra) {
+
+		postDao.removePost(postId);
+		ra.addFlashAttribute("message", "Post removed succesfully.");
+		Logging.Log("info", "Admin Controller: Post removed succesfully "
+				+ postId);
+		return "redirect:/admin/viewAllFlaggedPosts";
+
+	}
+
 	@RequestMapping("/admin/viewAllFlags")
-	public String goToViewAllFlags(Model model, @RequestParam int postId, HttpServletRequest request) {
-		
-		Logging.Log("trace", "Client request to url : Display All Flags");
+	public String goToViewAllFlags(Model model, @RequestParam int postId,
+			HttpServletRequest request) {
+
 		Post post = postDao.getPost(postId);
 		Set<Flag> flagList = post.getFlags();
-		System.out.println(flagList.size());
 		request.setAttribute("flagList", flagList);
 		request.setAttribute("post", post);
+		Logging.Log("info", "Admin Controller: Display all flags called.");
 		return "admin/DisplayAllFlags";
-		
+
 	}
-	
+
 	@RequestMapping("/admin/goToAddUser")
 	public String goToAddUser(HttpSession session, Model model) {
 
@@ -147,89 +146,83 @@ public class AdminController {
 		Profile profile = new Profile();
 		user.setProfile(profile);
 
-		model.addAttribute("newUser", user);
+		model.addAttribute("newUser", user);		
+		Logging.Log("info", "Admin Controller: Display all flags called.");
 		return "admin/AddUser";
 
 	}
 
 	@RequestMapping("/admin/doAddUser")
 	public String doAddUser(HttpSession session, Model model, User user) {
-		
-		if (!user.getPassword().equals(user.getConfirmPassword())){
-			model.addAttribute("passwordErrorMessage","Passwords do not match");
+
+		if (!user.getPassword().equals(user.getConfirmPassword())) {
+			model.addAttribute("passwordErrorMessage", "Passwords do not match");
 			return "admin/AddUser";
 		}
-		
-		user.setEmail(user.getUsername()+"@fdmgroup.com");
-		
-//		Profile profile = user.getProfile();
-//		Calendar temp = Calendar.getInstance();
-//		
-//		// Set start and end date
-//		String[] date = startDate.split("/");
-//		temp.set(Integer.parseInt(date[0]),Integer.parseInt(date[1]),
-//				Integer.parseInt(date[2]));
-//		
-//		profile.setStartDate(temp);
-		
+
+		user.setEmail(user.getUsername() + "@fdmgroup.com");
+
 		try {
 			userDao.addUser(user);
 		} catch (PersistenceException pe) {
 			model.addAttribute("userErrorMessage", "Username already exists.");
 			return "admin/AddUser";
 		}
-		
-		Logging.Log("info", "Admin Controller: "+session.getAttribute("username")+" added user "
-				+user.getUsername());
-		model.addAttribute("userAddedMessage", "User successfully added, they can now update their profile.");
+
+		Logging.Log("info",
+				"Admin Controller: " + session.getAttribute("username")
+						+ " added user " + user.getUsername());
+		model.addAttribute("userAddedMessage",
+				"User successfully added, they can now update their profile.");
 		return "redirect:/admin";
-		
+
 	}
-		
+
 	@RequestMapping("/admin/processRemoveUser")
 	public String processRemoveUser(@RequestParam String username, Model model) {
-		
-		Logging.Log("info", "user removed succesfully" + username);
+
 		userDao.removeUser(username);
 		model.addAttribute("message", "User removed succesfully");
+		Logging.Log("info", "Admin Controller: User removed succesfully" + username);
 		return "admin/DisplayAllUsers";
-		
+
 	}
 
 	@RequestMapping("/admin/viewAllUsers")
 	public String goToViewAllUsers(Model model) {
-		
-		Logging.Log("trace", "Client request to url : Display All Users");
+
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
+		Logging.Log("info", "Admin Controller: Display all users called");
 		return "admin/DisplayAllUsers";
-		
+
 	}
-	
 
 	@RequestMapping("/admin/viewAllFlaggedPosts")
-	public String goToViewAllFlaggedPosts(Model model, HttpServletRequest request) {
-		
-		Logging.Log("trace", "Client request to url : Display All Users");
-		List<Post> posts =postDao.getAllPosts();
+	public String goToViewAllFlaggedPosts(Model model,
+			HttpServletRequest request) {
+
+		Logging.Log("info", "Admin Controller: Display all flagged posts called.");
+		List<Post> posts = postDao.getAllPosts();
 		ArrayList<Post> flaggedPosts = new ArrayList<Post>();
-		for(Post post : posts){
-			if(post.getFlags().size()>0){
+		for (Post post : posts) {
+			if (post.getFlags().size() > 0) {
 				flaggedPosts.add(post);
 			}
 		}
 		request.setAttribute("flaggedPosts", flaggedPosts);
 		return "admin/DisplayAllFlaggedPosts";
-		
+
 	}
+
 	@RequestMapping("admin/addBadWords")
-	public String addBadWords(@RequestParam String badWords){
+	public String addBadWords(@RequestParam String badWords) {
+		
 		Flag flag = flagDao.getFlag(1);
 		flag.setFlagInfo(badWords);
 		flagDao.updateFlag(flag);
-		System.out.println("hello");
 		return "redirect:/admin";
-		
+
 	}
 
 }
