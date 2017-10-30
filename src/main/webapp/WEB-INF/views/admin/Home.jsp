@@ -29,8 +29,8 @@
 						</c:otherwise>
 					</c:choose>
 					<li class="horizl"><a href="admin/viewAllUsers">All Users</a></li>
-					<li class="horizl"><a href="admin/logout">Logout</a></li>
 					<li class="horizl"><a href="admin/account">Account</a></li>
+					<li id="right" class="horizl"><a href="admin/logout">Logout</a></li>
 				</ul>
 			</div>
 		</div>
