@@ -101,6 +101,7 @@
 						<c:if test="${userCur == session.user}">
 							<a href="goToEditPost?postId=${up.postId}">Edit Post</a>
 							<br />
+							
 							<br />
 							<c:if test="${postId == up.postId and editPost == 'doEdit'}">
 								<sf:form method="post" action="doEditPost?postId=${up.postId}"
@@ -117,9 +118,11 @@
 							<c:if test="${postId == up.postId}">
 								${postEditedMessage} ${postErrorMessage}
 							</c:if>
-							<hr />
+					 	<hr />	
 						</c:if>
+							</c:forEach>
 						
+						<c:forEach items="${userPosts}" var="up">
 						           <c:if test='${userCur == session.user}'>
                                  <a href="processRemovePostUser?postId=${up.postId}">Remove Post</a>
                                    <c:if test= "${postId == up.postId}">
@@ -128,7 +131,7 @@
                                        </c:if>
                                         </c:if>
 
-                                                <br>
+                                         <br>
 						
 					</c:forEach>
 				</div>
