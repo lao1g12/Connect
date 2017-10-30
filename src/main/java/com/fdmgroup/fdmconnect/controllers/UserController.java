@@ -74,7 +74,7 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
-		session.setAttribute("userPosts", posts);
+		model.addAttribute("posts", posts);
 		request.setAttribute("user", user);
 		
 		Logging.Log("info", "User Controller: "+session.getAttribute("username") + "viewed their profile.");
@@ -234,28 +234,34 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping("user/goToEditPost")
-	public String goToEditPost(Model model, Principal pricipal, @RequestParam(name = "postId") int postId) {
+	@RequestMapping(value = {"user/goToEditPost", "admin/goToEditPost"})
+	public String goToEditPost(RedirectAttributes ra, Principal pricipal, @RequestParam(name = "postId") int postId) {
 		
 		Post post = new Post();
 
-		model.addAttribute("editPost", "doEdit");
-		model.addAttribute("postId", postId);
-		model.addAttribute("post", post);
-		return "user/ViewAccount";
+		ra.addFlashAttribute("editPost", "doEdit");
+		ra.addFlashAttribute("postId", postId);
+		return "redirect:/user/account";
 		
 	}
 	
-	@RequestMapping("/user/doEditPost")
-	public String doEditPost(HttpSession session, Model model, Post post, 
-			@RequestParam(name = "postId") int postId, RedirectAttributes ra) {
+	@RequestMapping(value = {"/user/doEditPost", "/admin/doEditPost"})
+	public String doEditPost(HttpSession session, Model model, 
+			@RequestParam(name = "postId") int postId, RedirectAttributes ra,
+			@RequestParam(name = "title") String title, @RequestParam(name="category") String category,
+			@RequestParam(name = "bodyText") String bodyText, @RequestParam(name = "imgUrl") String imgUrl,
+			@RequestParam(name = "link") String link ) {
+		
+		Post post = postDao.getPost(postId);
+		post.setTitle(title); post.setCategory(category); post.setImgUrl(imgUrl);
+		post.setBodyText(bodyText); post.setLink(link);
+		System.out.println(title);
 		
 		try {
-			post.setPostId(postId);
 			postDao.updatePost(post);
-		} catch (PersistenceException pe) {
-			model.addAttribute("postErrorMessage", "Error updating post.");
-			return "user/ViewAccount";
+		} catch (Exception e) {
+			ra.addFlashAttribute("postErrorMessage", "Error updating post.");
+			return "redirect:/user/account";
 		}
 
 		Logging.Log("info",
