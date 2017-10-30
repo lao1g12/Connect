@@ -55,8 +55,7 @@ public class BuisnessLogic {
 						break;
 					}
 				}
-//				} else
-//					continue;
+
 
 			}
 			}
