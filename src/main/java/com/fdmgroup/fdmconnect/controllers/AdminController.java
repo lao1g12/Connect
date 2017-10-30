@@ -61,7 +61,7 @@ public class AdminController {
 		Post post = new Post();
 
 		model.addAttribute(post);
-		return "admin/AddPost";
+		return "user/AddPost";
 
 	}
 
