@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
 		TypedQuery<User> query = manager.createQuery("select u from User u", User.class);
 		List<User> users = query.getResultList();
 		Logging.Log("info",
-				"UserDao: All users have been retrieved from the database.");
+				"UserDAOImpl: All users have been retrieved from the database.");
 		return users;
 	}
 
@@ -45,7 +45,7 @@ public class UserDAOImpl implements UserDAO {
 		manager.getTransaction().begin();
 		manager.persist(user);
 		manager.getTransaction().commit();
-		Logging.Log("info", user + " has been added to the database.");
+		Logging.Log("info", "UserDAOImpl: "+user + " has been added to the database.");
 
 	}
 
@@ -56,7 +56,7 @@ public class UserDAOImpl implements UserDAO {
 		manager.getTransaction().begin();
 		manager.remove(user);
 		manager.getTransaction().commit();
-		Logging.Log("info", user + "have been removed from the database");
+		Logging.Log("info", "UserDAOImpl: "+user + "have been removed from the database");
 
 	}
 

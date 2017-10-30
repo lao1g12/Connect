@@ -1,7 +1,6 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.persistence.PersistenceException;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,9 +44,8 @@ public class UserController {
 	@Autowired
 	private ExperienceDAOImpl experienceDao;
 	
-
-	Logger logger = Logger.getLogger(getClass());
-		
+	
+	
 	public UserController() {}
 	
 	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao,
@@ -73,7 +70,7 @@ public class UserController {
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
 		request.setAttribute("user", user);
-		logger.info(session.getAttribute("username") + "going to profile");
+		Logging.Log("info", "User Controller: "+session.getAttribute("username") + "viewed their profile.");
 		return "user/ViewAccount";
 
 	}
@@ -117,6 +114,8 @@ public class UserController {
 		
 		List<User> users = userDao.getAllUsers();
 		session.setAttribute("users", users);
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " called view all users.");
 		return "user/ViewAllUsers";
 		
 	}
@@ -131,13 +130,15 @@ public class UserController {
 
 	@RequestMapping("/user/doAddEducation")
 	public String doAddEducation(Education education, HttpSession session, Principal principal,Model model, HttpServletRequest request) {
+		
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		education.setProfile(profile);
 		model.addAttribute(profile);
 		educationDao.addEducation(education);
 		request.setAttribute("message", "Your Education information has been added!");
-
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " added an education entry.");
 
 		return "user/EditAccount";
 
@@ -151,61 +152,72 @@ public class UserController {
 	}
 	@RequestMapping("/user/doAddExperience")
 	public String doAddExperience(Experience experience, HttpSession session, Principal principal,Model model,HttpServletRequest request) {
+		
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		experience.setProfile(profile);
 		model.addAttribute(profile);
 		experienceDao.addExperience(experience);
 		request.setAttribute("message", "Your work experience has been added!");
-
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " added a work experience entry.");
 
 		return "user/EditAccount";
-
-	}
-
-	@RequestMapping("user/doUpdateProfile")
-	public String updateProfile(Principal principal, Profile profile, HttpSession session, HttpServletRequest request) {
-
-		profileDao.updateProfile(profile);
-
-		return "redirect:/user/account";
 
 	}
 
 	@RequestMapping("user/editProfile")
 	public String editProfile(Model model, Principal principal) {
+		
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		model.addAttribute("profile", profile);
 		return "user/EditAccount";
+		
 	}
 	
+	@RequestMapping("user/doUpdateProfile")
+	public String updateProfile(Principal principal, Profile profile, HttpSession session, HttpServletRequest request) {
+
+		profileDao.updateProfile(profile);
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " updated their profile.");
+
+		return "redirect:/user/account";
+
+	}
+
 	@RequestMapping("/user/passwordChange")
 	public String doPasswordChange(HttpServletRequest request, HttpSession session, Model model) {
+		
 		String oldPassword = request.getParameter("password");
 		String newPassword = request.getParameter("newPassword");
 		String confNewPassword = request.getParameter("confNewPassword");
 		User user = (User) session.getAttribute("user");
 		Profile profile = user.getProfile();
 		model.addAttribute("profile", profile);
+		
 		if (oldPassword.equals(user.getPassword())) {
 			if (newPassword.equals(confNewPassword)) {
 				request.setAttribute("UpdatedPass", "Your password has been succesfully changed");
 				user.setPassword(newPassword);
 				userDao.updateUser(user);
-				logger.info(user.getUsername()+" updated password");
+				Logging.Log("info", "User Controller: "+user.getUsername()+" updated password");
 				return "user/EditAccount";
 			} else {
 				request.setAttribute("passNotMatch", "The two new passwords you entered do not match!");
-				logger.info(user.getUsername()+" attempted to change password but the two new passwords were different, redirected to the UpdateInfo page");
+				Logging.Log("info", "User Controller: "+user.getUsername()+" attempted to change password " +
+						"but the two new passwords were different, redirected to the UpdateInfo page");
 				return "user/EditAccount";
 			}
 		} else {
 			request.setAttribute("incorrectPass", "The password you entered is not correct");
-			logger.info(user.getUsername()+" attempted to change password but the current password was wrong, redirected to the UpdateInfo page");
+			Logging.Log("info", "User Controller: "+user.getUsername()+" attempted to change password but the " +
+					"current password was wrong, redirected to the UpdateInfo page");
 
 			return "user/EditAccount";
 		}
+		
 	}
 	
 	@RequestMapping("/user/viewProfile")
@@ -257,6 +269,9 @@ public class UserController {
 		}
 		
 		model.addAttribute("profiles", profiles);
+		Logging.Log("info",
+				"User Controller: " + session.getAttribute("username") + " searched for user by name "+name);
+
 		return "user/SearchResults";
 		
 	}

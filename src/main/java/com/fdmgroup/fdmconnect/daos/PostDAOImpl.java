@@ -25,11 +25,12 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	public void addPost(Post post) {
+		
 		EntityManager manager = factory.createEntityManager();
 		manager.getTransaction().begin();
 		manager.persist(post);
 		manager.getTransaction().commit();
-		Logging.Log("info", "Post has been added" + post.getPostId());
+		Logging.Log("info", "PostDAOImpl: Post has been added" + post.getPostId());
 
 	}
 	
@@ -37,7 +38,7 @@ public class PostDAOImpl implements PostDAO {
 		EntityManager manager = factory.createEntityManager();
 		TypedQuery<Post> query = manager.createQuery("select p from Post p", Post.class);
 		List<Post> posts = query.getResultList();
-		Logging.Log("info", "PostDao: All posts have been retrieved from the database.");
+		Logging.Log("info", "PostDAOImpl: All posts have been retrieved from the database.");
 		return posts;
 	}
 
@@ -47,7 +48,7 @@ public class PostDAOImpl implements PostDAO {
 		manager.getTransaction().begin();
 		manager.remove(post);
 		manager.getTransaction().commit();
-		Logging.Log("info",  post + "have been removed from the database");
+		Logging.Log("info",  "PostDAOImpl: "+post+" has been removed from the database");
 	}
 
 	public Post getPost(int postId) {

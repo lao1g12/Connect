@@ -28,7 +28,7 @@ public class EducationDAOImpl implements EducationDAO {
 		manager.getTransaction().begin();
 		manager.persist(education);
 		manager.getTransaction().commit();
-		Logging.Log("info", "Education has been added" + education.getEducationId());
+		Logging.Log("info", "EducationDAOImpl: Education has been added " + education.getEducationId());
 
 	}
 	

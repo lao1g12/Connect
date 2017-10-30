@@ -27,7 +27,7 @@ public class ExperienceDAOImpl implements ExperienceDAO {
 		manager.getTransaction().begin();
 		manager.persist(experience);
 		manager.getTransaction().commit();
-		Logging.Log("info", "Education has been added" + experience.getExperienceId());
+		Logging.Log("info", "ExperienceDAOImpl: Experience has been added" + experience.getExperienceId());
 
 	}
 	
