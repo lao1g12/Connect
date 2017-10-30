@@ -55,54 +55,7 @@ public class AdminController {
 		return "admin/Home";
 	}
 
-	@RequestMapping("admin/submitPost")
-	public String submitPost(Model model, HttpSession session) {
-		
-		Post post = new Post();
-
-		model.addAttribute(post);
-		return "user/AddPost";
-
-	}
-
-	@RequestMapping("admin/addPost")
-	public String addNewPost(Post post, HttpSession session,
-			HttpServletRequest request) {
-
-		User user = (User) session.getAttribute("user");
-		post.setPostOwner(user);
-		StringBuffer sb = new StringBuffer();
-		SearchMethod sm = new SearchMethod();
-		sb.append(post.getBodyText() + " " + post.getTitle() + " " + " "
-				+ post.getImgUrl() + " " + post.getLink());
-		String checkString = sb.toString();
-		checkString = checkString.replaceAll("[^a-zA-Z\\s]", " ");
-		checkString = checkString.toLowerCase();
-		Flag flag = flagDao.getFlag(1);
-		String badWords = flag.getFlagInfo();
-		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
-		badWords = badWords.toLowerCase();
-		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords
-				.split(" ")));
-		List<String> checkedBadWords = sm.searchForListings(badWordList,
-				checkString);
-
-		if (checkedBadWords.size() > 0) {
-			StringBuffer sbReturn = new StringBuffer();
-			for (String badWord : checkedBadWords) {
-				sbReturn.append(badWord + " ");
-			}
-			String badWordString = sbReturn.toString();
-			request.setAttribute("badPost",
-					"You just tried to post an article with the following inappropriate words :"
-							+ badWordString);
-			return "admin/AddPost";
-		}
-
-		postDao.addPost(post);
-		return "redirect:/user/login";
-
-	}
+	
 
 	@RequestMapping("/admin/viewAllPosts")
 	public String goToViewAllPosts(Model model) {
