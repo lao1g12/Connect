@@ -70,37 +70,7 @@ public class AdminControllerTest {
 
 	}
 
-	@Test
-	public void test_submitPost_returnsAdminAddPost() {
-
-		when(session.getAttribute("user")).thenReturn(user);
-		String result = adminController.submitPost(model, session);
-
-		assertEquals(result, "admin/AddPost");
-
-	}
 	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void test_addNewPost_returnsAdminAddPostIfBadWordsNumberGreaterThanZero(){
-		
-		StringBuffer sb = new StringBuffer();
-		String checkString = sb.toString();
-		SearchMethod sm = mock(SearchMethod.class);
-		String badWords = "";
-		List<String> badWordList = new ArrayList<String>();
-		List<String> checkedBadWords = mock(ArrayList.class);
-		
-		when(session.getAttribute("user")).thenReturn(user);
-		when(flagDao.getFlag(1)).thenReturn(flag);
-		when(flag.getFlagInfo()).thenReturn(badWords);
-		when(sm.searchForListings(badWordList, checkString)).thenReturn(checkedBadWords);
-		when(checkedBadWords.size()).thenReturn(1);
-		String result = adminController.addNewPost(post, session, request);
-		
-		assertEquals(result, "admin/AddPost");
-		
-	}
 	
 	@Test
 	public void test_goToViewAllFlags_returnsAdminDisplayAllFlags(){

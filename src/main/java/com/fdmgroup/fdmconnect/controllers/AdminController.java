@@ -3,7 +3,6 @@ package com.fdmgroup.fdmconnect.controllers;
 import javax.persistence.PersistenceException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 

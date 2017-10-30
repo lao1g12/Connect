@@ -73,6 +73,7 @@ public class UserController {
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
+		model.addAttribute("posts", posts);
 		request.setAttribute("user", user);
 		
 		Logging.Log("info", "User Controller: "+session.getAttribute("username") + "viewed their profile.");
@@ -107,6 +108,7 @@ public class UserController {
 		String badWords = flag.getFlagInfo();
 		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
 		badWords = badWords.toLowerCase();
+
 		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords
 				.split(" ")));
 		List<String> checkedBadWords = sm.searchForListings(badWordList,

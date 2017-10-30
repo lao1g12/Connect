@@ -32,10 +32,13 @@
 					<li class="horizl"><a href="logout">Logout</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
 					<li class="horizl"><a href="submitPost">Add Post</a><li> 
-		</ul>
+
+				</ul>
+
 			</div>
 		</div> 
-		</br> </br>
+		</br>
+		 </br>
 		
 															<!--  welcome User  -->		
 		<div class="col col12 last">
@@ -72,7 +75,7 @@
 				${flagErrorMessage}${flagSubmittedMessage}
 				</c:if>
 				<hr />
-			</c:forEach>
+	 		</c:forEach>
 		</div>
 		</div>
 		<div class="empty"> </div>

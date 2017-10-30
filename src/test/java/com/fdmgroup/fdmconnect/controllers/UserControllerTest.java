@@ -52,6 +52,7 @@ public class UserControllerTest {
 	private HttpServletRequest request;
 	private Experience experience;
 	private Set<Profile> profiles;
+	private Post post;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -76,6 +77,7 @@ public class UserControllerTest {
 		request = mock(HttpServletRequest.class);
 		experience = mock(Experience.class);
 		profiles = mock(HashSet.class);
+		post = mock(Post.class);
 	}
 
 	@Test
@@ -250,7 +252,7 @@ public class UserControllerTest {
 		when(profileDao.getProfile(profileId)).thenReturn(profile);
 		String result = userController.goToViewProfile(session, model, profileId, request);
 		
-		assertEquals(result, "user/ViewProfile");
+		assertEquals(result, "user/ViewAccount");
 		
 	}
 	
@@ -289,6 +291,38 @@ public class UserControllerTest {
 		
 		verify(model).addAttribute("nullSearchMessage", "No results found!");
 		assertEquals(result, "user/SearchResults");
+		
+	}
+	
+	@Test
+	public void test_submitPost_returnsUserAddPost() {
+
+		when(session.getAttribute("user")).thenReturn(user);
+		String result = userController.submitPost(model, session);
+
+		assertEquals(result, "user/AddPost");
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void test_addNewPost_returnsUserAddPostIfBadWordsNumberGreaterThanZero(){
+		
+		StringBuffer sb = new StringBuffer();
+		String checkString = sb.toString();
+		SearchMethod sm = mock(SearchMethod.class);
+		String badWords = "";
+		List<String> badWordList = new ArrayList<String>();
+		List<String> checkedBadWords = mock(ArrayList.class);
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(sm.searchForListings(badWordList, checkString)).thenReturn(checkedBadWords);
+		when(checkedBadWords.size()).thenReturn(1);
+		String result = userController.addNewPost(post, session, request);
+		
+		assertEquals(result, "user/AddPost");
 		
 	}
 	
