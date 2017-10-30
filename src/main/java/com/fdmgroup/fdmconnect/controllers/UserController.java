@@ -98,21 +98,11 @@ public class UserController {
 
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		StringBuffer sb = new StringBuffer();
-		SearchMethod sm = new SearchMethod();
-		sb.append(post.getBodyText() + " " + post.getTitle() + " " + " "
-				+ post.getImgUrl() + " " + post.getLink());
-		String checkString = sb.toString();
-		checkString = checkString.replaceAll("[^a-zA-Z\\s]", " ");
-		checkString = checkString.toLowerCase();
+		BuisnessLogic bl = new BuisnessLogic();
+		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
-		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
-		badWords = badWords.toLowerCase();
-
-		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords
-				.split(" ")));
-		List<String> checkedBadWords = sm.searchForListings(badWordList,
+		List<String> checkedBadWords = bl.searchForListings(badWords,
 				checkString);
 
 		if (checkedBadWords.size() > 0) {

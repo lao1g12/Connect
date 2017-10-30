@@ -41,7 +41,9 @@ public class Post {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
 	private Set<Flag> flags;
 	@Transient
-	private String ListOfWords;
+	private String listOfWords;
+	@Transient
+	private String fullListOfWords;
 		
 	public Post() {	}
 
@@ -58,6 +60,14 @@ public class Post {
 	public String getListOfKeyWords(){
 		StringBuffer sb = new StringBuffer();
 		sb.append(title+" "+bodyText+" "+category);
+		String searchString = sb.toString();
+		searchString = searchString.replaceAll("[^a-zA-Z\\s]", " ");
+		searchString = searchString.toLowerCase();
+		return searchString;
+	}
+	public String getFullListOfKeyWords(){
+		StringBuffer sb = new StringBuffer();
+		sb.append(title+" "+bodyText+" "+category+" "+link+" "+imgUrl);
 		String searchString = sb.toString();
 		searchString = searchString.replaceAll("[^a-zA-Z\\s]", " ");
 		searchString = searchString.toLowerCase();

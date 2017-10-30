@@ -45,7 +45,7 @@ public class LiamSearchController {
 	public String addNewPost(Post post, HttpSession session,
 			HttpServletRequest request, @RequestParam String input) {
 
-		SearchMethod sm = new SearchMethod();
+		BuisnessLogic sm = new BuisnessLogic();
 		System.out.println(input);
 		input = input.replaceAll("[^a-zA-Z\\s]", " ");
 		input = input.toLowerCase();

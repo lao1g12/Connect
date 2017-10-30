@@ -310,7 +310,7 @@ public class UserControllerTest {
 		
 		StringBuffer sb = new StringBuffer();
 		String checkString = sb.toString();
-		SearchMethod sm = mock(SearchMethod.class);
+		BuisnessLogic sm = mock(BuisnessLogic.class);
 		String badWords = "";
 		List<String> badWordList = new ArrayList<String>();
 		List<String> checkedBadWords = mock(ArrayList.class);
