@@ -81,6 +81,17 @@
 		<div class="empty"> </div>
 		<footer>
 			<br>
+			<c:choose>
+                            <c:when test='${user.getRole() == "Admin"}'>
+			
+			<a href="processRemovePostAdmin?postId=${aP.postId}">Remove  Post</a>
+			
+			</c:when>
+              <c:otherwise>
+
+                </c:otherwise>
+             </c:choose>
+           ${postRemovedByAdmin }
 			              
 			
 		
