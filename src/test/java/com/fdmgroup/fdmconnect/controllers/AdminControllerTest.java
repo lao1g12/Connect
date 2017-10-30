@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
@@ -39,6 +40,7 @@ public class AdminControllerTest {
 	private Post post;
 	private Set<Flag> flagList;
 	private Flag flag;
+	private RedirectAttributes ra;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -56,6 +58,7 @@ public class AdminControllerTest {
 		post = mock(Post.class);
 		flagList = mock(HashSet.class);
 		flag = mock(Flag.class);
+		ra = mock(RedirectAttributes.class);
 	}
 
 	@Test
@@ -144,7 +147,7 @@ public class AdminControllerTest {
 	@Test
 	public void test_processRemoveUser_returnsAdminRemoveUser(){
 		
-		String result = adminController.processRemoveUser("username", model);
+		String result = adminController.processRemoveUser("username", model, ra);
 		
 		assertEquals(result, "admin/DisplayAllUsers");
 		

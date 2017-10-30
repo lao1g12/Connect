@@ -56,7 +56,8 @@
 					<th>${p.link}</th>
 					<th>${p.category}</th>
 					<th>${p.imgUrl}</th>
-	               <th><a href="processRemovePost?postId=${p.postId}">Remove Post</a></th>
+	               <th><a href="processRemovePost?postId=${p.postId}"
+	                      onclick="return confirm('Are you sure you want to remove this post?')">Remove Post</a></th>
 				
 					
 				</tr>

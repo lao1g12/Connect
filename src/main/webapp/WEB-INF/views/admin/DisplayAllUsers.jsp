@@ -57,8 +57,8 @@
 					<th>${u.role}</th>
 				<!-- <th>${u.profile}</th>
 					<th>${u.posts}</th>-->
-	               <th><a href="processRemoveUser?username=${u.username}">Remove User</a></th>
-
+	               <th><a href="processRemoveUser?username=${u.username}" 
+	               		  onclick="return confirm('Are you sure you want to remove this user?')">Remove User</a></th>
 					
 				</tr>
 			</c:forEach>
