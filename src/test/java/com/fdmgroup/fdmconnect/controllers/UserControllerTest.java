@@ -248,7 +248,7 @@ public class UserControllerTest {
 		int profileId = 0;
 		
 		when(profileDao.getProfile(profileId)).thenReturn(profile);
-		String result = userController.goToViewProfile(session, model, profileId);
+		String result = userController.goToViewProfile(session, model, profileId, request);
 		
 		assertEquals(result, "user/ViewProfile");
 		
