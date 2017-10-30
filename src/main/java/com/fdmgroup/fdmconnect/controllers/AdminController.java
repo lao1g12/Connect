@@ -53,13 +53,15 @@ public class AdminController {
 		return "admin/Home";
 	}
 
-	@RequestMapping("/admin/processRemovePostAdmin")
-	public String processRemovePostAdmin(@RequestParam int postId, Model model) {
+	@RequestMapping("/user/processRemovePostAdmin")
+	public String processRemovePostAdmin(@RequestParam int postId, Model model, HttpSession session) {
 
 		Logging.Log("post", "post removed succesfully by admin" + postId);
 		postDao.removePost(postId);
 		model.addAttribute("postRemovedByAdmin", "Post removed succesfully.");
-		return "user/home";
+		session.setAttribute("allPosts", postDao.getAllPosts());
+		
+		return "user/Home";
 
 	}
 

@@ -45,7 +45,7 @@ public class IndexController {
 	
 	
 	@RequestMapping("/user/login")
-	public String goToHome(HttpSession session, Principal principal) {
+	public String goToHome(HttpSession session, Principal principal, HttpServletRequest request) {
 
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
