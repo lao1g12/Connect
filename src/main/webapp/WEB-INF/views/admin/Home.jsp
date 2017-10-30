@@ -34,31 +34,47 @@
 				</ul>
 			</div>
 		</div>
-		</br> </br>
-		<div id="Head" class="row">
+
+		<div id="adminPage" class="row">
+		<br> <br>
 			<div class="col col4">
 				<form method="get" action="admin/goToAddUser">
-    				<button type="submit">Add User</button>
+    				<button id="adminButton" type="submit">Add User</button>
 				</form>
 			</div>
 			<div class="col col4">
 				<form method="get" action="admin/viewAllUsers">
-    				<button type="submit">View all Users</button>
+    				<button id="adminButton" type="submit">View all Users</button>
 				</form>
 			</div>
 			<div class="col col4 last">
 				<form method="get" action="admin/viewAllFlaggedPosts">
-    				<button type="submit">View all Flagged Posts</button>
+    				<button id="adminButton" type="submit">View all Flagged Posts</button>
 				</form>
 			</div>
 		</div>
-		<form method="post" action="admin/addBadWords">
-			Enter Your new badwords : <input required type="text" name="badWords"
-				value="${flag.flagInfo}" /><br> <input type="submit"
-				value="Update details" />
-		</form>
+		<div id="adminPage" class="row">
+			<div class="col col3">
+				<div id="blankAdmin">
+				</div>
+			</div>
+			<div class="col col6">
+			<br> <br>
+				<form method="post" action="admin/addBadWords">
+					Enter Your new badwords : <input required type="text" name="badWords" value="${flag.flagInfo}" /><br> 
+					<input id="adminButton" type="submit" value="Update details" />
+				</form>
+			</div>
+			<div  class="col col3 last">
+			<div id="blankAdmin">
+			</div>
+
+			</div>
+		</div>
+
 		${userAddedMessage} <br>
 		<br>
+		<div id="Footer" class="row">
 		<footer>
 		<ul class="horiz">
 			<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
@@ -68,6 +84,7 @@
 			<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
 		</ul>
 		</footer>
+		</div>
 	</div>
 </body>
 </html>
