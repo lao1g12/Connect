@@ -63,6 +63,7 @@
 	Start Date: ${edu.getStartDateFormatted()}<br>
 	End Date: ${edu.getEndDateFormatted()}<br>
 	Further Information: ${edu.furtherInfo}<br>
+	<a href="deleteEducation?educationId=${edu.educationId}">Remove</a>
 						<br>
 					</c:forEach>
 					<br> <br>
@@ -73,6 +74,7 @@
 	Start Date: ${exp.getStartDateFormatted()}<br>
 	End Date: ${exp.getEndDateFormatted()}<br>
 	Job Description: ${exp.description}<br>
+	<a href="deleteExperience?experienceId=${exp.experienceId}">Remove</a>
 						<br>
 					</c:forEach>
 
@@ -115,6 +117,12 @@
 							</c:if>
 							<hr />
 						</c:if>
+						<c:if test='${userCur == session.user}'>
+                            <a href="processRemovePostUser?postId=${p.postId}">Remove Post</a>
+                            <c:if test="${postId == p.postId}">
+                 	           ${postRemovedByUser }                                       
+                            </c:if>
+                        </c:if>
 					</c:forEach>
 				</div>
 			</div>

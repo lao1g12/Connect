@@ -98,21 +98,11 @@ public class UserController {
 
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		StringBuffer sb = new StringBuffer();
-		SearchMethod sm = new SearchMethod();
-		sb.append(post.getBodyText() + " " + post.getTitle() + " " + " "
-				+ post.getImgUrl() + " " + post.getLink());
-		String checkString = sb.toString();
-		checkString = checkString.replaceAll("[^a-zA-Z\\s]", " ");
-		checkString = checkString.toLowerCase();
+		BuisnessLogic bl = new BuisnessLogic();
+		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
-		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
-		badWords = badWords.toLowerCase();
-
-		List<String> badWordList = new ArrayList<String>(Arrays.asList(badWords
-				.split(" ")));
-		List<String> checkedBadWords = sm.searchForListings(badWordList,
+		List<String> checkedBadWords = bl.searchForListings(badWords,
 				checkString);
 
 		if (checkedBadWords.size() > 0) {
@@ -132,6 +122,15 @@ public class UserController {
 
 	}
 	
+	@RequestMapping("/user/processRemovePostUser")
+    public String processRemovePostUser(@RequestParam int postId, Model model) {
+
+                    Logging.Log("post", "post removed succesfully by admin" + postId);
+                    postDao.removePost(postId);
+                    model.addAttribute("postRemovedByUser", "Post removed succesfully.");
+                    return "user/ViewAccount";
+
+    }   
 
 	@RequestMapping("/user/goToFlagPost")
 	public String goToFlagPost(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
@@ -201,6 +200,18 @@ public class UserController {
 		return "user/EditAccount";
 
 	}
+	
+	@RequestMapping("/user/deleteEducation")
+	public String removeEducation(@RequestParam int educationId,RedirectAttributes ra ) { 
+		
+		educationDao.removeEducation(educationId);
+		ra.addFlashAttribute("message", "Education removed succesfully.");
+		Logging.Log("info", "User Controller: education removed succesfully "
+				+ educationId);
+		return "redirect:/user/account";
+	}
+
+	
 	@RequestMapping("/user/addExperience")
 	public String addExperience(Model model) {
 		Experience experience = new Experience();
@@ -222,6 +233,16 @@ public class UserController {
 
 		return "user/EditAccount";
 
+	}
+	
+	@RequestMapping("/user/deleteExperience")
+	public String removeExperience(@RequestParam int experienceId,RedirectAttributes ra ) { 
+		
+		experienceDao.removeExperience(experienceId);
+		ra.addFlashAttribute("message", "Experience removed succesfully.");
+		Logging.Log("info", "User Controller: Experience removed succesfully "
+				+ experienceId);
+		return "redirect:/user/account";
 	}
 
 	@RequestMapping("user/editProfile")
