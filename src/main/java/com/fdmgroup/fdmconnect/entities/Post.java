@@ -18,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="FC_POSTS")
@@ -39,6 +40,8 @@ public class Post {
 	private User postOwner;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
 	private Set<Flag> flags;
+	@Transient
+	private String ListOfWords;
 		
 	public Post() {	}
 
@@ -51,6 +54,12 @@ public class Post {
 		this.imgUrl = imgUrl;
 //		this.postOwner = postOwner;
 //		postOwner.addPost(this);
+	}
+	public String getListOfKeyWords(){
+		StringBuffer sb = new StringBuffer();
+		sb.append(title+" "+bodyText+" "+category+" "+postOwner);
+		String searchString = sb.toString();
+		return searchString;
 	}
 	
 	public void addFlag(Flag flag) {
@@ -123,5 +132,7 @@ public class Post {
 	public void setPostOwner(User postOwner) {
 		this.postOwner = postOwner;
 	}
+
+
 
 }
