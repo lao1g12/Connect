@@ -74,6 +74,8 @@
 	Start Date: ${exp.getStartDateFormatted()}<br>
 	End Date: ${exp.getEndDateFormatted()}<br>
 	Job Description: ${exp.description}<br>
+	<a href="deleteExperience?experienceId=${exp.experienceId}">Remove</a>
+	
 						<br>
 					</c:forEach>
 

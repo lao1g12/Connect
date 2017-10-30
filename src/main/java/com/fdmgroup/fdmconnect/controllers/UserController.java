@@ -201,6 +201,20 @@ public class UserController {
 		return "user/EditAccount";
 
 	}
+	
+	
+	@RequestMapping("/user/deleteEducation")
+	public String removeEducation(@RequestParam int educationId,RedirectAttributes ra ) { 
+		
+		educationDao.removeEducation(educationId);
+		ra.addFlashAttribute("message", "Education removed succesfully.");
+		Logging.Log("info", "User Controller: education removed succesfully "
+				+ educationId);
+		return "redirect:/user/account";
+	}
+
+	
+	
 	@RequestMapping("/user/addExperience")
 	public String addExperience(Model model) {
 		Experience experience = new Experience();
@@ -223,6 +237,20 @@ public class UserController {
 		return "user/EditAccount";
 
 	}
+	
+	
+
+	@RequestMapping("/user/deleteExperience")
+	public String removeExperience(@RequestParam int experienceId,RedirectAttributes ra ) { 
+		
+		experienceDao.removeExperience(experienceId);
+		ra.addFlashAttribute("message", "Experience removed succesfully.");
+		Logging.Log("info", "User Controller: Experience removed succesfully "
+				+ experienceId);
+		return "redirect:/user/account";
+	}
+	
+	
 
 	@RequestMapping("user/editProfile")
 	public String editProfile(Model model, Principal principal) {
