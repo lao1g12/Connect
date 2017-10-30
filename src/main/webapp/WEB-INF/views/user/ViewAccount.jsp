@@ -91,7 +91,7 @@
 
 		<br>
 		<c:choose>
-			<c:when test='${request.user == session.user}'>
+			<c:when test='${userCur == session.user}'>
 				<a href="editProfile">Edit Profile</a>
 			</c:when>
 			<c:otherwise>

@@ -234,7 +234,7 @@ public class UserController {
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
 		request.setAttribute("userCur", user);
-		
+
 		return "user/ViewAccount";
 		
 	}
