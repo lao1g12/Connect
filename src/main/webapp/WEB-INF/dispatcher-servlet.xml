@@ -35,6 +35,8 @@
 	<bean id="educationDao" class="com.fdmgroup.fdmconnect.daos.EducationDAOImpl"/>
 	<bean id="flagDao" class="com.fdmgroup.fdmconnect.daos.FlagDAOImpl"/>
 
+	
+
 	<!-- <bean id="emf" class="javax.persistence.Persistence" factory-method="createEntityManagerFactory"> 
 		<constructor-arg value="DemoPersistence"/> </bean> -->
 </beans>
