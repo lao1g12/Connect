@@ -36,54 +36,58 @@
 		</div>
 
 		<div id="adminPage" class="row">
-		<br> <br>
-			<div class="col col4">
+			<br> <br>
+			<div class="col col3">
 				<form method="get" action="admin/goToAddUser">
-    				<button id="adminButton" type="submit">Add User</button>
+					<button id="adminButton" type="submit">Add User</button>
 				</form>
 			</div>
-			<div class="col col4">
+			<div class="col col3">
 				<form method="get" action="admin/viewAllUsers">
-    				<button id="adminButton" type="submit">View all Users</button>
+					<button id="adminButton" type="submit">View all Users</button>
 				</form>
 			</div>
-			<div class="col col4 last">
+			<div class="col col3">
+				<form method="get" action="admin/viewAllGroups">
+					<button id="adminButton" type="submit">View all Groups</button>
+				</form>
+			</div>
+			<div class="col col3 last">
 				<form method="get" action="admin/viewAllFlaggedPosts">
-    				<button id="adminButton" type="submit">View all Flagged Posts</button>
+					<button id="adminButton" type="submit">View all Flagged
+						Posts</button>
 				</form>
 			</div>
 		</div>
 		<div id="adminPage" class="row">
 			<div class="col col3">
-				<div id="blankAdmin">
-				</div>
+				<div id="blankAdmin"></div>
 			</div>
 			<div class="col col6">
-			<br> <br>
+				<br> <br>
 				<form method="post" action="admin/addBadWords">
-					Enter Your new badwords : <input required type="text" name="badWords" value="${flag.flagInfo}" /><br> 
-					<input id="adminButton" type="submit" value="Update details" />
+					Enter Your new badwords : <input required type="text"
+						name="badWords" value="${flag.flagInfo}" /><br> <input
+						id="adminButton" type="submit" value="Update details" />
 				</form>
 			</div>
-			<div  class="col col3 last">
-			<div id="blankAdmin">
-			</div>
+			<div class="col col3 last">
+				<div id="blankAdmin"></div>
 
 			</div>
 		</div>
 
-		${userAddedMessage} <br>
-		<br>
+		${userAddedMessage} <br> <br>
 		<div id="Footer" class="row">
-		<footer>
-		<ul class="horiz">
-			<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
-			<li class="horizl"><a href="www.Help.com">Help</a></li>
-			<li class="horizl"><a href="www.language.com">Language</a></li>
-			<li class="horizl"><a href="www.about.com">About</a></li>
-			<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
-		</ul>
-		</footer>
+			<footer>
+			<ul class="horiz">
+				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+				<li class="horizl"><a href="www.Help.com">Help</a></li>
+				<li class="horizl"><a href="www.language.com">Language</a></li>
+				<li class="horizl"><a href="www.about.com">About</a></li>
+				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+			</ul>
+			</footer>
 		</div>
 	</div>
 </body>

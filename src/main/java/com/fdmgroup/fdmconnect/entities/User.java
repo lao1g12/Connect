@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.entities;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -36,6 +38,11 @@ public class User {
 	private Set<Post> posts;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="reporter", cascade = CascadeType.REMOVE)
 	private List<Flag> flags;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy="users")
+	private Set<Group> groups= new HashSet<Group>();
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.REMOVE)
+	private Set<Group> ownedGroups;
+	
 	
 	public User() {	}
 
@@ -125,4 +132,13 @@ public class User {
 		posts.add(post);
 	}
 
+	public Set<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
+
+	
 }

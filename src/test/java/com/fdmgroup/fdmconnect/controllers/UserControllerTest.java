@@ -19,9 +19,11 @@ import static org.mockito.Mockito.when;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fdmgroup.fdmconnect.daos.CommentDAOImpl;
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
@@ -37,6 +39,7 @@ public class UserControllerTest {
 	private UserDAOImpl userDao;
 	private PostDAOImpl postDao;
 	private FlagDAOImpl flagDao;
+	private GroupDAOImpl groupDao;
 	private UserController userController;
 	private HttpSession session;
 	private Principal principal;
@@ -56,6 +59,7 @@ public class UserControllerTest {
 	private Set<Profile> profiles;
 	private Post post;
 	private BusinessLogic bl = mock(BusinessLogic.class);
+	private CommentDAOImpl commentDao;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -74,8 +78,9 @@ public class UserControllerTest {
 		principal = mock(Principal.class);
 		ra = mock(RedirectAttributes.class);
 		profile = mock(Profile.class);
-		userController = new UserController(userDao, profileDao, flagDao,
-				postDao, educationDao, experienceDao);
+		commentDao = mock(CommentDAOImpl.class);
+		userController = new UserController(userDao, profileDao, flagDao, postDao,
+				educationDao, experienceDao, commentDao, groupDao);
 		flaggedPost = mock(Post.class);
 		education = mock(Education.class);
 		request = mock(HttpServletRequest.class);

@@ -37,6 +37,9 @@ public class Post {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_POST_USER")
 	private User postOwner;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "FC_POST_GROUP")
+	private Group group;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
 	private Set<Flag> flags;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="post", cascade = CascadeType.REMOVE)
@@ -48,6 +51,18 @@ public class Post {
 		
 	public Post() {	}
 
+	public Post(String title, String bodyText, String link, String category, String imgUrl, Group group) {
+		super();
+		this.title = title;
+		this.bodyText = bodyText;
+		this.link = link;
+		this.category = category;
+		this.imgUrl = imgUrl;
+		this.group = group;
+//		this.postOwner = postOwner;
+//		postOwner.addPost(this);
+	}
+	
 	public Post(String title, String bodyText, String link, String category, String imgUrl) {
 		super();
 		this.title = title;
@@ -55,6 +70,7 @@ public class Post {
 		this.link = link;
 		this.category = category;
 		this.imgUrl = imgUrl;
+
 //		this.postOwner = postOwner;
 //		postOwner.addPost(this);
 	}
@@ -75,6 +91,16 @@ public class Post {
 		return searchString;
 	}
 	
+	
+	
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
 	public void addComment(Comment comment){
 		this.comments.add(comment);
 	}
