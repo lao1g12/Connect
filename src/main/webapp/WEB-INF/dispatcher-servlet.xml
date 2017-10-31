@@ -34,6 +34,8 @@
 	<bean id="experienceDao" class="com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl"/>
 	<bean id="educationDao" class="com.fdmgroup.fdmconnect.daos.EducationDAOImpl"/>
 	<bean id="flagDao" class="com.fdmgroup.fdmconnect.daos.FlagDAOImpl"/>
+	<bean id="commentDao" class="com.fdmgroup.fdmconnect.daos.CommentDAOImpl"/>
+	<bean id="groupDao" class="com.fdmgroup.fdmconnect.daos.GroupDAOImpl"/>
 
 	<!-- <bean id="emf" class="javax.persistence.Persistence" factory-method="createEntityManagerFactory"> 
 		<constructor-arg value="DemoPersistence"/> </bean> -->
