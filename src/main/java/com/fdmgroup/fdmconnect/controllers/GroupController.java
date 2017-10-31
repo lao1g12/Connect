@@ -56,8 +56,10 @@ public class GroupController {
 
 	}
 	@RequestMapping("user/doCreateGroup")
-	public String doCreateGroup(Model model){
-		Group group = new Group();
+	public String doCreateGroup(Model model, Group group, HttpSession session){
+		User owner = (User) session.getAttribute("user");
+		group.setOwner(owner);
+		groupDao.createGroup(group);
 		model.addAttribute("groupWasCreated", "Group was created successfully");
 		return"user/MyGroups";
 	}

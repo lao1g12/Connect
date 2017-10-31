@@ -9,8 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="viewProfile?profileId=${u.profile.profileId}">View
-				Profile</a>
+<a href="goToGroupHome?name=${g.name}">Go To Group</a>
 <sf:form method="post" action="doCreateGroup"  modelAttribute="group">
 		Group Name: <sf:input type="text"   path="name"/><br>
 		Group Description: <sf:input type="text"  path="description"/><br>
