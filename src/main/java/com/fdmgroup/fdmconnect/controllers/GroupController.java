@@ -68,13 +68,12 @@ public class GroupController {
 		return"redirect:/user/goToMyGroups";
 	}
 	
-<<<<<<< HEAD
+
 	@RequestMapping("user/postToGroup")
 	public String postToGroup() { 
 		
 		return "AddPost";
 	}
-=======
->>>>>>> branch 'master' of http://git.fdmgroup.com/L-17-JAV05-B/FDMConnect.git
+
 	
 }
