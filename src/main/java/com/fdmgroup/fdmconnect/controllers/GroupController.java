@@ -10,7 +10,6 @@ import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
-import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
 
 @Controller
@@ -18,10 +17,6 @@ public class GroupController {
 
 	@Autowired
 	private PostDAOImpl postDao;
-	@Autowired
-	private UserDAOImpl userDao;
-	@Autowired
-	private FlagDAOImpl flagDao;
 	@Autowired 
 	private GroupDAOImpl groupDao;
 	
@@ -30,8 +25,6 @@ public class GroupController {
 	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
 		super();
 		this.postDao = postDao;
-		this.userDao = userDao;
-		this.flagDao = flagDao;
 		this.groupDao = groupDao;
 	}
 	
