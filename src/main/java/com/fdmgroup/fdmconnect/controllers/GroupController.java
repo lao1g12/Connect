@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
@@ -34,11 +35,11 @@ public class GroupController {
 		this.groupDao = groupDao;
 	}
 	
-	@RequestMapping("/goToGroupHome")
-	public String admin(Model model, @RequestParam int groupId) {
+	@RequestMapping("user/goToGroupHome")
+	public String admin(Model model, @RequestParam String name) {
 
-		Group group = groupDao.getGroup(groupId);
-		model.addAttribute("allPosts", postDao.getAllPostsByGroup(groupId));
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute("group", group);
 		return "user/GroupHome";
 		
@@ -55,14 +56,19 @@ public class GroupController {
 		return "user/MyGroups";
 
 	}
+	
 	@RequestMapping("user/doCreateGroup")
-	public String doCreateGroup(Model model, Group group, HttpSession session){
+	public String doCreateGroup(Model model, Group group, HttpSession session, RedirectAttributes ra){
 		User owner = (User) session.getAttribute("user");
 		group.setOwner(owner);
+		owner.getGroups().add(group);
+		group.getUsers().add(owner);
 		groupDao.createGroup(group);
-		model.addAttribute("groupWasCreated", "Group was created successfully");
-		return"user/MyGroups";
+		ra.addFlashAttribute("groupWasCreated", "Group was created successfully");
+		return"redirect:/user/goToMyGroups";
 	}
 	
+
+
 	
 }

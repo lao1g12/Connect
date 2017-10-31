@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
@@ -34,16 +36,23 @@ public class AdminController {
 	private UserDAOImpl userDao;
 	@Autowired
 	private FlagDAOImpl flagDao;
+	@Autowired
+	private GroupDAOImpl groupDao;
 
 	public AdminController() {
 	}
 
-	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
+
+
+	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
 		super();
 		this.postDao = postDao;
 		this.userDao = userDao;
 		this.flagDao = flagDao;
+		this.groupDao = groupDao;
 	}
+
+
 
 	@RequestMapping("/admin")
 	public String admin(Model model) {
@@ -177,6 +186,26 @@ public class AdminController {
 		flag.setFlagInfo(badWords);
 		flagDao.updateFlag(flag);
 		return "redirect:/admin";
+
+	}
+	
+	@RequestMapping("/admin/viewAllGroups")
+	public String goToViewAllGroups(Model model) {
+
+		List<Group> groups = groupDao.getAllGroups();
+		model.addAttribute("groups", groups);
+		Logging.Log("info", "Admin Controller: Display all groups called");
+		return "admin/DisplayAllGroups";
+
+	}
+	
+	@RequestMapping("/admin/processRemoveGroup")
+	public String processRemoveGroup(@RequestParam String name, Model model, RedirectAttributes ra) {
+
+		Logging.Log("info", "Admin Controller: Group removed succesfully" + name);
+		groupDao.removeGroup(name);
+		ra.addFlashAttribute("message", "Group removed succesfully");
+		return "redirect:/admin/viewAllGroups";
 
 	}
 

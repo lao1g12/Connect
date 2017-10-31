@@ -43,6 +43,7 @@
 
 				<th>Group Name</th>
 				<th>Group Description</th>
+				<th>Group Owner</th>
 				<th>Group link</th>
 				<th>Remove Group </th>
 
@@ -52,8 +53,9 @@
 				<tr>
 					<th>${g.name}</th>
 					<th>${g.description}</th>
+					<th>${g.owner}</th>
 					<th><a href="/goToGroupHome?name=${g.name}">Go to Group</a></th>
-	                <th><a href="processRemoveGroup?postId=${g.name}"
+	                <th><a href="processRemoveGroup?name=${g.name}"
 	                      onclick="return confirm('Are you sure you want to remove this group?')">Remove Group</a></th>
 
 				
