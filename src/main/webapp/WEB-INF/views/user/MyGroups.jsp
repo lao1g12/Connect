@@ -9,7 +9,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="goToGroupHome?name=${g.name}">Go To Group</a>
+
+<c:forEach items="${groups}" var="g">
+	<h3> ${g.name } <br/></h3>
+	 
+	 Description: ${g.description } <br/>
+	 
+	 <img class="boarding" src="${g.imageUrl }"> <br/>
+			<br>
+			<br>
+			<a href="goToGroupHome?name=${g.name}">Go To Group</a>
+
+	</c:forEach>
+
 <sf:form method="post" action="doCreateGroup"  modelAttribute="group">
 		Group Name: <sf:input type="text"   path="name"/><br>
 		Group Description: <sf:input type="text"  path="description"/><br>
