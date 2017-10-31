@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fdmgroup.fdmconnect.controllers.Logging;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -29,10 +30,12 @@ public class FlagDAOImpl implements FlagDAO {
 		manager.getTransaction().begin();
 		manager.persist(flag);
 		manager.getTransaction().commit();
+		Logging.Log("info",  "FlagDAOImpl: "+flag+" has been added to the database");
 		
 	}
 	
 	public Flag getFlag(int id) {
+		
 		EntityManager manager = factory.createEntityManager();
 		Flag flag = manager.find(Flag.class, id);
 		return flag;
@@ -40,6 +43,7 @@ public class FlagDAOImpl implements FlagDAO {
 
 	
 	public List<Flag> getAllFlags(){
+		
 		EntityManager manager = factory.createEntityManager();
 		TypedQuery<Flag> query = manager.createQuery("select f from Flag f", Flag.class);
 		List<Flag> flags=query.getResultList();
@@ -48,10 +52,12 @@ public class FlagDAOImpl implements FlagDAO {
 	}
 
 	public void updateFlag(Flag flag) {
+		
 		EntityManager manager = factory.createEntityManager();
 		manager.getTransaction().begin();
 		manager.merge(flag);
 		manager.getTransaction().commit();
+		Logging.Log("info",  "FlagDAOImpl: "+flag+" has been updated on the database");
 		
 	}
 	

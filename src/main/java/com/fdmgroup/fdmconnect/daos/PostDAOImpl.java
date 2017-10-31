@@ -77,6 +77,8 @@ public class PostDAOImpl implements PostDAO {
 		manager.getTransaction().begin();
 		manager.merge(post);
 		manager.getTransaction().commit();
+		Logging.Log("info",  "PostDAOImpl: "+post+" has been updated on the database");
+
 		
 	}
 

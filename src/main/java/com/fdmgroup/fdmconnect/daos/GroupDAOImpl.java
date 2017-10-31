@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.controllers.Logging;
 import com.fdmgroup.fdmconnect.entities.Group;
-import com.fdmgroup.fdmconnect.entities.User;
 
 public class GroupDAOImpl implements GroupDAO {
 
@@ -43,6 +42,8 @@ public class GroupDAOImpl implements GroupDAO {
 		manager.getTransaction().begin();
 		manager.persist(group);
 		manager.getTransaction().commit();
+		Logging.Log("info", "GroupDAOImpl: " + group
+				+ " has been added to the database");
 		return group;
 
 	}

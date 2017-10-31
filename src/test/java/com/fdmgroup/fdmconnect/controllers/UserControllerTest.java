@@ -250,7 +250,7 @@ public class UserControllerTest {
 	@Test
 	public void test_addExperience_returnsUserAddExperience() {
 
-		String result = userController.addExperience(model);
+		String result = userController.addExperience(session, model);
 
 		assertEquals(result, "user/AddExperience");
 
