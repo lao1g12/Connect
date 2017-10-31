@@ -13,7 +13,7 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
 	<mvc:resources mapping="/user/img/**" location="/img/" />
-	<mvc:resources mapping="/admin/img/**" location="/img/" />
+	<mvc:resources mapping="/admin/img/**" location="/img/" /> 
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -29,8 +29,8 @@
 	</bean>
 	
 	<bean id="userDao" class="com.fdmgroup.fdmconnect.daos.UserDAOImpl"/>
-	<bean id="postDao" class="com.fdmgroup.fdmconnect.daos.ProfileDAOImpl"/>
-	<bean id="profileDao" class="com.fdmgroup.fdmconnect.daos.PostDAOImpl"/>
+	<bean id="profileDao" class="com.fdmgroup.fdmconnect.daos.ProfileDAOImpl"/>
+	<bean id="postDao" class="com.fdmgroup.fdmconnect.daos.PostDAOImpl"/>
 	<bean id="experienceDao" class="com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl"/>
 	<bean id="educationDao" class="com.fdmgroup.fdmconnect.daos.EducationDAOImpl"/>
 	<bean id="flagDao" class="com.fdmgroup.fdmconnect.daos.FlagDAOImpl"/>

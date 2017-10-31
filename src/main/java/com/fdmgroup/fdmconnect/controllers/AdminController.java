@@ -51,6 +51,7 @@ public class AdminController {
 		Flag flag = flagDao.getFlag(1);
 		model.addAttribute("flag", flag);
 		return "admin/Home";
+		
 	}
 
 	@RequestMapping("/user/processRemovePostAdmin")

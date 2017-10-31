@@ -97,6 +97,7 @@
 						<br />
 						Posted: ${p.getPostDateFormatted()}<br />
 						<br />
+						
 						<c:if test="${userCur == session.user}">
 							<a href="goToEditPost?postId=${p.postId}">Edit Post</a>
 							<br />

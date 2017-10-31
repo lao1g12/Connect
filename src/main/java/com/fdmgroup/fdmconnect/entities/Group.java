@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,12 +25,14 @@ public class Group {
 	@Id
 	private String name; 
 	private String description;
-	private String imageUrl; 
+	private String imageUrl;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="group")
 	private Set<Post> posts = new HashSet<Post>();
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinTable(name = "FC_USER_GROUPS")
 	private Set<User> users = new HashSet<User>();
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
+	private User owner;
 	
 		
 	
@@ -42,6 +45,17 @@ public class Group {
 		this.description = description;
 		this.imageUrl = imageUrl;
 		
+	}
+
+
+
+	public User getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 

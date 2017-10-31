@@ -333,8 +333,40 @@ public class UserController {
 			return "user/Home";
 		}
 		
+		return "redirect:/user/goHome";
+			
+	}
+	
+	@RequestMapping(value = {"/user/doRemoveComment", "/admin/doRemoveComment"})
+	String doRemoveComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId){
+		
+		commentDao.removeComment(commentId);
+		
+		return "redirect:/user/goHome";
+		
+	}
+	
+	@RequestMapping(value = {"/user/goToEditComment", "/admin/goToEditComment"})
+	String goToEditComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
+			@RequestParam(name = "commentId") int commentId) {
+		
+		model.addAttribute("postId", postId);
+		model.addAttribute("viewComments", "show");
+		model.addAttribute("editComment", "edit");
 		return "user/Home";
 		
+	}
+	
+	@RequestMapping(value = {"/user/doEditComment", "/admin/doEditComment"})
+	String doEditComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId, 
+			@RequestParam(name = "commentBody") String commentBody){
+		
+		Comment comment = commentDao.getComment(commentId);
+		comment.setCommentBody(commentBody);
+		
+		commentDao.updateComment(comment);
+		
+		return "redirect:/user/goHome";
 		
 	}
 	
