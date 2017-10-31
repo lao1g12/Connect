@@ -55,6 +55,7 @@ public class GroupController {
 		return "user/MyGroups";
 
 	}
+	
 	@RequestMapping("user/doCreateGroup")
 	public String doCreateGroup(Model model, Group group, HttpSession session){
 		User owner = (User) session.getAttribute("user");
@@ -63,6 +64,7 @@ public class GroupController {
 		model.addAttribute("groupWasCreated", "Group was created successfully");
 		return"user/MyGroups";
 	}
+	
 	
 	
 }
