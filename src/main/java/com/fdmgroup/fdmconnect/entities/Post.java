@@ -62,6 +62,18 @@ public class Post {
 //		this.postOwner = postOwner;
 //		postOwner.addPost(this);
 	}
+	
+	public Post(String title, String bodyText, String link, String category, String imgUrl) {
+		super();
+		this.title = title;
+		this.bodyText = bodyText;
+		this.link = link;
+		this.category = category;
+		this.imgUrl = imgUrl;
+
+//		this.postOwner = postOwner;
+//		postOwner.addPost(this);
+	}
 	public String getListOfKeyWords(){
 		StringBuffer sb = new StringBuffer();
 		sb.append(title+" "+bodyText+" "+category);
