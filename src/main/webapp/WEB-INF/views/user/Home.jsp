@@ -89,9 +89,8 @@
 							</form>
 						</c:if>
 					</c:if>
-							
+					<br />
 					<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
-					<br>
 					<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
 						<sf:form method="post" action="doFlagPost?postId=${aP.postId}"
 							modelAttribute="flag">
@@ -101,7 +100,6 @@
 						</sf:form>
 					</c:if>
 					<br />
-					
 					<c:choose>
 						<c:when test='${user.getRole() == "Admin"}'>
 							<a href="processRemovePostAdmin?postId=${aP.postId}"

@@ -37,9 +37,9 @@ public class Post {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_POST_USER")
 	private User postOwner;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinTable(name = "FC_POST_GROUP")
-	private Group group;
+//	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+//	@JoinTable(name = "FC_POST_GROUP")
+//	private Group group;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="flaggedPost", cascade = CascadeType.REMOVE)
 	private Set<Flag> flags;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="post", cascade = CascadeType.REMOVE)

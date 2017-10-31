@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.controllers.Logging;
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -84,6 +85,18 @@ public class PostDAOImpl implements PostDAO {
 		EntityManager manager = factory.createEntityManager();
 		Post post = manager.find(Post.class, postId);
 		return post;
+		
+	}
+	
+	public List<Post> getAllPostsByGroup(int groupId){
+		
+		EntityManager manager = factory.createEntityManager();
+		Group group = manager.find(Group.class, groupId);
+		TypedQuery<Post> query = manager.createQuery("select p from Post as p where p.group = ?", Post.class);
+		query.setParameter(1, group);
+		List<Post> posts = query.getResultList();
+		
+		return posts;
 		
 	}
 }
