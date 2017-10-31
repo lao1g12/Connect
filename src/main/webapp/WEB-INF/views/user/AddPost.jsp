@@ -42,7 +42,7 @@
 <h1> Add New Post </h1>
 <br>
 
-<form action="" method="postToGroup"> 
+<form action="postToGroup" method="postToGroup"> 
 <input type="submit" value="Post To Group"> 
 
 </form>
