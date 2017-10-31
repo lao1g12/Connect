@@ -111,6 +111,7 @@
 						</c:if>
 						<br />
 						<c:if test="${postId == aP.postId and addComment == 'add'}">
+							<h4>${badComment}</h4>
 							<form method="post" action="doAddComment?postId=${aP.postId}">
 								<input type="text" name="commentBody" /> <br /> <input
 									type="submit" value="Add Comment" />

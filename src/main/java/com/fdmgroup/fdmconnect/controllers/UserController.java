@@ -14,6 +14,7 @@ import javax.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -333,8 +334,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = {"/user/goToAddComment", "/admin/goToAddComment"})
-	public String goToAddComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
-		
+	public String goToAddComment(HttpSession session, Model model, HttpServletRequest request,  @ModelAttribute("postId") int postId) {
+		if (postId == 0){
+			postId = Integer.parseInt(request.getParameter("postId"));
+		}
 		model.addAttribute("postId", postId);
 		model.addAttribute("viewComments", "show");
 		model.addAttribute("addComment", "add");
@@ -344,9 +347,25 @@ public class UserController {
 	
 	@RequestMapping(value = {"/user/doAddComment", "/admin/doAddComment"})
 	public String doAddComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
-			@RequestParam(name = "commentBody") String commentBody) {
+			@RequestParam(name = "commentBody") String commentBody, RedirectAttributes ra, HttpServletRequest request) {
 		
 		Comment comment = new Comment(commentBody);
+		BusinessLogic bl = new BusinessLogic();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		List<String> checkedBadWords = bl.searchForListings(badWords, commentBody);
+
+		if (checkedBadWords.size() > 0) {
+			StringBuffer sbReturn = new StringBuffer();
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
+			}
+			String badWordString = sbReturn.toString();
+			ra.addFlashAttribute("badComment",
+					"You just tried to post an article with the following inappropriate words :" + badWordString);
+			ra.addFlashAttribute("postId", postId);
+			return "redirect:/user/goToAddComment";
+		}
 		comment.setUser((User) session.getAttribute("user"));
 		comment.setPost(postDao.getPost(postId));
 		
