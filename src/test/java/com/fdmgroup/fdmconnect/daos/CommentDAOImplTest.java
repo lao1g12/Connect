@@ -5,21 +5,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import javassist.bytecode.Mnemonic;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.fdmgroup.fdmconnect.entities.Comment;
-import com.fdmgroup.fdmconnect.entities.Education;
 
 public class CommentDAOImplTest {
 
@@ -27,11 +22,8 @@ public class CommentDAOImplTest {
 	private EntityManagerFactory factory;
 	private EntityManager manager;
 	private EntityTransaction transaction;
-	private TypedQuery<Education> query;
-	private List<Comment> comments;
 	private Comment comment;
 
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() throws Exception {
 		
@@ -40,8 +32,6 @@ public class CommentDAOImplTest {
 		transaction = mock(EntityTransaction.class);
 		
 		commentDao = new CommentDAOImpl(factory);
-		query = mock(TypedQuery.class);
-		comments = mock(ArrayList.class);
 		comment = mock(Comment.class);
 		
 		when(factory.createEntityManager()).thenReturn(manager);
@@ -81,6 +71,18 @@ public class CommentDAOImplTest {
 		verify(transaction).begin();
 		verify(manager).merge(comment);
 		verify(transaction).commit();
+		
+	}
+	
+	@Test
+	public void test_getComment_returnsComment() {
+		
+		int commentId = 0;
+		
+		when(manager.find(Comment.class, commentId)).thenReturn(comment);
+		Comment retrievedComment = commentDao.getComment(commentId);
+		
+		assertEquals(retrievedComment, comment);
 		
 	}
 
