@@ -29,8 +29,8 @@
 	</bean>
 	
 	<bean id="userDao" class="com.fdmgroup.fdmconnect.daos.UserDAOImpl"/>
-	<bean id="postDao" class="com.fdmgroup.fdmconnect.daos.ProfileDAOImpl"/>
-	<bean id="profileDao" class="com.fdmgroup.fdmconnect.daos.PostDAOImpl"/>
+	<bean id="postDao" class="com.fdmgroup.fdmconnect.daos.PostDAOImpl"/>
+	<bean id="profileDao" class="com.fdmgroup.fdmconnect.daos.ProfileDAOImpl"/>
 	<bean id="experienceDao" class="com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl"/>
 	<bean id="educationDao" class="com.fdmgroup.fdmconnect.daos.EducationDAOImpl"/>
 	<bean id="flagDao" class="com.fdmgroup.fdmconnect.daos.FlagDAOImpl"/>

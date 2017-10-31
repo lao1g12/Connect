@@ -51,13 +51,14 @@ public class Post {
 		
 	public Post() {	}
 
-	public Post(String title, String bodyText, String link, String category, String imgUrl) {
+	public Post(String title, String bodyText, String link, String category, String imgUrl, Group group) {
 		super();
 		this.title = title;
 		this.bodyText = bodyText;
 		this.link = link;
 		this.category = category;
 		this.imgUrl = imgUrl;
+		this.group = group;
 //		this.postOwner = postOwner;
 //		postOwner.addPost(this);
 	}
@@ -78,6 +79,16 @@ public class Post {
 		return searchString;
 	}
 	
+	
+	
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
 	public void addComment(Comment comment){
 		this.comments.add(comment);
 	}
