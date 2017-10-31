@@ -56,7 +56,8 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
-					<c:choose>
+
+				<c:choose>
 				<c:when test='${aP.imgUrl == null}'>
 				</c:when>
 				<c:otherwise>
