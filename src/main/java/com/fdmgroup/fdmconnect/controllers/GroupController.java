@@ -1,5 +1,10 @@
 package com.fdmgroup.fdmconnect.controllers;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +16,7 @@ import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Group;
+import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
 public class GroupController {
@@ -37,4 +43,24 @@ public class GroupController {
 		return "user/GroupHome";
 		
 	}
+	
+	@RequestMapping("user/goToMyGroups")
+	public String goToViewAllGroups(Model model, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Set<Group> groups= user.getGroups();
+		Group group = new Group();
+		model.addAttribute(group);
+		model.addAttribute("groups", groups);
+		Logging.Log("trace", "Admin Controller: Display all posts called.");
+		return "user/MyGroups";
+
+	}
+	@RequestMapping("user/doCreateGroup")
+	public String doCreateGroup(Model model){
+		Group group = new Group();
+		model.addAttribute(group);
+		return"user/MyGroups";
+	}
+	
+	
 }

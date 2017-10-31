@@ -25,7 +25,7 @@
 	
 	<bean id="factory" class="javax.persistence.Persistence"
 		factory-method="createEntityManagerFactory">
-		<constructor-arg value="PersistenceInCreateMode" />
+		<constructor-arg value="DemoPersistence" />
 	</bean>
 	
 	<bean id="userDao" class="com.fdmgroup.fdmconnect.daos.UserDAOImpl"/>

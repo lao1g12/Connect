@@ -22,9 +22,6 @@ public class Group {
 	
 	
 	@Id
-	@SequenceGenerator(name = "groupid_sequence", sequenceName = "groupid_sequence", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupid_sequence")
-	@Column(name = "NAME")
 	private String name; 
 	private String description;
 	private String imageUrl; 
