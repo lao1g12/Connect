@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,7 +31,8 @@ public class Group {
 	private String imageUrl; 
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="group")
 	private Set<Post> posts=new HashSet<Post>();
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="group")
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
+	@JoinTable(name = "FC_USER_GROUPS")
 	private Set<User> users=new HashSet<User>();
 	
 		
@@ -113,6 +116,8 @@ public class Group {
 	public void addUser(User user){ 
 		this.users.add(user);
 	}
+	
+	
 	
 	
 
