@@ -29,10 +29,10 @@ public class Group {
 	private String description;
 	private String imageUrl; 
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="group")
-	private Set<Post> posts=new HashSet<Post>();
+	private Set<Post> posts = new HashSet<Post>();
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinTable(name = "FC_USER_GROUPS")
-	private Set<User> users=new HashSet<User>();
+	private Set<User> users = new HashSet<User>();
 	
 		
 	
