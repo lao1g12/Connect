@@ -69,11 +69,6 @@ public class GroupController {
 	}
 	
 
-	@RequestMapping("user/postToGroup")
-	public String postToGroup() { 
-		
-		return "AddPost";
-	}
 
 	
 }
