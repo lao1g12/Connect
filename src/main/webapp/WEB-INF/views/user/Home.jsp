@@ -69,10 +69,12 @@
 					<a href="goToViewComments?postId=${aP.postId}">View Comments</a> 
 					<br />
 					<c:if test="${postId == aP.postId and viewComments == 'show' }">
+						<h3>Comments</h3>
 						<c:forEach items="${aP.comments}" var="c">
-							${c.user.firstName} ${c.user.lastName} 
+							${c.user.profile.firstName} ${c.user.profile.lastName} 
 							<br />
 							${c.getCommentDateFormatted()} 
+							<br />
 							<br />
 							${c.commentBody} 
 							<br />

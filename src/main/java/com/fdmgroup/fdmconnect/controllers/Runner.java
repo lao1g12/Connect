@@ -3,7 +3,9 @@ package com.fdmgroup.fdmconnect.controllers;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -13,6 +15,7 @@ public class Runner {
 		
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("DemoPersistence");
 		UserDAOImpl userDao = new UserDAOImpl(factory);
+		FlagDAOImpl flagDao = new FlagDAOImpl(factory);
 		
 		Profile profile = new Profile("someUrl", "I am an admin!", "Stopping people having fun.");
 		User user = new User("admin","password","admin@fdmgroup.com","Admin","Admin");
