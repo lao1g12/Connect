@@ -20,7 +20,9 @@
 	 <img class="boarding" src="${g.imageUrl }"> <br/>
 			<br>
 			<br>
-			<a href="goToMyGroups?name=${g.name}">Go To Group</a>
+			<a href="goToGroupHome?name=${g.name}">Go To Group</a>
+			<br>
+			<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
 
 	</c:forEach>
 

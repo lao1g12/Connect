@@ -52,7 +52,7 @@ public class GroupController {
 		Group group = new Group();
 		model.addAttribute(group);
 		model.addAttribute("groups", groups);
-		Logging.Log("trace", "Admin Controller: Display all posts called.");
+		Logging.Log("trace", "Admin Controller:  My groups called.");
 		return "user/MyGroups";
 
 	}
