@@ -34,11 +34,11 @@ public class GroupController {
 		this.groupDao = groupDao;
 	}
 	
-	@RequestMapping("/goToGroupHome")
-	public String admin(Model model, @RequestParam int groupId) {
+	@RequestMapping("user/goToGroupHome")
+	public String admin(Model model, @RequestParam String name) {
 
-		Group group = groupDao.getGroup(groupId);
-		model.addAttribute("allPosts", postDao.getAllPostsByGroup(groupId));
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute("group", group);
 		return "user/GroupHome";
 		
@@ -60,11 +60,12 @@ public class GroupController {
 	public String doCreateGroup(Model model, Group group, HttpSession session){
 		User owner = (User) session.getAttribute("user");
 		group.setOwner(owner);
+		owner.getGroups().add(group);
+		group.getUsers().add(owner);
 		groupDao.createGroup(group);
 		model.addAttribute("groupWasCreated", "Group was created successfully");
-		return"user/MyGroups";
+		return"redirect:/user/goToMyGroups";
 	}
-	
 	
 	
 }
