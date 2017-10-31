@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fdmgroup.fdmconnect.entities.Post;
 
 public class BusinessLogic {
+	
 	@Autowired
 	private EntityManagerFactory factory;
 
