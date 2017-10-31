@@ -333,6 +333,8 @@ public class UserController {
 			return "user/Home";
 		}
 		
+		return "user/Home";
+		
 		
 	}
 	

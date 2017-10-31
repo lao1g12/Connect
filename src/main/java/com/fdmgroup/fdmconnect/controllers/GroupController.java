@@ -20,7 +20,8 @@ public class GroupController {
 	private UserDAOImpl userDao;
 	@Autowired
 	private FlagDAOImpl flagDao;
-	@Autowired GroupDAOImpl groupDao;
+	@Autowired 
+	private GroupDAOImpl groupDao;
 	
 	public GroupController() {	}
 
@@ -36,6 +37,7 @@ public class GroupController {
 	public String admin(Model model, @RequestParam int groupId) {
 
 		Group group = groupDao.getGroup(1);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(groupId));
 		model.addAttribute("group", group);
 		return "user/GroupHome";
 	}
