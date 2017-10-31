@@ -33,7 +33,7 @@
 		<input type="submit" value="Create group"/><br>
 	</sf:form>
 	${groupWasCreated}
-	
+	${ownerLeftGroup }
 
 
 </body>

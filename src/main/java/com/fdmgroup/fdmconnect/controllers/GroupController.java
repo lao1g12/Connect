@@ -52,7 +52,7 @@ public class GroupController {
 		Group group = new Group();
 		model.addAttribute(group);
 		model.addAttribute("groups", groups);
-		Logging.Log("trace", "Admin Controller:  My groups called.");
+		Logging.Log("trace", "Group Controller:  My groups called.");
 		return "user/MyGroups";
 
 	}
@@ -74,6 +74,17 @@ public class GroupController {
 		
 		return "AddPost";
 	}
+	
+	@RequestMapping("user/goToLeaveGroup")
+	public String doToLeaveGroup(Model model, Group group, HttpSession session, RedirectAttributes ra){
+		User owner = (User) session.getAttribute("user");
+	     group.getOwner();
+		group.getUsers().remove(owner);
+	
+		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
+		return"redirect:/user/goToMyGroups";
+	}
+	
 
 	
 }
