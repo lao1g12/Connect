@@ -211,7 +211,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/deleteEducation")
-	public String removeEducation(@RequestParam int educationId,RedirectAttributes ra ) { 
+	public String removeEducation(@RequestParam int educationId, RedirectAttributes ra ) { 
 		
 		educationDao.removeEducation(educationId);
 		ra.addFlashAttribute("message", "Education removed succesfully.");
@@ -283,7 +283,6 @@ public class UserController {
 		Post post = postDao.getPost(postId);
 		post.setTitle(title); post.setCategory(category); post.setImgUrl(imgUrl);
 		post.setBodyText(bodyText); post.setLink(link);
-		System.out.println(title);
 		
 		try {
 			postDao.updatePost(post);

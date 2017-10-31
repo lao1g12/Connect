@@ -69,8 +69,6 @@ public class AdminControllerTest {
 		assertEquals(result, "admin/Home");
 
 	}
-
-	
 	
 	@Test
 	public void test_goToViewAllFlags_returnsAdminDisplayAllFlags(){
@@ -81,6 +79,28 @@ public class AdminControllerTest {
 		String result = adminController.goToViewAllFlags(model, postId, request);
 		
 		assertEquals(result, "admin/DisplayAllFlags");
+	}
+	
+	@Test
+	public void test_processRemovePostAdmin_returnsUserHome() {
+		
+		int postId = 0;
+		
+		String result = adminController.processRemovePostAdmin(postId, model, session);
+		
+		assertEquals(result, "user/Home");
+		
+	}
+	
+	@Test
+	public void test_processRemovePost_returnsRedirectToAdminViewAllFlaggedPosts() {
+		
+		int postId = 0;
+		
+		String result = adminController.processRemovePost(postId, model, ra);
+		
+		assertEquals(result, "redirect:/admin/viewAllFlaggedPosts");
+		
 	}
 
 	@Test
@@ -110,16 +130,16 @@ public class AdminControllerTest {
 		String result = adminController.doAddUser(session, model, user);
 		
 		verify(userDao).addUser(user);
-		assertEquals(result, "admin/Home");
+		assertEquals(result, "redirect:/admin");
 		
 	}
 	
 	@Test
-	public void test_processRemoveUser_returnsAdminRemoveUser(){
+	public void test_processRemoveUser_returnsRedirectToAdminViewAllUsers(){
 		
 		String result = adminController.processRemoveUser("username", model, ra);
 		
-		assertEquals(result, "admin/DisplayAllUsers");
+		assertEquals(result, "redirect:/admin/viewAllUsers");
 		
 	}
 	
@@ -154,6 +174,18 @@ public class AdminControllerTest {
 		String result = adminController.goToViewAllFlaggedPosts(model, request);
 		
 		assertEquals(result, "admin/DisplayAllFlaggedPosts");
+		
+	}
+	
+	@Test
+	public void test_addBadWords_returnsRedirectToAdmin() { 
+		
+		String badWords = "";
+		
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		String result = adminController.addBadWords(badWords);
+		
+		assertEquals(result, "redirect:/admin");
 		
 	}
 }

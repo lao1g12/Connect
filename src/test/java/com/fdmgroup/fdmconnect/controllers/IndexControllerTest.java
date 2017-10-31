@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 
 public class IndexControllerTest {
@@ -35,6 +36,7 @@ public class IndexControllerTest {
 	private Calendar calendar;
 	private User user;
 	private FlagDAOImpl flagDao;
+	private Profile profile;
 
 	@Before
 	public void setUp() {
@@ -47,6 +49,7 @@ public class IndexControllerTest {
 		principal = mock(Principal.class);
 		user = mock(User.class);
 		calendar = mock(Calendar.class);
+		profile = mock(Profile.class);
 	}
 
 	@Test
@@ -56,16 +59,32 @@ public class IndexControllerTest {
 		assertEquals(result, "index");
 	}
 	
-//	@Test
-//	public void test_goToHome_callsGetUserAndReturnsHomePage(){
-//		when(principal.getName()).thenReturn("username");
-//		when(userDao.getUser("username")).thenReturn(user);
-//		when(user.getLastLogin()).thenReturn(calendar);
-//		String result = index.goToHome(session, principal);
-//		
-//		verify(userDao).getUser("username");
-//		assertEquals(result, "user/Home");
-//	}
+	@Test
+	public void test_goToHome_callsGetUserAndReturnsHomePageIfUserPreviouslyLoggedIn(){
+		
+		when(principal.getName()).thenReturn("username");
+		when(userDao.getUser("username")).thenReturn(user);
+		when(user.getProfile()).thenReturn(profile);
+		when(user.getLastLogin()).thenReturn(calendar);
+		String result = index.goToHome(session, principal, request);
+		
+		verify(userDao).getUser("username");
+		assertEquals(result, "user/Home");
+		
+	}
+	
+	@Test
+	public void test_goToHome_returnsUpdatePasswordIfFirstLogIn(){
+		
+		when(principal.getName()).thenReturn("username");
+		when(userDao.getUser("username")).thenReturn(user);
+		when(user.getProfile()).thenReturn(profile);
+		when(user.getLastLogin()).thenReturn(null);
+		String result = index.goToHome(session, principal, request);
+		
+		assertEquals(result, "user/UpdatePassword");
+		
+	}
 	
 	@Test
 	public void test_goToLogout_callsSessionInvalidateAndReturnsIndexMapping(){
