@@ -56,8 +56,13 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
-					<img class="boardimg" src="${aP.imgUrl}">
-					<br>
+				<c:choose>
+				<c:when test='${aP.imgUrl == null}'>
+				</c:when>
+				<c:otherwise>
+				<img class="boardimg" src="${aP.imgUrl}"><br>
+				</c:otherwise>
+				</c:choose>
 				${aP.bodyText}<br />
 					<a href="${aP.link}">For more info click here!</a>
 					<br />
