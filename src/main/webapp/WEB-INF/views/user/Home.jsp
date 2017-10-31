@@ -56,8 +56,13 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
-					<img class="boardimg" src="${aP.imgUrl}">
-					<br>
+					<c:choose>
+				<c:when test='${aP.imgUrl == null}'>
+				</c:when>
+				<c:otherwise>
+				<img class="boardimg" src="${aP.imgUrl}"><br>
+				</c:otherwise>
+				</c:choose>
 				${aP.bodyText}<br />
 					<a href="${aP.link}">For more info click here!</a>
 					<br />
@@ -82,17 +87,19 @@
 							<br />
 							<c:if
 								test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
-								<a href="doRemoveComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
+								<a
+									href="doRemoveComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
 							</c:if>
-							
+
 							<c:if test="${username == c.user.getUsername()}">
-								<a href="goToEditComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
+								<a
+									href="goToEditComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
 								<br />
 								<c:if test="${postId == aP.postId and editComment == 'edit'}">
-									<form method="post" action="doEditComment?commentId=${c.commentId}">
-										<input type="text" name="commentBody" /> 
-										<br /> 
-										<input type="submit" value="Update" />
+									<form method="post"
+										action="doEditComment?commentId=${c.commentId}">
+										<input type="text" name="commentBody" /> <br /> <input
+											type="submit" value="Update" />
 									</form>
 								</c:if>
 							</c:if>
@@ -106,6 +113,7 @@
 						</c:if>
 						<br />
 						<c:if test="${postId == aP.postId and addComment == 'add'}">
+							<h4>${badComment}</h4>
 							<form method="post" action="doAddComment?postId=${aP.postId}">
 								<input type="text" name="commentBody" /> <br /> <input
 									type="submit" value="Add Comment" />
