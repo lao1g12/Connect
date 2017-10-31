@@ -76,10 +76,10 @@ public class GroupController {
 	}
 	
 	@RequestMapping("user/goToLeaveGroup")
-	public String doToLeaveGroup(Model model, Group group, HttpSession session, RedirectAttributes ra){
+	public String goToLeaveGroup(Model model, Group group, HttpSession session, RedirectAttributes ra){
 		User owner = (User) session.getAttribute("user");
 	     group.getOwner();
-		group.getUsers().remove(owner);
+		group.removeUser();
 	
 		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
 		return"redirect:/user/goToMyGroups";
