@@ -44,9 +44,9 @@ public class GroupDAOImpl implements GroupDAO{
 		
 	}
 	
-	public Group getGroup(int groupId) {
+	public Group getGroup(String name) {
 		EntityManager manager = factory.createEntityManager();
-		Group group = manager.find(Group.class, groupId);
+		Group group = manager.find(Group.class, name);
 		return group;
 	}
 

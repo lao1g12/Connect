@@ -88,10 +88,10 @@ public class PostDAOImpl implements PostDAO {
 		
 	}
 	
-	public List<Post> getAllPostsByGroup(int groupId){
+	public List<Post> getAllPostsByGroup(String name){
 		
 		EntityManager manager = factory.createEntityManager();
-		Group group = manager.find(Group.class, groupId);
+		Group group = manager.find(Group.class, name);
 		TypedQuery<Post> query = manager.createQuery("select p from Post as p where p.group = ?", Post.class);
 		query.setParameter(1, group);
 		List<Post> posts = query.getResultList();
