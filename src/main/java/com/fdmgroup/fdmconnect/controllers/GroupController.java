@@ -42,5 +42,6 @@ public class GroupController {
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(groupId));
 		model.addAttribute("group", group);
 		return "user/GroupHome";
+		
 	}
 }
