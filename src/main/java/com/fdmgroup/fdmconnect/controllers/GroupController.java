@@ -58,7 +58,7 @@ public class GroupController {
 	@RequestMapping("user/doCreateGroup")
 	public String doCreateGroup(Model model){
 		Group group = new Group();
-		model.addAttribute(group);
+		model.addAttribute("groupWasCreated", "Group was created successfully");
 		return"user/MyGroups";
 	}
 	
