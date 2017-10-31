@@ -65,8 +65,9 @@
 			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner.username}<br />
 					<br />
-					
-					<a href="goToViewComments?postId=${aP.postId}">View Comments</a> 
+					<c:if test="${viewComments != 'show'}">
+						<a href="goToViewComments?postId=${aP.postId}">View Comments</a>
+					</c:if>
 					<br />
 					<c:if test="${postId == aP.postId and viewComments == 'show' }">
 						<h3>Comments</h3>
@@ -79,15 +80,35 @@
 							${c.commentBody} 
 							<br />
 							<br />
+							<c:if
+								test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
+								<a href="doRemoveComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
+							</c:if>
+							
+							<c:if test="${username == c.user.getUsername()}">
+								<a href="goToEditComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
+								<br />
+								<c:if test="${postId == aP.postId and editComment == 'edit'}">
+									<form method="post" action="doEditComment?commentId=${c.commentId}">
+										<input type="text" name="commentBody" /> 
+										<br /> 
+										<input type="submit" value="Update" />
+									</form>
+								</c:if>
+							</c:if>
+							<br />
+							${commentRemovedMessage}
+							<br />
 						</c:forEach>
 						<br />
-						<a href="goToAddComment?postId=${aP.postId}">Add Comment</a>
+						<c:if test="${addComment != 'add'}">
+							<a href="goToAddComment?postId=${aP.postId}">Add Comment</a>
+						</c:if>
 						<br />
 						<c:if test="${postId == aP.postId and addComment == 'add'}">
 							<form method="post" action="doAddComment?postId=${aP.postId}">
-								<input type="text" name="commentBody" />
-								<br />
-								<input type="submit" value="Add Comment" />
+								<input type="text" name="commentBody" /> <br /> <input
+									type="submit" value="Add Comment" />
 							</form>
 						</c:if>
 					</c:if>
@@ -112,7 +133,7 @@
 
 						</c:otherwise>
 					</c:choose>
-					
+
 					<br />
 					<c:if test="${postId == aP.postId}">
 				${flagErrorMessage}${flagSubmittedMessage}
@@ -122,8 +143,7 @@
 			</div>
 		</div>
 		<div class="empty"></div>
-		<footer> 
-		<br>
+		<footer> <br>
 
 		${postRemovedByAdmin }
 

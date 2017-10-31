@@ -50,4 +50,14 @@ public class GroupDAOImpl implements GroupDAO{
 		return group;
 	}
 
+	public void removeGroup(String name) {
+		EntityManager manager = factory.createEntityManager();
+		Group group = manager.find(Group.class, name);
+		manager.getTransaction().begin();
+		manager.remove(group);
+		manager.getTransaction().commit();
+		Logging.Log("info",  "GroupDAOImpl: "+group+" has been removed from the database");
+
+	}
+
 }

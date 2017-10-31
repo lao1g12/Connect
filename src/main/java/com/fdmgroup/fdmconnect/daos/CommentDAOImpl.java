@@ -52,4 +52,12 @@ public class CommentDAOImpl implements CommentDAO{
 		
 	}
 
+
+	@Override
+	public Comment getComment(int commentId) {
+		EntityManager manager = factory.createEntityManager();
+		Comment comment = manager.find(Comment.class, commentId);
+		return comment;
+	}
+
 }
