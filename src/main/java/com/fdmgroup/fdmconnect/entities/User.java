@@ -38,10 +38,10 @@ public class User {
 	private Set<Post> posts;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="reporter", cascade = CascadeType.REMOVE)
 	private List<Flag> flags;
-	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy="users")
 	private Set<Group> groups= new HashSet<Group>();
-	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.REMOVE)
+	private Set<Group> ownedGroups;
 	
 	
 	public User() {	}
