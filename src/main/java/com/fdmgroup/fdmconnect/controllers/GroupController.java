@@ -26,6 +26,8 @@ public class GroupController {
 	private PostDAOImpl postDao;
 	@Autowired 
 	private GroupDAOImpl groupDao;
+	@Autowired
+	private UserDAOImpl userDao;
 	
 	public GroupController() {	}
 
@@ -76,11 +78,12 @@ public class GroupController {
 	}
 	
 	@RequestMapping("user/goToLeaveGroup")
-	public String goToLeaveGroup(Model model, Group group, HttpSession session, RedirectAttributes ra){
-		User owner = (User) session.getAttribute("user");
-	     group.getOwner();
-		group.removeUser();
-	
+	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
+		
+		List<User> users = userDao.getAllUsers();
+		//User owner = (User) session.getAttribute("user");
+	    // group.getOwner();
+	    users.remove(username);
 		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
 		return"redirect:/user/goToMyGroups";
 	}
