@@ -90,19 +90,19 @@ public class GroupController {
 	}
 
 	
-	@RequestMapping("user/goToLeaveGroup")
-	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam(name="username" ) String username,  RedirectAttributes ra, Group groupId){
-        Group group =(Group)session.getAttribute("group");
-        List<User> users =userDao.getAllUsers();
-       
-        users.getGroup(groupId).getUsers().remove(username);
-     
-
-		System.out.println("1234");
-
-		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
-		return "redirect:/user/goToMyGroups";
-	}
+//	@RequestMapping("user/goToLeaveGroup")
+//	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam(name="username" ) String username,  RedirectAttributes ra, Group groupId){
+//        Group group =(Group)session.getAttribute("group");
+//        List<User> users =userDao.getAllUsers();
+//       
+//        users.getGroup(groupId).getUsers().remove(username);
+//     
+//
+//		System.out.println("1234");
+//
+//		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
+//		return "redirect:/user/goToMyGroups";
+//	}
 	
 
 	
@@ -144,7 +144,7 @@ public class GroupController {
 	
 	@RequestMapping("user/doAcceptInvite")
 	public String doAcceptInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId, 
-			@RequestParam(name="groupName") String name) {
+			@RequestParam(name="groupName") String name, RedirectAttributes ra) {
 		
 		User user = (User) session.getAttribute("user");
 		Group group = groupDao.getGroup(name);
@@ -156,28 +156,29 @@ public class GroupController {
 			groupDao.updateGroup(group);
 			notificationDao.removeNotification(notificationId);
 		} catch (PersistenceException pe) {
-			model.addAttribute("inviteAcceptError", "You already exist as a member in this group.");
-			return "user/Home";
+			ra.addFlashAttribute("inviteAcceptError", "You already exist as a member in this group.");
+			return "redirect:/user/goHome";
 		}
 		
-		model.addAttribute("userAddedToGroupMessage", "You have been added to the group "+name);
-		return "user/Home";
+		ra.addFlashAttribute("userAddedToGroupMessage", "You have been added to the group "+name);
+		return "redirect:/user/goHome";
 		
 	}
 	
 	@RequestMapping("user/doDeclineInvite")
-	public String doDeclineInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId) {
+	public String doDeclineInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId,
+			RedirectAttributes ra) {
 
 		int notificationId = Integer.parseInt(nId);
 		
 		try {
 			notificationDao.removeNotification(notificationId);
 		} catch (PersistenceException pe) {
-			model.addAttribute("inviteDeclineError", "Invite no longer exists.");
-			return "user/Home";
+			ra.addFlashAttribute("inviteDeclineError", "Invite no longer exists.");
+			return "redirect:/user/goHome";
 		}
 		
-		return "user/Home";
+		return "redirect:/user/goHome";
 		
 	}
 	

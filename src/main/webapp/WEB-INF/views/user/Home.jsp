@@ -67,7 +67,9 @@
 							<a href="doAcceptInvite?notificationId=${n.notificationId}&groupName=${n.body}">Accept</a>
 							<a href="doDeclineInvite?notificationId=${n.notificationId}">Decline</a>
 						</c:if>
-						<br /> <br />
+						<br />
+						${inviteDeclineError}${userAddedToGroupMessage}${inviteAcceptError}
+						<br />
 					</div>
 					</c:forEach>
 				</c:if>
