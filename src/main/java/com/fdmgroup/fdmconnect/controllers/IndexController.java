@@ -59,7 +59,7 @@ public class IndexController {
 		
 		user.setLastLogin();
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
-		session.setAttribute("allPosts", postDao.getAllPostsWhereGroupsIsNull());
+		session.setAttribute("allPosts", postDao.getAllPosts());
 		
 		return "user/Home";
 		
