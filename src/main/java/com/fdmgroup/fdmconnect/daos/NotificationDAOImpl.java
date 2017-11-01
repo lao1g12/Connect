@@ -69,7 +69,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		
 	}
 	
-	public List<Notification> getAllPostsByGroup(User sender, User recipient){
+	public List<Notification> getAllNotificationsByGroup(User sender, User recipient){
 		
 		EntityManager manager = factory.createEntityManager();
 
