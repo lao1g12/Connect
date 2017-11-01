@@ -32,6 +32,7 @@
 					<li class="horizl"><a href="account">Account</a></li>
 					<li class="horizl"><a href="submitPost">Add Post</a></li>
 					<li class="horizl"><a href="goToMyGroups">My Groups</a></li>
+					<li class="horizl"><a href="goToMyMessages">My Messages</a></li>
 					<li id="right" class="horizl"><a href="logout">Logout</a></li>
 
 				</ul>
@@ -40,14 +41,20 @@
 		</div>
 
 		<!--  welcome User  -->
-		<div class="col col12 last">
+		<div class = "row">
+		<div class="col col6">
 			<h3>Welcome ${user.getUsername()}</h3>
 		</div>
-		<form action="searchPosts" method="get">
+		
+	
+		<div class="col col6 last, search">
+		<form action="searchPosts" method="get" >
 			Search for post: <input type="text" name="input" /> <input
 				type="submit" value="Search!" />
 		</form>
+		</div>
 
+		</div>
 		<!-- Notice Board -->
 		<div class="col col12 last, border">
 			<div class="boardtext">

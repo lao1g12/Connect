@@ -134,15 +134,7 @@ public class UserController {
 
 	}
 	
-	@RequestMapping("user/postToGroup")
-	public String postToGroup(RedirectAttributes ra) { 
-		
-		
-		ra.addFlashAttribute("triggerMessage", "group");
-		
-		return "redirect:/user/submitPost";
-	}
-	
+
 	
 	
 	

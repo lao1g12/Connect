@@ -9,17 +9,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
+import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
+import com.fdmgroup.fdmconnect.entities.Notification;
 import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
@@ -33,19 +36,20 @@ public class GroupController {
 	private UserDAOImpl userDao;
 	@Autowired
 	private FlagDAOImpl flagDao;
-	
-	
-	
+	@Autowired
+	private NotificationDAOImpl notificationDao;
+
 	public GroupController() {	}
 
 	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
 		super();
+		this.userDao = userDao;
 		this.postDao = postDao;
 		this.groupDao = groupDao;
 		this.flagDao = flagDao;
 	}
 	
-	@RequestMapping("user/goToGroupHome")
+	@RequestMapping(value={"user/goToGroupHome" , "admin/goToGroupHome"})
 	public String admin(Model model, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
@@ -83,20 +87,48 @@ public class GroupController {
 		
 		return"redirect:/user/goToMyGroups";
 	}
+
 	
-
-
 	@RequestMapping("user/goToLeaveGroup")
-	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
-		
-		List<User> users = groupDao.getAllUsers();
-		//User owner = (User) session.getAttribute("user");
-	    // group.getOwner();
-	    users.remove(username);
+	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam(name="username" ) String username,  RedirectAttributes ra, Group groupId){
+        Group group =(Group)session.getAttribute("group");
+        List<User> users =userDao.getAllUsers();
+       
+        users.getGroup(groupId).getUsers().remove(username);
+     
+
+		System.out.println("1234");
+
 		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
-		return"redirect:/user/goToMyGroups";
+		return "redirect:/user/goToMyGroups";
 	}
 	
+
+	
+	@RequestMapping("user/goToSendInvite")
+	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name){
+		
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("group", group);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		model.addAttribute("sendInvite", "send");
+		
+		return "user/GroupHome";
+		
+	}
+	
+	@RequestMapping("user/doSendInvite")
+	public String doSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name,
+			@RequestParam(name="username") String username){
+		
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("group", group);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		
+		Notification notification = new Notification(title, type);
+		
+		
+	}
 	
 	@RequestMapping("user/addGroupPost")
 	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request){ 
