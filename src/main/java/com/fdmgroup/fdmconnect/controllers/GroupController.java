@@ -78,12 +78,6 @@ public class GroupController {
 	
 
 
-	@RequestMapping("user/postToGroup")
-	public String postToGroup() { 
-		
-		return "AddPost";
-	}
-	
 	@RequestMapping("user/goToLeaveGroup")
 	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
 		
