@@ -62,8 +62,8 @@
 						${n.title}<br />
 						<br />
 						${n.body} <br />
-						${n.getNotificationDateFormatted()} <br />
 						<c:if test="${n.type == 'invite'}">
+							${n.getNotificationDateFormatted()} <br />
 							<a href="doAcceptInvite?notificationId=${n.notificationId}&groupName=${n.body}">Accept</a>
 							<a href="doDeclineInvite?notificationId=${n.notificationId}">Decline</a>
 						</c:if>
