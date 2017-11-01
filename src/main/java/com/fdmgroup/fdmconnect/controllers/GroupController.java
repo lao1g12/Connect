@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.controllers;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
+import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
@@ -28,6 +31,10 @@ public class GroupController {
 	private GroupDAOImpl groupDao;
 	@Autowired
 	private UserDAOImpl userDao;
+	@Autowired
+	private FlagDAOImpl flagDao;
+	
+	
 	
 	public GroupController() {	}
 
@@ -35,6 +42,7 @@ public class GroupController {
 		super();
 		this.postDao = postDao;
 		this.groupDao = groupDao;
+		this.flagDao = flagDao;
 	}
 	
 	@RequestMapping("user/goToGroupHome")
@@ -89,7 +97,49 @@ public class GroupController {
 		return"redirect:/user/goToMyGroups";
 	}
 	
+	
+	@RequestMapping("user/addGroupPost")
+	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request){ 
+		Post post = new Post();
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		model.addAttribute("group", group);
+		model.addAttribute(post);
+	
+		request.setAttribute("addGroupPost", "hello");
+		return"user/GroupHome";
+	}
 
+	
+	@RequestMapping(value = { "user/groupPost" })
+	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String name) {
+		
+		Group group = groupDao.getGroup(name);
+		User user = (User) session.getAttribute("user");
+		post.setPostOwner(user);
+		BusinessLogic bl = new BusinessLogic();
+		String checkString = post.getFullListOfKeyWords();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		List<String> checkedBadWords = bl.searchForListings(badWords, checkString);
 
+		if (checkedBadWords.size() > 0) {
+			StringBuffer sbReturn = new StringBuffer();
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
+			}
+			String badWordString = sbReturn.toString();
+			request.setAttribute("badPost",
+					"You just tried to post an article with the following inappropriate words :" + badWordString);
+			return "user/AddPost";
+		}
+		
+		post.setGroup(group);
+		postDao.addPost(post);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + "added post" + post);
+
+		return "redirect:/user/login";
+
+	}
 	
 }
