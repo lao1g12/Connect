@@ -83,8 +83,6 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
-					
-					<div class = "row">
 					<c:choose>
 						<c:when test='${aP.imgUrl == null}'>
 						</c:when>
