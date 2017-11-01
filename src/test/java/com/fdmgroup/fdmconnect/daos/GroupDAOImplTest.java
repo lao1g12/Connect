@@ -93,5 +93,16 @@ public class GroupDAOImplTest {
 		verify(transaction).commit();
 		
 	}
+	
+	@Test
+	public void test_updateGroup_invokesGetTransactionAndMerge() {
+		
+		groupDao.updateGroup(group);
+		
+		verify(transaction).begin();
+		verify(manager).merge(group);
+		verify(transaction).commit();
+	
+	}
 
 }
