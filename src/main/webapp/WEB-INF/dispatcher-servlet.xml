@@ -36,7 +36,7 @@
 	<bean id="flagDao" class="com.fdmgroup.fdmconnect.daos.FlagDAOImpl"/>
 	<bean id="commentDao" class="com.fdmgroup.fdmconnect.daos.CommentDAOImpl"/>
 	<bean id="groupDao" class="com.fdmgroup.fdmconnect.daos.GroupDAOImpl"/>
-
+	<bean id="notificationDao" class="com.fdmgroup.fdmconnect.daos.NotificationDAOImpl"/>
 	
 
 	<!-- <bean id="emf" class="javax.persistence.Persistence" factory-method="createEntityManagerFactory"> 
