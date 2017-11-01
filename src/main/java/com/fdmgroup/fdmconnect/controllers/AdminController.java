@@ -69,7 +69,7 @@ public class AdminController {
 		postDao.removePost(postId);
 		Logging.Log("post", "post removed succesfully by admin" + postId);
 		model.addAttribute("postRemovedByAdmin", "Post removed succesfully.");
-		session.setAttribute("allPosts", postDao.getAllPosts());
+		session.setAttribute("allPosts", postDao.getAllPostsWhereGroupsIsNull());
 		
 		return "user/Home";
 
