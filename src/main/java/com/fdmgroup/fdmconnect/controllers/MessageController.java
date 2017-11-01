@@ -62,4 +62,14 @@ public class MessageController {
 		request.setAttribute("senders", senders);
 		return "user/MyMessages";
 	}
+	
+	@RequestMapping("user/goToMyMessages")
+	public String goToMyMessages(Principal principal, HttpServletRequest request){
+		MessageLogic ml = new MessageLogic();
+		User user = userDao.getUser(principal.getName());
+		Set<User> senders = ml.getRecievedList(user.getNotifications());
+		request.setAttribute("senders", senders);
+		return "user/MyMessages";
+		
+	}
 }
