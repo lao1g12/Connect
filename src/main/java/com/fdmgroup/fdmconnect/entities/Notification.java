@@ -1,6 +1,9 @@
 package com.fdmgroup.fdmconnect.entities;
 
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="FC_NOTIFICATIONS")
@@ -23,6 +28,8 @@ public class Notification {
 	private String title;
 	private String body;
 	private String type;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateAdded = Calendar.getInstance();
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_NOTIFICATION_USER")
 	private User recipient;
@@ -40,9 +47,6 @@ public class Notification {
 		this.body = body;
 	}
 
-	
-	
-	
 	public String getBody() {
 		return body;
 	}
@@ -89,6 +93,11 @@ public class Notification {
 
 	public void setUser(User user) {
 		recipient = user;
+	}
+	
+	public Date getNotificationDateFormatted(){
+		Date date = this.dateAdded.getTime();
+		return date;
 	}
 
 }

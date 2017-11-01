@@ -34,8 +34,6 @@ public class Comment {
 	@JoinTable(name="FC_COMMENT_USER")
 	private User user;
 	
-
-	
 	public Comment() {	}
 	public Comment(String commentBody) {
 		super();

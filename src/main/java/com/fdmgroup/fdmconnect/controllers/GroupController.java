@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.controllers;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -49,7 +50,7 @@ public class GroupController {
 		this.flagDao = flagDao;
 	}
 	
-	@RequestMapping("user/goToGroupHome")
+	@RequestMapping(value={"user/goToGroupHome" , "admin/goToGroupHome"})
 	public String admin(Model model, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
@@ -122,16 +123,67 @@ public class GroupController {
 			@RequestParam(name="username") String username){
 		
 		Group group = groupDao.getGroup(name);
+		User sender = (User) session.getAttribute("user");
+		User recipient = userDao.getUser(username);
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		
-		Notification notification = new Notification(title, type);
+
+		Notification notification = new Notification("Group Invite from "+sender.getUsername(), "invite", name);
+		notification.setUser(recipient);
+		notification.setSender(sender);
+		notificationDao.addNotification(notification);
 		
+		model.addAttribute("inviteSentMessage", "A group invite has been sent to "+username);
+		Logging.Log("info", "Group Controller: " + sender +
+				" sent an invite to " + username);
+		
+		return "user/GroupHome";
+		
+	}
+	
+	@RequestMapping("user/doAcceptInvite")
+	public String doAcceptInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId, 
+			@RequestParam(name="groupName") String name) {
+		
+		User user = (User) session.getAttribute("user");
+		Group group = groupDao.getGroup(name);
+		System.out.println(group);
+		int notificationId = Integer.parseInt(nId);
+		
+		try {
+			group.addUser(user);
+			groupDao.updateGroup(group);
+			notificationDao.removeNotification(notificationId);
+		} catch (PersistenceException pe) {
+			model.addAttribute("inviteAcceptError", "You already exist as a member in this group.");
+			return "user/Home";
+		}
+		
+		model.addAttribute("userAddedToGroupMessage", "You have been added to the group "+name);
+		return "user/Home";
+		
+	}
+	
+	@RequestMapping("user/doDeclineInvite")
+	public String doDeclineInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId) {
+
+		int notificationId = Integer.parseInt(nId);
+		
+		try {
+			notificationDao.removeNotification(notificationId);
+		} catch (PersistenceException pe) {
+			model.addAttribute("inviteDeclineError", "Invite no longer exists.");
+			return "user/Home";
+		}
+		
+		return "user/Home";
 		
 	}
 	
 	@RequestMapping("user/addGroupPost")
-	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request){ 
+	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request) { 
+		
 		Post post = new Post();
 		Group group = groupDao.getGroup(name);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
@@ -140,6 +192,7 @@ public class GroupController {
 	
 		request.setAttribute("addGroupPost", "hello");
 		return"user/GroupHome";
+		
 	}
 
 	

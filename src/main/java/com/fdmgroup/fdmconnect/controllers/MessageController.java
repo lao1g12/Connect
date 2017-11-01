@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +59,8 @@ public class MessageController {
 		notification.setSender(sender);
 		notifDao.addNotification(notification);
 		User user = userDao.getUser(principal.getName());
-		Set<User> senders = ml.getRecievedList(user.getNotifications());
-		request.setAttribute("senders", senders);
+		Set<User> contacts = ml.getContactList(user.getNotifications(), user.getNotificationsSent());
+		request.setAttribute("contacts", contacts);
 		return "user/MyMessages";
 	}
 	
@@ -67,9 +68,20 @@ public class MessageController {
 	public String goToMyMessages(Principal principal, HttpServletRequest request){
 		MessageLogic ml = new MessageLogic();
 		User user = userDao.getUser(principal.getName());
-		Set<User> senders = ml.getRecievedList(user.getNotifications());
-		request.setAttribute("senders", senders);
+		Set<User> contacts = ml.getContactList(user.getNotifications(), user.getNotificationsSent());
+		request.setAttribute("contacts", contacts);
 		return "user/MyMessages";
+		
+	}
+	
+	@RequestMapping("user/messages")
+	public String messageBox(@RequestParam String username, Principal principal, Model model){
+		
+		User comUser = userDao.getUser(username);
+		User currentUser = userDao.getUser(principal.getName());
+		List<Notification> conversation = notifDao.getAllPostsByGroup(currentUser, comUser);
+		model.addAttribute("conversation", conversation);
+		return "user/Messages";
 		
 	}
 }
