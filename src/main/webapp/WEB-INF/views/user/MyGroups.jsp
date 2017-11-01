@@ -72,7 +72,7 @@
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>
-		${groupWasCreated} ${ownerLeftGroup }
+		${groupWasCreated} ${userLeftGroup }
 
 	</div>
 </body>

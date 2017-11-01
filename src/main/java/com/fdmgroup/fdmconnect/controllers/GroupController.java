@@ -49,7 +49,7 @@ public class GroupController {
 		this.flagDao = flagDao;
 	}
 	
-	@RequestMapping("user/goToGroupHome")
+	@RequestMapping(value={"user/goToGroupHome", "admin/goToGroupHome"})
 	public String admin(Model model, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
@@ -88,22 +88,18 @@ public class GroupController {
 		return"redirect:/user/goToMyGroups";
 	}
 
-	
 	@RequestMapping("user/goToLeaveGroup")
-	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam(name="username" ) String username,  RedirectAttributes ra, Group groupId){
-        Group group =(Group)session.getAttribute("group");
-        List<User> users =userDao.getAllUsers();
-       
-        users.getGroup(groupId).getUsers().remove(username);
-     
-
-		System.out.println("1234");
-
-		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
+	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname ){
+		User user = (User) session.getAttribute("user");
+        Group group =groupDao.getGroup(groupname);
+       group.removeUser(user);
+       session.setAttribute("user", user);
+		//System.out.println("1234");
+       groupDao.updateGroup(group);
+       model.addAttribute("userLeftGroup", "User left group  successfully");
+		Logging.Log("info", "User left the group");
 		return "redirect:/user/goToMyGroups";
 	}
-	
-
 	
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name){
@@ -112,9 +108,7 @@ public class GroupController {
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute("sendInvite", "send");
-		
 		return "user/GroupHome";
-		
 	}
 	
 	@RequestMapping("user/doSendInvite")
@@ -122,14 +116,60 @@ public class GroupController {
 			@RequestParam(name="username") String username){
 		
 		Group group = groupDao.getGroup(name);
+		User sender = (User) session.getAttribute("user");
+		User recipient = userDao.getUser(username);
+		
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		
-		Notification notification = new Notification(title, type);
+		Notification notification = new Notification("Group Invite from "+sender.getUsername(), "invite", name);
+		notification.setUser(recipient);
+		notification.setSender(sender);
+		notificationDao.addNotification(notification);
 		
+		model.addAttribute("inviteSentMessage", "A group invite has been sent to "+username);
+		Logging.Log("info", "Group Controller: " + sender +
+				" sent an invite to " + username);
+		
+		return "user/GroupHome";
 		
 	}
 	
+	@RequestMapping("user/doAcceptInvite")
+	public String doAcceptInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId, 
+			@RequestParam(name="groupName") String name, RedirectAttributes ra) {
+		
+		User user = (User) session.getAttribute("user");
+		Group group = groupDao.getGroup(name);
+		System.out.println(group);
+		int notificationId = Integer.parseInt(nId);
+		
+		try {
+			group.addUser(user);
+			groupDao.updateGroup(group);
+			notificationDao.removeNotification(notificationId);
+		} catch (PersistenceException pe) {
+			ra.addFlashAttribute("inviteAcceptError", "You already exist as a member in this group.");
+			return "redirect:/user/goHome";
+		}
+		
+		ra.addFlashAttribute("userAddedToGroupMessage", "You have been added to the group "+name);
+		return "redirect:/user/goHome";
+		}
+	
+	@RequestMapping("user/doDeclineInvite")
+	public String doDeclineInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId,
+			RedirectAttributes ra) {
+
+		int notificationId = Integer.parseInt(nId);
+		
+		try {
+			notificationDao.removeNotification(notificationId);
+		} catch (PersistenceException pe) {
+			ra.addFlashAttribute("inviteDeclineError", "Invite no longer exists.");
+			return "redirect:/user/goHome";
+		}
+		
 	@RequestMapping("user/addGroupPost")
 	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request){ 
 		Post post = new Post();
