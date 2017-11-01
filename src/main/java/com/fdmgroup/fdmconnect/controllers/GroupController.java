@@ -81,7 +81,7 @@ public class GroupController {
 	@RequestMapping("user/goToLeaveGroup")
 	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
 		
-		List<User> users = userDao.getAllUsers();
+		List<User> users = groupDao.getAllUsers();
 		//User owner = (User) session.getAttribute("user");
 	    // group.getOwner();
 	    users.remove(username);
