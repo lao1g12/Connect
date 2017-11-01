@@ -82,16 +82,23 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 	
-	public User getUserByGroup(Group group, String name){
-		EntityManager manager = factory.createEntityManager();
+	//public User getUserByGroup(Group group, String name){
+	//	EntityManager manager = factory.createEntityManager();
 	 
+
+		//Group group1 = manager.find(Group.class, name);
+
+	//	TypedQuery<User> query = manager.createQuery("select u from User u where group=u.group", User.class);
+	//	query.setParameter("name", group);
+		//User user = query.getSingleResult();
+
+		//TypedQuery<User> query = manager.createQuery("select u from User u where u.group= ?", User.class);
+		//query.setParameter(1, group);
+		//User user = query.getSingleResult();
+
 		
-		TypedQuery<User> query = manager.createQuery("select u from User u where u.group= ?", User.class);
-		query.setParameter(1, group);
-		User user = query.getSingleResult();
+		//return user;
 		
-		return user;
-		
-	}
+//	}
 
 }

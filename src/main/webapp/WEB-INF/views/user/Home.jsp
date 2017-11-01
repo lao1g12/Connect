@@ -41,14 +41,18 @@
 		</div>
 
 		<!--  welcome User  -->
-		<div class="col col12 last">
+		<div class = "row">
+		<div class="col col6">
 			<h3>Welcome ${user.getUsername()}</h3>
 		</div>
-		<form action="searchPosts" method="get">
+		
+	
+		<div class="col col6 last, search">
+		<form action="searchPosts" method="get" >
 			Search for post: <input type="text" name="input" /> <input
 				type="submit" value="Search!" />
 		</form>
-
+		</div>
 		<div class="row">
 				<c:if test="${notifications.size() > 0}">
 					<h3>Notifications</h3>
@@ -68,7 +72,7 @@
 					</c:forEach>
 				</c:if>
 		</div>
-		
+	
 		<!-- Notice Board -->
 		<div class="col col12 last, border">
 			<div class="boardtext">
@@ -77,7 +81,6 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
-
 					<c:choose>
 						<c:when test='${aP.imgUrl == null}'>
 						</c:when>
@@ -86,6 +89,7 @@
 							<br>
 						</c:otherwise>
 					</c:choose>
+
 				${aP.bodyText}<br />
 					<a href="${aP.link}">For more info click here!</a>
 					<br />
