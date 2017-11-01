@@ -21,17 +21,42 @@ public class Notification {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="notificationId_sequence")
 	private int notificationId;
 	private String title;
+	private String body;
 	private String type;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_NOTIFICATION_USER")
 	private User recipient;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "FC_NOTIFICATION_SENDER")
+	private User sender;
+	
 	
 	public Notification() {}
 
-	public Notification(String title, String type) {
+	public Notification(String title, String type, String body) {
 		super();
 		this.title = title;
 		this.type = type;
+		this.body = body;
+	}
+
+	
+	
+	
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
 
 	public int getNotificationId() {
