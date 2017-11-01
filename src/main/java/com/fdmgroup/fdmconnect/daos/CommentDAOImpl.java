@@ -10,6 +10,7 @@ import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Post;
 
 public class CommentDAOImpl implements CommentDAO{
+	
 	@Autowired
 	private EntityManagerFactory factory;
 

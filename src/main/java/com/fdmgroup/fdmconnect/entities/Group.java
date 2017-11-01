@@ -34,10 +34,7 @@ public class Group {
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	private User owner;
 	
-		
-	
 	public Group() {}
-
 
 	public Group( String name, String description, String imageUrl) {
 		super();
@@ -46,8 +43,6 @@ public class Group {
 		this.imageUrl = imageUrl;
 		
 	}
-
-
 
 	public User getOwner() {
 		return owner;
@@ -117,8 +112,4 @@ public class Group {
 		this.users.add(user);
 	}
 	
-	
-	
-	
-
 }
