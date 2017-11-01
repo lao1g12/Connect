@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
-<title>Home Page</title>
+<title>Group Home</title>
 </head>
 <body>
 
@@ -43,7 +43,6 @@
 		<div class="col col12 last">
 			<h3>Welcome to ${group.name}</h3>
 		</div>
-				
 		<div> 
 		
 		<a href="addGroupPost?name=${group.name}"><button>Add Post To Group</button></a>

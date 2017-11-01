@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
@@ -79,6 +80,18 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter(1, profile);
 		User user = query.getSingleResult();
 		return user;
+	}
+	
+	public User getUserByGroup(Group group, String name){
+		EntityManager manager = factory.createEntityManager();
+	 
+		
+		TypedQuery<User> query = manager.createQuery("select u from User u where u.group= ?", User.class);
+		query.setParameter(1, group);
+		User user = query.getSingleResult();
+		
+		return user;
+		
 	}
 
 }

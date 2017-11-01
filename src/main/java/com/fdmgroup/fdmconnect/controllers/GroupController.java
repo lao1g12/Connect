@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.controllers;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class GroupController {
 	private FlagDAOImpl flagDao;
 	@Autowired
 	private NotificationDAOImpl notificationDao;
-	
+
 	public GroupController() {	}
 
 	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
@@ -85,6 +86,7 @@ public class GroupController {
 		
 		return"redirect:/user/goToMyGroups";
 	}
+
 	
 	@RequestMapping("user/goToLeaveGroup")
 	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
@@ -96,6 +98,8 @@ public class GroupController {
 		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
 		return "redirect:/user/goToMyGroups";
 	}
+	
+
 	
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name){
@@ -132,6 +136,38 @@ public class GroupController {
 	
 		request.setAttribute("addGroupPost", "hello");
 		return"user/GroupHome";
+	}
+
+	
+	@RequestMapping(value = { "user/groupPost" })
+	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String name) {
+		
+		Group group = groupDao.getGroup(name);
+		User user = (User) session.getAttribute("user");
+		post.setPostOwner(user);
+		BusinessLogic bl = new BusinessLogic();
+		String checkString = post.getFullListOfKeyWords();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		List<String> checkedBadWords = bl.searchForListings(badWords, checkString);
+
+		if (checkedBadWords.size() > 0) {
+			StringBuffer sbReturn = new StringBuffer();
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
+			}
+			String badWordString = sbReturn.toString();
+			request.setAttribute("badPost",
+					"You just tried to post an article with the following inappropriate words :" + badWordString);
+			return "user/AddPost";
+		}
+		
+		post.setGroup(group);
+		postDao.addPost(post);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + "added post" + post);
+
+		return "redirect:/user/login";
+
 	}
 	
 }

@@ -107,9 +107,6 @@ public class UserController {
 	@RequestMapping(value = { "user/addPost" })
 	public String addNewPost(Post post, HttpSession session, HttpServletRequest request) {
 		
-			String groupName = request.getParameter("groupName");
-			Group group = groupDao.getGroup(groupName);
-			post.setGroup(group);
 
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
