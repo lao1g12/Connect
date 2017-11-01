@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.controllers;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -49,7 +50,9 @@ public class GroupController {
 		this.flagDao = flagDao;
 	}
 	
+
 	@RequestMapping(value={"user/goToGroupHome", "admin/goToGroupHome"})
+
 	public String admin(Model model, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
@@ -88,6 +91,7 @@ public class GroupController {
 		return"redirect:/user/goToMyGroups";
 	}
 
+
 	@RequestMapping("user/goToLeaveGroup")
 	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname ){
 		User user = (User) session.getAttribute("user");
@@ -100,6 +104,9 @@ public class GroupController {
 		Logging.Log("info", "User left the group");
 		return "redirect:/user/goToMyGroups";
 	}
+
+
+
 	
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name){
@@ -118,10 +125,13 @@ public class GroupController {
 		Group group = groupDao.getGroup(name);
 		User sender = (User) session.getAttribute("user");
 		User recipient = userDao.getUser(username);
+
 		
+
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		
+
 		Notification notification = new Notification("Group Invite from "+sender.getUsername(), "invite", name);
 		notification.setUser(recipient);
 		notification.setSender(sender);
@@ -132,6 +142,7 @@ public class GroupController {
 				" sent an invite to " + username);
 		
 		return "user/GroupHome";
+
 		
 	}
 	
@@ -155,7 +166,8 @@ public class GroupController {
 		
 		ra.addFlashAttribute("userAddedToGroupMessage", "You have been added to the group "+name);
 		return "redirect:/user/goHome";
-		}
+		
+	}
 	
 	@RequestMapping("user/doDeclineInvite")
 	public String doDeclineInvite(HttpSession session, Model model, @RequestParam(name="notificationId") String nId,
@@ -170,8 +182,17 @@ public class GroupController {
 			return "redirect:/user/goHome";
 		}
 		
+		return "redirect:/user/goHome";
+
+		
+	}
+
+	
+	
+		
 	@RequestMapping("user/addGroupPost")
-	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request){ 
+	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request) { 
+		
 		Post post = new Post();
 		Group group = groupDao.getGroup(name);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
@@ -180,6 +201,7 @@ public class GroupController {
 	
 		request.setAttribute("addGroupPost", "hello");
 		return"user/GroupHome";
+		
 	}
 
 	

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Flag;
@@ -28,7 +29,9 @@ public class IndexController {
 	private PostDAOImpl postDao;
 	@Autowired
 	private FlagDAOImpl flagDao;
-
+	@Autowired
+	private NotificationDAOImpl notificationDao;
+	
 	public IndexController() {}
 
 	public IndexController(UserDAOImpl userDao, PostDAOImpl postDao, FlagDAOImpl flagDao) {
@@ -60,6 +63,8 @@ public class IndexController {
 		user.setLastLogin();
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
 		session.setAttribute("allPosts", postDao.getAllPosts());
+		session.setAttribute("notifications", 
+				notificationDao.getAllNotificationsByUser(principal.getName()));
 		
 		return "user/Home";
 		

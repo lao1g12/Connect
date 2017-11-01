@@ -8,13 +8,19 @@ import com.fdmgroup.fdmconnect.entities.User;
 
 public class MessageLogic {
 
-	public Set<User> getRecievedList(Set<Notification> notifications) {
-		Set<User> senders = new HashSet<User>();
+	public Set<User> getContactList(Set<Notification> notifications, Set<Notification> notificationsSent) {
+		Set<User> contacts = new HashSet<User>();
 		for(Notification notification: notifications){
 			User user = notification.getSender();
-			senders.add(user);
+			contacts.add(user);
 		}
-		return senders;
+		for(Notification notification: notificationsSent){
+			User user = notification.getUser();
+			contacts.add(user);
+		}
+		return contacts;
 	}
+
+	
 
 }

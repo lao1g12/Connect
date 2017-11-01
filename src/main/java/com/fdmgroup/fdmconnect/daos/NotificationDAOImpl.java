@@ -8,7 +8,9 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Notification;
+import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
 public class NotificationDAOImpl implements NotificationDAO {
@@ -57,10 +59,25 @@ public class NotificationDAOImpl implements NotificationDAO {
 		
 		EntityManager manager = factory.createEntityManager();
 		User user = manager.find(User.class, username);
-		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where :user = n.recipient", Notification.class );
+		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where :user = n.recipient "
+				+ "order by n.dateAdded", Notification.class );
 		
 		query.setParameter("user", user);
 		List<Notification> notifications = query.getResultList();
+		return notifications;
+		
+	}
+	
+	public List<Notification> getAllPostsByGroup(User sender, User recipient){
+		
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where n.sender.username = ? or ? and n.recipient.username = ? or ?", Notification.class);
+		query.setParameter(1, sender.getUsername());
+		query.setParameter(2, recipient.getUsername());
+		query.setParameter(2, sender.getUsername());
+		query.setParameter(1, recipient.getUsername());
+		List<Notification> notifications = query.getResultList();
+		
 		return notifications;
 		
 	}

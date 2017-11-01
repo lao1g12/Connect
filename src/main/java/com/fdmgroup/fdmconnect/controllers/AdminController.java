@@ -200,6 +200,10 @@ public class AdminController {
 
 	}
 	
+	
+	
+	
+	
 	@RequestMapping("/admin/processRemoveGroup")
 	public String processRemoveGroup(@RequestParam String name, Model model, RedirectAttributes ra) {
 

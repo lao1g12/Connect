@@ -68,10 +68,16 @@ right: 0;
 
 .boardimg { 
 	
-	width: 50%;
-	
+	width: 50%;	
 }
 	
+.search{ 
+	
+	margin-top: -40px;
+	margin-left: 64.5%;
+	
+}	
+
 
 /*** View Account **/ 
 

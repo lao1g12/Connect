@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ include file="../PageDirectives.jsp"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,9 +10,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-		<c:forEach items="${contacts}" var="c">
+		<c:forEach items="${conversation}" var="c">
 			<h3>
-				<a href="messages?username= ${c.username }">${c.username }</a><br />
+				${c.
+				${c.title}
+				${c.body}
 			</h3>
 
 

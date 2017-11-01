@@ -41,14 +41,40 @@
 		</div>
 
 		<!--  welcome User  -->
-		<div class="col col12 last">
+		<div class = "row">
+		<div class="col col6">
 			<h3>Welcome ${user.getUsername()}</h3>
 		</div>
-		<form action="searchPosts" method="get">
+		
+	
+		<div class="col col6 last, search">
+		<form action="searchPosts" method="get" >
 			Search for post: <input type="text" name="input" /> <input
 				type="submit" value="Search!" />
 		</form>
-
+		</div>
+		<div class="row">
+				<c:if test="${notifications.size() > 0}">
+					<h3>Notifications</h3>
+					<br />
+					<c:forEach items="${notifications}" var="n">
+					<div class="col col2">
+						${n.title}<br />
+						<br />
+						${n.body} <br />
+						<c:if test="${n.type == 'invite'}">
+							${n.getNotificationDateFormatted()} <br />
+							<a href="doAcceptInvite?notificationId=${n.notificationId}&groupName=${n.body}">Accept</a>
+							<a href="doDeclineInvite?notificationId=${n.notificationId}">Decline</a>
+						</c:if>
+						<br />
+						${inviteDeclineError}${userAddedToGroupMessage}${inviteAcceptError}
+						<br />
+					</div>
+					</c:forEach>
+				</c:if>
+		</div>
+	
 		<!-- Notice Board -->
 		<div class="col col12 last, border">
 			<div class="boardtext">
@@ -57,14 +83,15 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
+					<c:choose>
+						<c:when test='${aP.imgUrl == null}'>
+						</c:when>
+						<c:otherwise>
+							<img class="boardimg" src="${aP.imgUrl}">
+							<br>
+						</c:otherwise>
+					</c:choose>
 
-				<c:choose>
-				<c:when test='${aP.imgUrl == null}'>
-				</c:when>
-				<c:otherwise>
-				<img class="boardimg" src="${aP.imgUrl}"><br>
-				</c:otherwise>
-				</c:choose>
 				${aP.bodyText}<br />
 					<a href="${aP.link}">For more info click here!</a>
 					<br />
@@ -78,7 +105,7 @@
 					<br />
 					<c:if test="${postId == aP.postId and viewComments == 'show' }">
 						<h3>Comments</h3>
-						<c:forEach items="${aP.comments}" var="c">
+						<c:forEach items="${comments}" var="c">
 							${c.user.profile.firstName} ${c.user.profile.lastName} 
 							<br />
 							${c.getCommentDateFormatted()} 
@@ -153,19 +180,20 @@
 			</div>
 		</div>
 		<div class="empty"></div>
-		<footer> <br>
 
-		${postRemovedByAdmin }
+		<div class="row">
+			<footer> <br>
+			${postRemovedByAdmin }
 
-		<ul class="horiz">
-			<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
-			<li class="horizl"><a href="www.Help.com">Help</a></li>
-			<li class="horizl"><a href="www.language.com">Language</a></li>
-			<li class="horizl"><a href="www.about.com">About</a></li>
-			<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
-		</ul>
-		</footer>
-
+			<ul class="horiz">
+				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+				<li class="horizl"><a href="www.Help.com">Help</a></li>
+				<li class="horizl"><a href="www.language.com">Language</a></li>
+				<li class="horizl"><a href="www.about.com">About</a></li>
+				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+			</ul>
+			</footer>
+		</div>
 
 	</div>
 
