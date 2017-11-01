@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
-<%@ include file="../PageDirectives.jsp"%>   
+<%@ include file="../PageDirectives.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,14 +12,14 @@
 <title>Group Home</title>
 </head>
 <body>
-<!-- Top Menu --> 
+	<!-- Top Menu -->
 
 	<div class="page-container">
-<div id="logodiv">
-	<img class="img" src="img/fdmConnect.jpg" >
-	</div>
+		<div id="logodiv">
+			<img class="img" src="img/fdmConnect.jpg">
+		</div>
 		<div id="Head" class="row">
-			<div class ="col12">
+			<div class="col12">
 				<ul class="horiz">
 					<li class="horizl"><a href="goHome">Home</a></li>
 					<c:choose>
@@ -32,22 +32,25 @@
 					</c:choose>
 					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
-					<li class="horizl"><a href="submitPost">Add Post</a><li> 
+					<li class="horizl"><a href="submitPost">Add Post</a>
+					<li>
 					<li id="right" class="horizl"><a href="logout">Logout</a></li>
 
 				</ul>
 
 			</div>
-		</div> 
-		</br>
-		 </br>
+		</div>
+		</br> </br>
 
-<c:forEach items="${groups}" var="g">
-	<h3> ${g.name } <br/></h3>
+		<c:forEach items="${groups}" var="g">
+			<h3>
+				${g.name } <br />
+			</h3>
 	 
-	 Description: ${g.description } <br/>
-	 
-	 <img class="boarding" src="${g.imageUrl }"> <br/>
+	 Description: ${g.description } <br />
+
+			<img class="boarding" src="${g.imageUrl }">
+			<br />
 			<br>
 			<br>
 			<a href="goToGroupHome?name=${g.name}">Go To Group</a>
@@ -56,19 +59,21 @@
 			<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
 
 
-	</c:forEach> 
-	</br>
-	</br>
+		</c:forEach>
+		</br> </br>
 
-<sf:form method="post" action="doCreateGroup"  modelAttribute="group">
-		Group Name: <sf:input type="text"   path="name"/><br>
-		Group Description: <sf:input type="text"  path="description"/><br>
-	    Group Picture<sf:input type="text" path ="imageUrl"/> <br>
-		<input type="submit" value="Create group"/><br>
-	</sf:form>
-	${groupWasCreated}
-	${ownerLeftGroup }
+		<sf:form method="post" action="doCreateGroup" modelAttribute="group">
+		Group Name: <sf:input type="text" path="name" />
+			<br>
+		Group Description: <sf:input type="text" path="description" />
+			<br>
+	    Group Picture<sf:input type="text" path="imageUrl" />
+			<br>
+			<input type="submit" value="Create group" />
+			<br>
+		</sf:form>
+		${groupWasCreated} ${ownerLeftGroup }
 
-</div>
+	</div>
 </body>
 </html>
