@@ -42,11 +42,6 @@
 <h1> Add New Post </h1>
 <br>
 
-<form action="postToGroup" method="postToGroup"> 
-<input type="submit" value="Post To Group"> 
-
-</form>
-
 <sf:form method="post" action="addPost" modelAttribute="post">
 <h2>${badPost}</h2>
 Title : <sf:input type="text" path="title" /> <br> 
@@ -55,17 +50,7 @@ Link: <sf:input type="text" path="link" /> <br>
 Category: <sf:input type="text" path="category" />  <br>
 Image : <sf:input type="text" path="imgUrl"/> <br>
 
-<c:choose> 
-<c:when test='${triggerMessage == "group"}'>
-<select name="groupName">
-	<c:forEach var="g" items="${user.groups}">
-	<option value="${g.name}">${g.name}</option>
-	</c:forEach>
-</select>
-</c:when>
-<c:otherwise>
-</c:otherwise>
-</c:choose>
+
 <button type="submit" value="Submit Post">Add post</button>
 </sf:form>
 	<br><br>

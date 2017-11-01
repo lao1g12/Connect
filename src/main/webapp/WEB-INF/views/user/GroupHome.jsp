@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
-<title>Home Page</title>
+<title>Group Home</title>
 </head>
 <body>
 
@@ -44,6 +44,39 @@
 		<div class="col col12 last">
 			<h3>Welcome to ${group.name}</h3>
 		</div>
+		
+		<div> 
+		
+		<a href="addGroupPost?name=${group.name}"><button>Add Post To Group</button></a>
+		</div>
+		<c:choose>
+		<c:when test='${addGroupPost == "hello"}' > 
+		
+		<br>
+
+<sf:form method="post" action="groupPost" modelAttribute="post">
+<h2>${badPost}</h2>
+Title : <sf:input type="text" path="title" /> <br> 
+BodyText: <sf:input type="text" path="bodyText" /> <br> 
+Link: <sf:input type="text" path="link" /> <br>
+Category: <sf:input type="text" path="category" />  <br>
+Image : <sf:input type="text" path="imgUrl"/> <br>
+<input type="hidden" value="${group.name}" name ="name"/>
+
+
+<button type="submit" value="Submit Post">Add post</button>
+</sf:form>
+	<br>
+		
+		</c:when>
+		
+		<c:otherwise>
+		
+		</c:otherwise>
+	
+		
+		</c:choose>
+		
 		<div class="col col2">
 		<c:forEach items="${group.users}" var="user">
 			<a href="viewProfile?profileId=${user.profile.profileId}">${user.username}</a>
