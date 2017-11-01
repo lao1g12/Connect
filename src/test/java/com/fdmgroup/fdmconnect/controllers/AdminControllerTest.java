@@ -19,9 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -30,6 +32,7 @@ public class AdminControllerTest {
 	private UserDAOImpl userDao;
 	private PostDAOImpl postDao;
 	private FlagDAOImpl flagDao;
+	private GroupDAOImpl groupDao;
 	private AdminController adminController;
 	private HttpSession session;
 	private Model model;
@@ -41,6 +44,7 @@ public class AdminControllerTest {
 	private Set<Flag> flagList;
 	private Flag flag;
 	private RedirectAttributes ra;
+	private List<Group> groups;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -48,7 +52,8 @@ public class AdminControllerTest {
 		userDao = mock(UserDAOImpl.class);
 		postDao = mock(PostDAOImpl.class);
 		flagDao = mock(FlagDAOImpl.class);
-		adminController = new AdminController(postDao, userDao, flagDao);
+		groupDao = mock(GroupDAOImpl.class);
+		adminController = new AdminController(postDao, userDao, flagDao, groupDao);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
 		user = mock(User.class);
@@ -59,6 +64,7 @@ public class AdminControllerTest {
 		flagList = mock(HashSet.class);
 		flag = mock(Flag.class);
 		ra = mock(RedirectAttributes.class);
+		groups = mock(ArrayList.class);
 	}
 
 	@Test
@@ -186,6 +192,27 @@ public class AdminControllerTest {
 		String result = adminController.addBadWords(badWords);
 		
 		assertEquals(result, "redirect:/admin");
+		
+	}
+	
+	@Test
+	public void test_goToViewAllGroups_returnsAdminDisplayAllGroups() {
+		
+		when(groupDao.getAllGroups()).thenReturn(groups);
+		String result = adminController.goToViewAllGroups(model);
+		
+		assertEquals(result, "admin/DisplayAllGroups");
+		
+	}
+	
+	@Test
+	public void test_processRemoveGroup_returnsRedirectToAdminViewAllGroups() {
+		
+		String name = "";
+		
+		String result = adminController.processRemoveGroup(name, model, ra);
+		
+		assertEquals(result, "redirect:/admin/viewAllGroups");
 		
 	}
 }

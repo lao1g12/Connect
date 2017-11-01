@@ -21,6 +21,5 @@
 				class="loginbutton" type="Submit" value="Login" />
 		</form>
 	</div>
-
 </body>
 </html>

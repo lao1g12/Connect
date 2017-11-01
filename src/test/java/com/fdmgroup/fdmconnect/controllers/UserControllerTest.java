@@ -23,12 +23,15 @@ import com.fdmgroup.fdmconnect.daos.CommentDAOImpl;
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Education;
 import com.fdmgroup.fdmconnect.entities.Experience;
 import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
@@ -38,6 +41,7 @@ public class UserControllerTest {
 	private UserDAOImpl userDao;
 	private PostDAOImpl postDao;
 	private FlagDAOImpl flagDao;
+	private GroupDAOImpl groupDao;
 	private UserController userController;
 	private HttpSession session;
 	private Principal principal;
@@ -54,10 +58,11 @@ public class UserControllerTest {
 	private Education education;
 	private HttpServletRequest request;
 	private Experience experience;
-	private Set<Profile> profiles;
 	private Post post;
 	private BusinessLogic bl = mock(BusinessLogic.class);
 	private CommentDAOImpl commentDao;
+	private Comment comment;
+	private Group group;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -67,7 +72,9 @@ public class UserControllerTest {
 		profileDao = mock(ProfileDAOImpl.class);
 		educationDao = mock(EducationDAOImpl.class);
 		experienceDao = mock(ExperienceDAOImpl.class);
+		groupDao = mock(GroupDAOImpl.class);
 		flagDao = mock(FlagDAOImpl.class);
+		commentDao = mock(CommentDAOImpl.class);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
 		user = mock(User.class);
@@ -76,15 +83,15 @@ public class UserControllerTest {
 		principal = mock(Principal.class);
 		ra = mock(RedirectAttributes.class);
 		profile = mock(Profile.class);
-		commentDao = mock(CommentDAOImpl.class);
 		userController = new UserController(userDao, profileDao, flagDao, postDao,
-				educationDao, experienceDao, commentDao);
+				educationDao, experienceDao, commentDao, groupDao);
 		flaggedPost = mock(Post.class);
 		education = mock(Education.class);
 		request = mock(HttpServletRequest.class);
 		experience = mock(Experience.class);
-		profiles = mock(HashSet.class);
 		post = mock(Post.class);
+		comment = mock(Comment.class);
+		group = mock(Group.class);
 	}
 
 	@Test
@@ -248,7 +255,7 @@ public class UserControllerTest {
 	@Test
 	public void test_addExperience_returnsUserAddExperience() {
 
-		String result = userController.addExperience(model);
+		String result = userController.addExperience(session, model);
 
 		assertEquals(result, "user/AddExperience");
 
@@ -330,27 +337,26 @@ public class UserControllerTest {
 
 	}
 
-	// @SuppressWarnings("unchecked")
-	// @Test
-	// public void
-	// test_addNewPost_returnsUserAddPostIfBadWordsNumberGreaterThanZero(){
-	//
-	// String checkString = "";
-	// String badWords = "word";
-	// List<String> checkedBadWords = new ArrayList<String>();
-	// checkedBadWords.add("word");
-	//
-	// when(post.getFullListOfKeyWords()).thenReturn(checkString);
-	// when(session.getAttribute("user")).thenReturn(user);
-	// when(flagDao.getFlag(1)).thenReturn(flag);
-	// when(flag.getFlagInfo()).thenReturn(badWords);
-	// when(bl.searchForListings(badWords,
-	// checkString)).thenReturn(checkedBadWords);
-	// String result = userController.addNewPost(flaggedPost, session, request);
-	//
-	// assertEquals(result, "user/AddPost");
-	//
-	// }
+//	@Test
+//	public void test_addNewPost_returnsUserAddPostIfCheckedBadWordsSizeMoreThanZero() {
+//		
+//		String groupName = "";
+//		String badWords = "a";
+//		String checkString = "a";
+//		List<String> checkedBadWords = new ArrayList<String>();
+//		checkedBadWords.add("a");
+//		
+//		when(groupDao.getGroup(groupName)).thenReturn(group);
+//		when(session.getAttribute("user")).thenReturn(user);
+//		when(post.getFullListOfKeyWords()).thenReturn(checkString);
+//		when(flagDao.getFlag(1)).thenReturn(flag);
+//		when(flag.getFlagInfo()).thenReturn(badWords);
+//		when(bl.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
+//		String result = userController.addNewPost(flaggedPost, session, request, groupName);
+//		
+//		assertEquals(result, "user/AddPost");
+//		
+//	}
 
 	@Test
 	public void test_processRemovePostUser_returnsUserViewAccount() {
@@ -409,5 +415,99 @@ public class UserControllerTest {
 		assertEquals(result, "redirect:/user/account");
 		
 	}
+	
+	@Test
+	public void test_goToViewComments_returnsUserHome() {
+		
+		int postId = 0;
+		
+		String result = userController.goToViewComments(session, model, postId);
+		
+		assertEquals(result, "user/Home");
+		
+	}
+	
+	@Test
+	public void test_goToAddComment_returnsUserHome() {
+		
+		int postId = 0;
+		
+		when(request.getParameter("postId")).thenReturn("0");
+		String result = userController.goToAddComment(session, model, request, postId);
+		
+		assertEquals(result, "user/Home");
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void test_doAddComment_returnsRedirectToUserGoToAddCommentIfCheckedBadWordsSizeMoreThanOne() {
+		
+		String badWords = "a";
+		String commentBody = "a";
+		int postId = 0;
+		List<String> checkedBadWords = new ArrayList<String>();
+		checkedBadWords.add("a");
+		
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(bl.searchForListings(badWords, commentBody)).thenReturn(checkedBadWords);
+		String result = userController.doAddComment(session, model, postId, commentBody, ra, request);
+		
+		assertEquals(result, "redirect:/user/goToAddComment");
+		
+	}
+	
+	@Test
+	public void test_doAddComment_returnsRedirectToUserGoHomeIfCheckedBadWordsSizeEqualsZero() {
+		
+		String badWords = "a";
+		String commentBody = "b";
+		int postId = 0;
+		List<String> checkedBadWords = new ArrayList<String>();
+		
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(bl.searchForListings(badWords, commentBody)).thenReturn(checkedBadWords);
+		String result = userController.doAddComment(session, model, postId, commentBody, ra, request);
+		
+		assertEquals(result, "redirect:/user/goHome");
+		
+	}
 
+	@Test
+	public void test_doRemoveComment_returnsRedirectToUserGoHome() {
+		
+		int commentId = 0;
+		
+		String result = userController.doRemoveComment(session, model, commentId);
+		
+		assertEquals(result, "redirect:/user/goHome");
+		
+	}
+	
+	@Test
+	public void test_goToEditComment_returnsUserHome() {
+		
+		int postId = 0; int commentId = 0;
+		
+		String result = userController.goToEditComment(session, model, postId, commentId);
+		
+		assertEquals(result, "user/Home");
+		
+	}
+	
+	@Test
+	public void test_doEditComment_returnsRedirectToUserGoHome() {
+		
+		int commentId = 0;
+		String commentBody = "";
+		
+		when(commentDao.getComment(commentId)).thenReturn(comment);
+		String result = userController.doEditComment(session, model, commentId, commentBody);
+		
+		assertEquals(result, "redirect:/user/goHome");
+		
+	}
+	
 }

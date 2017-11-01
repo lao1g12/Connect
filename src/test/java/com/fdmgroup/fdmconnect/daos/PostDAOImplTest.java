@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fdmgroup.fdmconnect.entities.Experience;
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -31,6 +32,7 @@ public class PostDAOImplTest {
 	private List<Post> posts;
 	private Post post;
 	private User user;
+	private Group group;
 
 
 
@@ -45,6 +47,7 @@ public class PostDAOImplTest {
 		query = mock(TypedQuery.class);
 		posts = mock(List.class);
 		post = mock(Post.class);
+		group = mock(Group.class);
 		user = mock(User.class);
 		
 		when(factory.createEntityManager()).thenReturn(manager);
@@ -128,5 +131,18 @@ public class PostDAOImplTest {
 		
 	}
 
+	@Test
+	public void test_getAllPostsByGroup_returnsListOfPosts(){
+		
+		String name = "";
+		
+		when(manager.find(Group.class, name)).thenReturn(group);
+		when(manager.createQuery("select p from Post as p where p.group = ?", Post.class)).thenReturn(query);
+		when(query.getResultList()).thenReturn(posts);
+		List<Post> retrievedPosts = postDao.getAllPostsByGroup(name);
+		
+		assertEquals(posts, retrievedPosts);
+		
+	}
 
 }

@@ -28,7 +28,7 @@ public class CommentDAOImpl implements CommentDAO{
 		manager.getTransaction().begin();
 		manager.persist(comment);
 		manager.getTransaction().commit();
-		Logging.Log("info", "PostDAOImpl: Post has been added" + comment.getCommentId());
+		Logging.Log("info", "CommentDAOImpl: Comment has been added" + comment.getCommentId());
 		
 	}
 
@@ -49,7 +49,16 @@ public class CommentDAOImpl implements CommentDAO{
 		manager.getTransaction().begin();
 		manager.merge(comment);
 		manager.getTransaction().commit();
+		Logging.Log("info",  "CommentDAOImpl: "+comment+" has been updated on the database");
 		
+	}
+
+
+	@Override
+	public Comment getComment(int commentId) {
+		EntityManager manager = factory.createEntityManager();
+		Comment comment = manager.find(Comment.class, commentId);
+		return comment;
 	}
 
 }

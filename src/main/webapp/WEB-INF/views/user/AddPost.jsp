@@ -58,11 +58,11 @@ Image : <sf:input type="text" path="imgUrl"/> <br>
 
 <c:choose> 
 <c:when test='${triggerMessage == "group"}'>
-<sf:select path="group">
+<select name="groupName">
 	<c:forEach var="g" items="${user.groups}">
-	<sf:option value="${g.name}">${g.name}</sf:option>
+	<option value="${g.name}">${g.name}</option>
 	</c:forEach>
-</sf:select>
+</select>
 </c:when>
 <c:otherwise>
 </c:otherwise>

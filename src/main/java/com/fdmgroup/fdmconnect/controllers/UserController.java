@@ -14,6 +14,7 @@ import javax.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +23,7 @@ import com.fdmgroup.fdmconnect.daos.CommentDAOImpl;
 import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
@@ -29,6 +31,7 @@ import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Education;
 import com.fdmgroup.fdmconnect.entities.Experience;
 import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
@@ -50,12 +53,14 @@ public class UserController {
 	private ExperienceDAOImpl experienceDao;
 	@Autowired
 	private CommentDAOImpl commentDao;
+	@Autowired
+	private GroupDAOImpl groupDao;
 
 	public UserController() {
 	}
 
 	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao,
-			EducationDAOImpl educationDao, ExperienceDAOImpl experienceDao, CommentDAOImpl commentDao) {
+			EducationDAOImpl educationDao, ExperienceDAOImpl experienceDao, CommentDAOImpl commentDao, GroupDAOImpl groupDao) {
 		
 		super();
 		this.userDao = userDao;
@@ -65,6 +70,7 @@ public class UserController {
 		this.educationDao = educationDao;
 		this.experienceDao = experienceDao;
 		this.commentDao = commentDao;
+		this.groupDao = groupDao;
 		
 	}
 
@@ -99,8 +105,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "user/addPost" })
-	public String addNewPost(Post post, HttpSession session, HttpServletRequest request) {
-
+	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String groupName) {
+		if(groupName.equals(null)){
+			
+		}else{
+			Group group = groupDao.getGroup(groupName);
+			post.setGroup(group);
+		}
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
 		BusinessLogic bl = new BusinessLogic();
@@ -121,15 +132,31 @@ public class UserController {
 		}
 
 		postDao.addPost(post);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + "added post" + post);
+
 		return "redirect:/user/login";
 
 	}
+	
+	@RequestMapping("user/postToGroup")
+	public String postToGroup(RedirectAttributes ra) { 
+		
+		
+		ra.addFlashAttribute("triggerMessage", "group");
+		
+		return "redirect:/user/submitPost";
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping("/user/processRemovePostUser")
 	public String processRemovePostUser(@RequestParam int postId, Model model) {
 
-		Logging.Log("post", "post removed succesfully by admin" + postId);
 		postDao.removePost(postId);
+		Logging.Log("post", "post removed succesfully by admin" + postId);
 		model.addAttribute("postRemovedByUser", "Post removed succesfully.");
 		return "user/ViewAccount";
 
@@ -221,9 +248,11 @@ public class UserController {
 	}
 
 	@RequestMapping("/user/addExperience")
-	public String addExperience(Model model) {
+	public String addExperience(HttpSession session, Model model) {
 		Experience experience = new Experience();
 		model.addAttribute(experience);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added an experience entry.");
+
 		return "user/AddExperience";
 
 	}
@@ -309,8 +338,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = {"/user/goToAddComment", "/admin/goToAddComment"})
-	public String goToAddComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
-		
+	public String goToAddComment(HttpSession session, Model model, HttpServletRequest request,  @ModelAttribute("postId") int postId) {
+		if (postId == 0){
+			postId = Integer.parseInt(request.getParameter("postId"));
+		}
 		model.addAttribute("postId", postId);
 		model.addAttribute("viewComments", "show");
 		model.addAttribute("addComment", "add");
@@ -320,9 +351,25 @@ public class UserController {
 	
 	@RequestMapping(value = {"/user/doAddComment", "/admin/doAddComment"})
 	public String doAddComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
-			@RequestParam(name = "commentBody") String commentBody) {
+			@RequestParam(name = "commentBody") String commentBody, RedirectAttributes ra, HttpServletRequest request) {
 		
 		Comment comment = new Comment(commentBody);
+		BusinessLogic bl = new BusinessLogic();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		List<String> checkedBadWords = bl.searchForListings(badWords, commentBody);
+
+		if (checkedBadWords.size() > 0) {
+			StringBuffer sbReturn = new StringBuffer();
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
+			}
+			String badWordString = sbReturn.toString();
+			ra.addFlashAttribute("badComment",
+					"You just tried to post an article with the following inappropriate words :" + badWordString);
+			ra.addFlashAttribute("postId", postId);
+			return "redirect:/user/goToAddComment";
+		}
 		comment.setUser((User) session.getAttribute("user"));
 		comment.setPost(postDao.getPost(postId));
 		
@@ -333,8 +380,44 @@ public class UserController {
 			return "user/Home";
 		}
 		
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added a comment "+comment);
+		
+		return "redirect:/user/goHome";
+			
+	}
+	
+	@RequestMapping(value = {"/user/doRemoveComment", "/admin/doRemoveComment"})
+	String doRemoveComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId){
+		
+		commentDao.removeComment(commentId);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " removed a comment "+commentId);
+		
+		return "redirect:/user/goHome";
+		
+	}
+	
+	@RequestMapping(value = {"/user/goToEditComment", "/admin/goToEditComment"})
+	String goToEditComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
+			@RequestParam(name = "commentId") int commentId) {
+		
+		model.addAttribute("postId", postId);
+		model.addAttribute("viewComments", "show");
+		model.addAttribute("editComment", "edit");
 		return "user/Home";
 		
+	}
+	
+	@RequestMapping(value = {"/user/doEditComment", "/admin/doEditComment"})
+	String doEditComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId, 
+			@RequestParam(name = "commentBody") String commentBody){
+		
+		Comment comment = commentDao.getComment(commentId);
+		comment.setCommentBody(commentBody);
+		
+		commentDao.updateComment(comment);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " edited a comment "+commentId);
+		
+		return "redirect:/user/goHome";
 		
 	}
 	

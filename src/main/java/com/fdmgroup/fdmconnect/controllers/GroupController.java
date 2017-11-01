@@ -61,15 +61,22 @@ public class GroupController {
 	
 	@RequestMapping("user/doCreateGroup")
 	public String doCreateGroup(Model model, Group group, HttpSession session, RedirectAttributes ra){
+		
 		User owner = (User) session.getAttribute("user");
+		
 		group.setOwner(owner);
 		owner.getGroups().add(group);
 		group.getUsers().add(owner);
+		
 		groupDao.createGroup(group);
 		ra.addFlashAttribute("groupWasCreated", "Group was created successfully");
+		Logging.Log("info", "Group Controller: " + session.getAttribute("username") + "created a group" + group);
+
+		
 		return"redirect:/user/goToMyGroups";
 	}
 	
+
 
 	@RequestMapping("user/postToGroup")
 	public String postToGroup() { 
@@ -88,6 +95,7 @@ public class GroupController {
 		return"redirect:/user/goToMyGroups";
 	}
 	
+
 
 	
 }
