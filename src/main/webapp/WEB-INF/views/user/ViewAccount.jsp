@@ -63,7 +63,7 @@
 	Start Date: ${edu.getStartDateFormatted()}<br>
 	End Date: ${edu.getEndDateFormatted()}<br>
 	Further Information: ${edu.furtherInfo}<br>
-	<a href="deleteEducation?educationId=${edu.educationId}">Remove</a>
+						<a href="deleteEducation?educationId=${edu.educationId}">Remove</a>
 						<br>
 					</c:forEach>
 					<br> <br>
@@ -74,7 +74,7 @@
 	Start Date: ${exp.getStartDateFormatted()}<br>
 	End Date: ${exp.getEndDateFormatted()}<br>
 	Job Description: ${exp.description}<br>
-	<a href="deleteExperience?experienceId=${exp.experienceId}">Remove</a>
+						<a href="deleteExperience?experienceId=${exp.experienceId}">Remove</a>
 						<br>
 					</c:forEach>
 
@@ -97,33 +97,89 @@
 						<br />
 						Posted: ${p.getPostDateFormatted()}<br />
 						<br />
-						
+
 						<c:if test="${userCur == session.user}">
 							<a href="goToEditPost?postId=${p.postId}">Edit Post</a>
 							<br />
 							<c:if test="${postId == p.postId and editPost == 'doEdit'}">
 								<form method="post" action="doEditPost?postId=${p.postId}">
-										Title: <input type="text" name="title" value="${p.title}" />
-										Category: <input type="text" name="category" value="${p.category}" />
-										Description: <input type="text" name="bodyText" value="${p.bodyText}" />
-										Image URL: <input type="text" name="imgUrl" value="${p.imgUrl}" />
-										Link URL: <input type="text" name="link" value="${p.link}" />
-									<br />
-									<input type="submit" value="Edit Post" />
+									Title: <input type="text" name="title" value="${p.title}" /> <br />
+									Category: <input type="text" name="category"
+										value="${p.category}" /> <br /> Description: <input type="text"
+										name="bodyText" value="${p.bodyText}" /> <br /> Image URL: <input
+										type="text" name="imgUrl" value="${p.imgUrl}" /> <br /> Link URL: <input
+										type="text" name="link" value="${p.link}" /> <br /> <input
+										type="submit" value="Edit Post" />
 								</form>
 							</c:if>
 							<c:if test="${postId == p.postId}">
 								${postEditedMessage}${postErrorMessage}
 							</c:if>
 						</c:if>
+						
+						<!-- Comments 
+						
+						<c:if test="${viewComments != 'show'}">
+							<a href="goToViewComments?postId=${p.postId}">View Comments</a>
+						</c:if>
+						<br />
+						<c:if test="${postId == p.postId and viewComments == 'show' }">
+							<h3>Comments</h3>
+							<c:forEach items="${p.comments}" var="c">
+							${c.user.profile.firstName} ${c.user.profile.lastName} 
+							<br />
+							${c.getCommentDateFormatted()} 
+							<br />
+								<br />
+							${c.commentBody} 
+							<br />
+								<br />
+								<c:if
+									test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
+									<a
+										href="doRemoveComment?commentId=${c.commentId}&postId=${p.postId}">Remove</a>
+								</c:if>
+
+								<c:if test="${username == c.user.getUsername()}">
+									<a
+										href="goToEditComment?commentId=${c.commentId}&postId=${p.postId}">Edit</a>
+									<br />
+									<c:if test="${postId == p.postId and editComment == 'edit'}">
+										<form method="post"
+											action="doEditComment?commentId=${c.commentId}">
+											<input type="text" name="commentBody" /> <br /> <input
+												type="submit" value="Update" />
+										</form>
+									</c:if>
+								</c:if>
+								<br />
+							${commentRemovedMessage}
+							<br />
+							</c:forEach>
+							<br />
+							<c:if test="${addComment != 'add'}">
+								<a href="goToAddComment?postId=${p.postId}">Add Comment</a>
+							</c:if>
+							<br />
+							<c:if test="${postId == p.postId and addComment == 'add'}">
+								<form method="post" action="doAddComment?postId=${p.postId}">
+									<input type="text" name="commentBody" /> <br /> <input
+										type="submit" value="Add Comment" />
+								</form>
+							</c:if>
+						</c:if>
+						
+					    Remove Post -->
+						
 						<c:if test='${userCur == session.user}'>
-                            <a href="processRemovePostUser?postId=${p.postId}"
-                               onclick="return confirm('Are you sure you want to remove this post?')">Remove Post</a>
-                            <c:if test="${postId == p.postId}">
+							<a href="processRemovePostUser?postId=${p.postId}"
+								onclick="return confirm('Are you sure you want to remove this post?')">Remove
+								Post</a>
+							<c:if test="${postId == p.postId}">
                  	           ${postRemovedByUser }                                       
                             </c:if>
-                        </c:if>
-					 	<hr />	
+						</c:if>
+						<hr />
 					</c:forEach>
 				</div>
 			</div>
@@ -147,6 +203,6 @@
 			</ul>
 			</footer>
 		</div>
-		</div>
+	</div>
 </body>
 </html>

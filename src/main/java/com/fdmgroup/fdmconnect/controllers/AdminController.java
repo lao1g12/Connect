@@ -66,8 +66,8 @@ public class AdminController {
 	@RequestMapping("/user/processRemovePostAdmin")
 	public String processRemovePostAdmin(@RequestParam int postId, Model model, HttpSession session) {
 
-		Logging.Log("post", "post removed succesfully by admin" + postId);
 		postDao.removePost(postId);
+		Logging.Log("post", "post removed succesfully by admin" + postId);
 		model.addAttribute("postRemovedByAdmin", "Post removed succesfully.");
 		session.setAttribute("allPosts", postDao.getAllPosts());
 		
@@ -203,8 +203,8 @@ public class AdminController {
 	@RequestMapping("/admin/processRemoveGroup")
 	public String processRemoveGroup(@RequestParam String name, Model model, RedirectAttributes ra) {
 
-		Logging.Log("info", "Admin Controller: Group removed succesfully" + name);
 		groupDao.removeGroup(name);
+		Logging.Log("info", "Admin Controller: Group removed succesfully" + name);
 		ra.addFlashAttribute("message", "Group removed succesfully");
 		return "redirect:/admin/viewAllGroups";
 

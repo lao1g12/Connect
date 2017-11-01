@@ -56,6 +56,7 @@
 					</h3>
 				
 				Category: ${aP.category}<br />
+
 				<c:choose>
 				<c:when test='${aP.imgUrl == null}'>
 				</c:when>
@@ -87,17 +88,19 @@
 							<br />
 							<c:if
 								test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
-								<a href="doRemoveComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
+								<a
+									href="doRemoveComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
 							</c:if>
-							
+
 							<c:if test="${username == c.user.getUsername()}">
-								<a href="goToEditComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
+								<a
+									href="goToEditComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
 								<br />
 								<c:if test="${postId == aP.postId and editComment == 'edit'}">
-									<form method="post" action="doEditComment?commentId=${c.commentId}">
-										<input type="text" name="commentBody" /> 
-										<br /> 
-										<input type="submit" value="Update" />
+									<form method="post"
+										action="doEditComment?commentId=${c.commentId}">
+										<input type="text" name="commentBody" /> <br /> <input
+											type="submit" value="Update" />
 									</form>
 								</c:if>
 							</c:if>

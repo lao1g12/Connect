@@ -67,6 +67,8 @@ public class UserDAOImpl implements UserDAO {
 		manager.getTransaction().begin();
 		manager.merge(user);
 		manager.getTransaction().commit();
+		Logging.Log("info", "UserDAOImpl: "+user + "has been updated on the database");
+
 
 	}
 
