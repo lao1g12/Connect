@@ -84,6 +84,7 @@
 					${profile.getEndDateFormatted()} <br> <br>
 				</div>
 			</div>
+			<a href="goToSendMessage?username=${userCur.username}">Send Message</a>
 			<div class="row">
 				<div class="col12">
 					<h2>Your Posts</h2>
