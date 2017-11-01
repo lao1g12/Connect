@@ -80,7 +80,7 @@ Image : <sf:input type="text" path="imgUrl"/> <br>
 				<a href="viewProfile?profileId=${user.profile.profileId}">${user.username}</a>
 			</c:forEach>
 		</div>
-			<c:if test="${user.username == group.owner.username}">
+		<c:if test="${user.username == group.owner.username}">
 			<a href="goToSendInvite?groupName=${group.name}">Send Invite</a>
 			<c:if test="${sendInvite == 'send'}">
 				<form method="post" action="doSendInvite?groupName=${group.name}">
@@ -90,14 +90,14 @@ Image : <sf:input type="text" path="imgUrl"/> <br>
 				</form>
 			</c:if>
 		</c:if>
-		<div class="col col10 last">	
-			<!-- Notice Board -->		
-	<div class="col col12 last, border">
+		<div class="col col10 last">
+			<!-- Notice Board -->
+			<div class="col col12 last, border">
 				<div class="boardtext">
 					<c:forEach items="${allPosts}" var="aP">
 						<h3>${aP.title}<br />
 						</h3>
-						
+				
 				Category: ${aP.category}<br />
 						<c:choose>
 							<c:when test='${aP.imgUrl == null}'>

@@ -1,6 +1,7 @@
 package com.fdmgroup.fdmconnect.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -111,5 +112,6 @@ public class Group {
 	public void addUser(User user){ 
 		this.users.add(user);
 	}
+
 	
 }
