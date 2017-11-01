@@ -105,13 +105,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "user/addPost" })
-	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String groupName) {
-		if(groupName.equals(null)){
-			
-		}else{
+	public String addNewPost(Post post, HttpSession session, HttpServletRequest request) {
+		
+			String groupName = request.getParameter("groupName");
 			Group group = groupDao.getGroup(groupName);
 			post.setGroup(group);
-		}
+
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
 		BusinessLogic bl = new BusinessLogic();
@@ -132,6 +131,8 @@ public class UserController {
 		}
 
 		postDao.addPost(post);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + "added post" + post);
+
 		return "redirect:/user/login";
 
 	}
@@ -153,8 +154,8 @@ public class UserController {
 	@RequestMapping("/user/processRemovePostUser")
 	public String processRemovePostUser(@RequestParam int postId, Model model) {
 
-		Logging.Log("post", "post removed succesfully by admin" + postId);
 		postDao.removePost(postId);
+		Logging.Log("post", "post removed succesfully by admin" + postId);
 		model.addAttribute("postRemovedByUser", "Post removed succesfully.");
 		return "user/ViewAccount";
 
@@ -246,9 +247,11 @@ public class UserController {
 	}
 
 	@RequestMapping("/user/addExperience")
-	public String addExperience(Model model) {
+	public String addExperience(HttpSession session, Model model) {
 		Experience experience = new Experience();
 		model.addAttribute(experience);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added an experience entry.");
+
 		return "user/AddExperience";
 
 	}
@@ -376,6 +379,8 @@ public class UserController {
 			return "user/Home";
 		}
 		
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added a comment "+comment);
+		
 		return "redirect:/user/goHome";
 			
 	}
@@ -384,6 +389,7 @@ public class UserController {
 	String doRemoveComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId){
 		
 		commentDao.removeComment(commentId);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " removed a comment "+commentId);
 		
 		return "redirect:/user/goHome";
 		
@@ -408,6 +414,7 @@ public class UserController {
 		comment.setCommentBody(commentBody);
 		
 		commentDao.updateComment(comment);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " edited a comment "+commentId);
 		
 		return "redirect:/user/goHome";
 		

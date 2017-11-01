@@ -55,7 +55,6 @@ Link: <sf:input type="text" path="link" /> <br>
 Category: <sf:input type="text" path="category" />  <br>
 Image : <sf:input type="text" path="imgUrl"/> <br>
 
-
 <c:choose> 
 <c:when test='${triggerMessage == "group"}'>
 <select name="groupName">
