@@ -42,6 +42,8 @@ public class User {
 	private Set<Group> groups= new HashSet<Group>();
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.REMOVE)
 	private Set<Group> ownedGroups;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="recipient", cascade = CascadeType.REMOVE)
+	private Set<Notification> notifications;
 	
 	
 	public User() {	}
@@ -55,6 +57,21 @@ public class User {
 		this.role = role;
 	}
 	
+	public Set<Group> getOwnedGroups() {
+		return ownedGroups;
+	}
+	
+	public void setOwnedGroups(Set<Group> ownedGroups) {
+		this.ownedGroups = ownedGroups;
+	}
+	
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+	
+	public void setNotifications(Set<Notification> notifications) {
+		this.notifications = notifications;
+	}
 	
 	public List<Flag> getFlags() {
 		return flags;
