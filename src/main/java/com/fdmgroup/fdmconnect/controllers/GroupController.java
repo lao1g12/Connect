@@ -79,12 +79,12 @@ public class GroupController {
 
 
 	@RequestMapping("user/goToLeaveGroup")
-	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
-		
-		List<User> users = groupDao.getAllUsers();
+	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam String username, @RequestParam String name, RedirectAttributes ra){
+		Group group =(Group)session.getAttribute("group");
+		List<User> users =userDao.getAllUsers();
 		//User owner = (User) session.getAttribute("user");
 	    // group.getOwner();
-	    users.remove(username);
+	 groupDao .getGroup(name).getUsers().remove(username);
 		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
 		return"redirect:/user/goToMyGroups";
 	}
