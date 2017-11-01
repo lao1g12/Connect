@@ -36,112 +36,130 @@
 
 			</div>
 		</div>
-		</br> 
-		</br>
+		</br> </br>
 
 		<!--  welcome User  -->
 		<div class="col col12 last">
 			<h3>Welcome to ${group.name}</h3>
 		</div>
-		<div> 
-		
-		<a href="addGroupPost?name=${group.name}"><button>Add Post To Group</button></a>
+		<div>
+
+			<a href="addGroupPost?name=${group.name}"><button>Add
+					Post To Group</button></a>
 		</div>
 		<c:choose>
-		<c:when test='${addGroupPost == "hello"}' > 
-		
-		<br>
+			<c:when test='${addGroupPost == "hello"}'>
 
-<sf:form method="post" action="groupPost" modelAttribute="post">
-<h2>${badPost}</h2>
-Title : <sf:input type="text" path="title" /> <br> 
-BodyText: <sf:input type="text" path="bodyText" /> <br> 
-Link: <sf:input type="text" path="link" /> <br>
-Category: <sf:input type="text" path="category" />  <br>
-Image : <sf:input type="text" path="imgUrl"/> <br>
-<input type="hidden" value="${group.name}" name ="name"/>
+				<br>
+
+				<sf:form method="post" action="groupPost" modelAttribute="post">
+					<h2>${badPost}</h2>
+Title : <sf:input type="text" path="title" />
+					<br> 
+BodyText: <sf:input type="text" path="bodyText" />
+					<br> 
+Link: <sf:input type="text" path="link" />
+					<br>
+Category: <sf:input type="text" path="category" />
+					<br>
+Image : <sf:input type="text" path="imgUrl" />
+					<br>
+					<input type="hidden" value="${group.name}" name="name" />
 
 
-<button type="submit" value="Submit Post">Add post</button>
-</sf:form>
-	<br>
-		
-		</c:when>
-		
-		<c:otherwise>
-		
-		</c:otherwise>
-	
-		
+					<button type="submit" value="Submit Post">Add post</button>
+				</sf:form>
+				<br>
+
+			</c:when>
+
+			<c:otherwise>
+
+			</c:otherwise>
+
+
 		</c:choose>
-		
-		<div class="col col2">
-			<c:forEach items="${group.users}" var="user">
-				<a href="viewProfile?profileId=${user.profile.profileId}">${user.username}</a>
-			</c:forEach>
+
+		<h3>Group Members</h3>
+		<div class="row">
+			<div class="col col2">
+				<c:forEach items="${group.users}" var="user">
+					<a href="viewProfile?profileId=${user.profile.profileId}">${user.username}</a>
+				</c:forEach>
+			</div>
 		</div>
-		<c:if test="${user.username == group.owner.username}">
-			<a href="goToSendInvite?groupName=${group.name}">Send Invite</a>
-			<c:if test="${sendInvite == 'send'}">
-				<form method="post" action="doSendInvite?groupName=${group.name}">
-					<input type="text" name="username" /> 
-					<br /> 
-					<input type="submit" value="Send" />
-				</form>
-			</c:if>
-		</c:if>
-		<div class="col col10 last">
-			<!-- Notice Board -->
-			<div class="col col12 last, border">
-				<div class="boardtext">
-					<c:forEach items="${allPosts}" var="aP">
-						<h3>${aP.title}<br />
-						</h3>
+		<br />
+		<hr>
+		<br />
+		<div class="row">
+			<div class="col col2">
+				<c:if test="${user.username == group.owner.username}">
+					<a href="goToSendInvite?groupName=${group.name}">Send Invite</a>
+					<c:if test="${sendInvite == 'send'}">
+						<form method="post" action="doSendInvite?groupName=${group.name}">
+							<input type="text" name="username" /> <br /> <input
+								type="submit" value="Send" />
+						</form>
+					</c:if>
+				</c:if>
+			</div>
+		</div>
+		<br />
+		<br />
+		<div class="row">
+			<div class="col col10 last">
+				<!-- Notice Board -->
+				<div class="col col12 last, border">
+					<div class="boardtext">
+						<c:forEach items="${allPosts}" var="aP">
+							<h3>${aP.title}<br />
+							</h3>
 				
 				Category: ${aP.category}<br />
-						<c:choose>
-							<c:when test='${aP.imgUrl == null}'>
-							</c:when>
-							<c:otherwise>
-								<img class="boardimg" src="${aP.imgUrl}">
-								<br>
-							</c:otherwise>
-						</c:choose>
+							<c:choose>
+								<c:when test='${aP.imgUrl == null}'>
+								</c:when>
+								<c:otherwise>
+									<img class="boardimg" src="${aP.imgUrl}">
+									<br>
+								</c:otherwise>
+							</c:choose>
 				${aP.bodyText}<br />
-						<a href="${aP.link}">For more info click here!</a>
-						<br />
+							<a href="${aP.link}">For more info click here!</a>
+							<br />
 			
 			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner.username}<br />
-						<br />
-						<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
-						<br>
-						<c:choose>
-							<c:when
-								test='${user.getRole() == "Admin" or user == group.owner}'>
-								<a href="processRemovePostAdmin?postId=${aP.postId}"
-									onclick="return confirm('Are you sure you want to remove this post?')">Remove
-									Post</a>
-							</c:when>
-							<c:otherwise>
+							<br />
+							<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+							<br>
+							<c:choose>
+								<c:when
+									test='${user.getRole() == "Admin" or user == group.owner}'>
+									<a href="processRemovePostAdmin?postId=${aP.postId}"
+										onclick="return confirm('Are you sure you want to remove this post?')">Remove
+										Post</a>
+								</c:when>
+								<c:otherwise>
 
-							</c:otherwise>
-						</c:choose>
-						<br />
-						<br />
-						<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
-							<sf:form method="post" action="doFlagPost?postId=${aP.postId}"
-								modelAttribute="flag">
+								</c:otherwise>
+							</c:choose>
+							<br />
+							<br />
+							<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
+								<sf:form method="post" action="doFlagPost?postId=${aP.postId}"
+									modelAttribute="flag">
 							Reason for flagging: <sf:input type="text" path="flagInfo" />
-								<br />
-								<input type="submit" value="Send Report" />
-							</sf:form>
-						</c:if>
-						<c:if test="${postId == aP.postId}">
+									<br />
+									<input type="submit" value="Send Report" />
+								</sf:form>
+							</c:if>
+							<c:if test="${postId == aP.postId}">
 				${flagErrorMessage}${flagSubmittedMessage}
 				</c:if>
-						<hr />
-					</c:forEach>
+							<hr />
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 		</div>

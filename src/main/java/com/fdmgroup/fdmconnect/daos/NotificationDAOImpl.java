@@ -57,7 +57,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 		
 		EntityManager manager = factory.createEntityManager();
 		User user = manager.find(User.class, username);
-		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where :user = n.recipient", Notification.class );
+		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where :user = n.recipient "
+				+ "order by n.dateAdded", Notification.class );
 		
 		query.setParameter("user", user);
 		List<Notification> notifications = query.getResultList();

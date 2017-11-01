@@ -10,5 +10,6 @@ public interface GroupDAO {
 	public List<Group> getAllGroups();
 	public Group createGroup(Group group);
 	public Group getGroup(String name);
+	public void updateGroup(Group group);
 
 }

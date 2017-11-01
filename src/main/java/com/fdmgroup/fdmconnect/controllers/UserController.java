@@ -214,14 +214,6 @@ public class UserController {
 	public String doAddEducation(Education education, HttpSession session, Principal principal, Model model,
 			HttpServletRequest request, @RequestParam(name = "startDate") String startDate) {
 
-		// if(!startDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4}))")){
-		//
-		// model.addAttribute("dateFormatErrorMessage", "Incorrect date format,
-		// try again.");
-		// return "user/AddEducation";
-		//
-		// }
-
 		User user = userDao.getUser(principal.getName());
 		Profile profile = user.getProfile();
 		education.setProfile(profile);
@@ -329,6 +321,8 @@ public class UserController {
 		
 		model.addAttribute("postId", postId);
 		model.addAttribute("viewComments", "show");
+		List<Comment> comments = commentDao.getAllCommentsByPost(postId);
+		model.addAttribute("comments",comments);
 		return "user/Home";
 		
 	}
@@ -397,8 +391,12 @@ public class UserController {
 			@RequestParam(name = "commentId") int commentId) {
 		
 		model.addAttribute("postId", postId);
+		model.addAttribute("commentId", commentId);
 		model.addAttribute("viewComments", "show");
 		model.addAttribute("editComment", "edit");
+		List<Comment> comments = commentDao.getAllCommentsByPost(postId);
+		model.addAttribute("comments",comments);
+		
 		return "user/Home";
 		
 	}
