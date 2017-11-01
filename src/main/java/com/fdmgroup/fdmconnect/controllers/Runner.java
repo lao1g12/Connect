@@ -18,6 +18,7 @@ public class Runner {
 		FlagDAOImpl flagDao = new FlagDAOImpl(factory);
 		
 		Profile profile = new Profile("someUrl", "I am an admin!", "Stopping people having fun.");
+		profile.setFirstName("Optimus"); profile.setLastName("Prime");
 		User user = new User("admin","password","admin@fdmgroup.com","Admin","Admin");
 		user.setProfile(profile);
 		userDao.addUser(user);

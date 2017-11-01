@@ -15,11 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
+import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
+import com.fdmgroup.fdmconnect.entities.Notification;
 import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
@@ -33,13 +35,14 @@ public class GroupController {
 	private UserDAOImpl userDao;
 	@Autowired
 	private FlagDAOImpl flagDao;
-	
-	
-	
+	@Autowired
+	private NotificationDAOImpl notificationDao;
+
 	public GroupController() {	}
 
 	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
 		super();
+		this.userDao = userDao;
 		this.postDao = postDao;
 		this.groupDao = groupDao;
 		this.flagDao = flagDao;
@@ -83,9 +86,8 @@ public class GroupController {
 		
 		return"redirect:/user/goToMyGroups";
 	}
+
 	
-
-
 	@RequestMapping("user/goToLeaveGroup")
 	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam String username, @RequestParam String name, RedirectAttributes ra){
 		Group group =(Group)session.getAttribute("group");
@@ -94,9 +96,35 @@ public class GroupController {
 	    // group.getOwner();
 	 groupDao .getGroup(name).getUsers().remove(username);
 		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
-		return"redirect:/user/goToMyGroups";
+		return "redirect:/user/goToMyGroups";
 	}
 	
+
+	
+	@RequestMapping("user/goToSendInvite")
+	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name){
+		
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("group", group);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		model.addAttribute("sendInvite", "send");
+		
+		return "user/GroupHome";
+		
+	}
+	
+	@RequestMapping("user/doSendInvite")
+	public String doSendInvite(HttpSession session, Model model, @RequestParam(name="groupName") String name,
+			@RequestParam(name="username") String username){
+		
+		Group group = groupDao.getGroup(name);
+		model.addAttribute("group", group);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		
+		Notification notification = new Notification(title, type)
+		
+		
+	}
 	
 	@RequestMapping("user/addGroupPost")
 	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request){ 
