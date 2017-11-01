@@ -12,9 +12,10 @@
 <body>
 		<c:forEach items="${conversation}" var="c">
 			<h3>
-				${c.
+				${c.getNotificationDateFormatted()}
 				${c.title}
 				${c.body}
+				${c.sender.getUsername()}
 			</h3>
 
 

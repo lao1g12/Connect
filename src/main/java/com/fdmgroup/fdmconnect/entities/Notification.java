@@ -33,9 +33,11 @@ public class Notification {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_NOTIFICATION_USER")
 	private User recipient;
+	private String recipientUsername;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "FC_NOTIFICATION_SENDER")
 	private User sender;
+	private String senderUsername;
 	
 	
 	public Notification() {}
@@ -45,6 +47,24 @@ public class Notification {
 		this.title = title;
 		this.type = type;
 		this.body = body;
+	}
+	
+	
+
+	public String getRecipientUsername() {
+		return recipientUsername;
+	}
+
+	public void setRecipientUsername() {
+		this.recipientUsername = recipient.getUsername();
+	}
+
+	public String getSenderUsername() {
+		return senderUsername;
+	}
+
+	public void setSenderUsername() {
+		this.senderUsername = sender.getUsername();
 	}
 
 	public String getBody() {

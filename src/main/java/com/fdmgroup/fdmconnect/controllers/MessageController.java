@@ -57,6 +57,8 @@ public class MessageController {
 		User sender = (User) session.getAttribute("user");
 		notification.setUser(reciever);
 		notification.setSender(sender);
+		notification.setRecipientUsername();
+		notification.setSenderUsername();
 		notifDao.addNotification(notification);
 		User user = userDao.getUser(principal.getName());
 		Set<User> contacts = ml.getContactList(user.getNotifications(), user.getNotificationsSent());
@@ -76,10 +78,13 @@ public class MessageController {
 	
 	@RequestMapping("user/messages")
 	public String messageBox(@RequestParam String username, Principal principal, Model model){
-		
-		User comUser = userDao.getUser(username);
-		User currentUser = userDao.getUser(principal.getName());
-		List<Notification> conversation = notifDao.getAllPostsByGroup(currentUser, comUser);
+		User user = userDao.getUser(username);
+		User curUsername = userDao.getUser(principal.getName());
+		List<Notification> conversation = notifDao.getAllPostsByGroup(user, curUsername);
+		System.out.println(user+" "+curUsername);
+		List<Notification> conversation2 = notifDao.getAllPostsByGroup(curUsername, user);
+		conversation.addAll(conversation2);
+		System.out.println(conversation);
 		model.addAttribute("conversation", conversation);
 		return "user/Messages";
 		
