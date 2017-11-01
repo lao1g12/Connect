@@ -81,11 +81,7 @@ public class MessageController {
 		MessageLogic ml = new MessageLogic();
 		User user = userDao.getUser(username);
 		User curUsername = userDao.getUser(principal.getName());
-		List<Notification> sent = notifDao.getAllPostsByGroup(user, curUsername);
-		System.out.println(user+" "+curUsername);
-		List<Notification> conversation = ml.refineMessages(sent, user, curUsername);
-//		List<Notification> conversation2 = notifDao.getAllPostsByGroup(curUsername, user);
-//		conversation.addAll(conversation2);
+		List<Notification> conversation = notifDao.getAllPostsByGroup(curUsername, user);
 		System.out.println(conversation);
 		model.addAttribute("conversation", conversation);
 		return "user/Messages";

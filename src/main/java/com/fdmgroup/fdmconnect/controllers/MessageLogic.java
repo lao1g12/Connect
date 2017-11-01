@@ -23,15 +23,6 @@ public class MessageLogic {
 		return contacts;
 	}
 
-	public List<Notification> refineMessages(List<Notification> sent, User user, User curUsername) {
-		List<Notification> conversation = new ArrayList<Notification>();
-		for(Notification convo: sent){
-			if(convo.getRecipientUsername().equals(user.getUsername()) || convo.getRecipientUsername().equals(curUsername.getUsername())){
-				conversation.add(convo);
-			}
-		}
-		return conversation;
-	}
 
 	
 
