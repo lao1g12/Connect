@@ -52,6 +52,10 @@
 			<br>
 			<a href="goToGroupHome?name=${g.name}">Go To Group</a>
 
+			<br>
+			<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
+
+
 	</c:forEach> 
 	</br>
 	</br>
@@ -63,7 +67,7 @@
 		<input type="submit" value="Create group"/><br>
 	</sf:form>
 	${groupWasCreated}
-	
+	${ownerLeftGroup }
 
 </div>
 </body>

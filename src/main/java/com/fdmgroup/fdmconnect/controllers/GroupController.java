@@ -26,6 +26,8 @@ public class GroupController {
 	private PostDAOImpl postDao;
 	@Autowired 
 	private GroupDAOImpl groupDao;
+	@Autowired
+	private UserDAOImpl userDao;
 	
 	public GroupController() {	}
 
@@ -52,7 +54,7 @@ public class GroupController {
 		Group group = new Group();
 		model.addAttribute(group);
 		model.addAttribute("groups", groups);
-		Logging.Log("trace", "Admin Controller: Display all posts called.");
+		Logging.Log("trace", "Group Controller:  My groups called.");
 		return "user/MyGroups";
 
 	}
@@ -71,6 +73,25 @@ public class GroupController {
 		Logging.Log("info", "Group Controller: " + session.getAttribute("username") + "created a group" + group);
 
 		
+		return"redirect:/user/goToMyGroups";
+	}
+	
+
+
+	@RequestMapping("user/postToGroup")
+	public String postToGroup() { 
+		
+		return "AddPost";
+	}
+	
+	@RequestMapping("user/goToLeaveGroup")
+	public String goToLeaveGroup(@RequestParam String username, RedirectAttributes ra){
+		
+		List<User> users = userDao.getAllUsers();
+		//User owner = (User) session.getAttribute("user");
+	    // group.getOwner();
+	    users.remove(username);
+		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
 		return"redirect:/user/goToMyGroups";
 	}
 	
