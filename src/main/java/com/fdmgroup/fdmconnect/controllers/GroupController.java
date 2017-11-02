@@ -64,7 +64,7 @@ public class GroupController {
 
 	}
 
-	@RequestMapping("user/goToMyGroups")
+	@RequestMapping(value = { "/admin/goToMyGroups","user/goToMyGroups"})
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		Set<Group> groups = user.getGroups();
@@ -163,6 +163,14 @@ public class GroupController {
 
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		
+	if (recipient == null) {
+			
+			model.addAttribute("userErrorMessage", "User with username "+username+" does not exist.");
+			return "user/GroupHome";
+			
+		}
+		
 
 		Notification notification = new Notification("Group Invite from " + sender.getUsername(), "invite", name);
 		notification.setUser(recipient);
@@ -190,11 +198,12 @@ public class GroupController {
 			notificationDao.removeNotification(notificationId);
 		} catch (PersistenceException pe) {
 			ra.addFlashAttribute("inviteAcceptError", "You already exist as a member in this group.");
+			notificationDao.removeNotification(notificationId);
 			return "redirect:/user/goHome";
 		}
 
 		ra.addFlashAttribute("userAddedToGroupMessage", "You have been added to the group " + name);
-		return "redirect:/user/goHome";
+		return "redirect:/user/login";
 
 	}
 
@@ -211,7 +220,7 @@ public class GroupController {
 			return "redirect:/user/goHome";
 		}
 
-		return "redirect:/user/goHome";
+		return "redirect:/user/login";
 
 	}
 

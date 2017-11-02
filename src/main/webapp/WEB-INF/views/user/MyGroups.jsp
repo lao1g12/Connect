@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
-<title>Group Home</title>
+<title>MyGroup</title>
 </head>
 <body>
 	<!-- Top Menu -->
@@ -32,8 +32,9 @@
 					</c:choose>
 					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
-					<li class="horizl"><a href="submitPost">Add Post</a>
-					<li>
+					<li class="horizl"><a href="submitPost">Add Post</a></li>
+					<li class="horizl"><a href="goToMyGroups">My Groups</a></li>
+					<li class="horizl"><a href="goToMyMessages">My Messages</a></li>
 					<li id="right" class="horizl"><a href="logout">Logout</a></li>
 
 				</ul>
@@ -49,7 +50,7 @@
 	 
 	 Description: ${g.description } <br />
 
-			<img class="boarding" src="${g.imageUrl }">
+			<img class="groupImg" src="${g.imageUrl }">
 			<br />
 			<br>
 			<br>
@@ -58,7 +59,9 @@
 			<br>
 			<c:choose>
 				<c:when test="${user.username != g.owner.username}">
-					<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
+					<a href="goToLeaveGroup?name=${g.name}">
+					onclick="return confirm('Are you sure you want to leave this group?')">Leave Group</a>
+				
 
 				</c:when>
 				<c:otherwise>
@@ -70,7 +73,9 @@
 			
 			<c:choose>
 				<c:when test='${user.username  == g.owner.username}'>
-					<a href="goToRemoveGroup?name=${g.name }">Remove Group</a>
+					<a href="goToRemoveGroup?name=${g.name }"
+					onclick="return confirm('Are you sure you want to remove this group?')" 
+					Remove Group</a>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
@@ -109,7 +114,7 @@
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>
-		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}
+		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}
     <br>
 	</div>
 </body>
