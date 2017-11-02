@@ -93,7 +93,6 @@ Image : <sf:input type="text" path="imgUrl" />
 			</div>
 		</div>
 		<br />
-		<hr>
 		<br />
 		<div class="row">
 			<div class="col col2">
@@ -114,14 +113,14 @@ Image : <sf:input type="text" path="imgUrl" />
 
 		<br /><br />
 
-		<div class="row">
-			<div class="col col10 last">
+<div>
+	
 				<!-- Notice Board -->
+					<div class="row">
 				<div class="col col12 last, border">
 					<div class="boardtext">
 						<c:forEach items="${allPosts}" var="aP">
-							<h3>${aP.title}<br />
-							</h3>
+							<h3>${aP.title}<br /></h3>
 				
 				Category: ${aP.category}<br />
 							<c:choose>
@@ -172,21 +171,26 @@ Image : <sf:input type="text" path="imgUrl" />
 			</div>
 		</div>
 		<div class="empty"></div>
-		<footer> <br>
-
-		${postRemovedByAdmin }
-
-
-
-		<ul class="horiz">
-			<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
-			<li class="horizl"><a href="www.Help.com">Help</a></li>
-			<li class="horizl"><a href="www.language.com">Language</a></li>
-			<li class="horizl"><a href="www.about.com">About</a></li>
-			<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
-		</ul>
-		</footer>
-	</div>
-
+		
+			${postRemovedByAdmin }
+			<br>
+ <br> <br>
+		
+		<div> 
+		<br>
+	<div id="Footer" class="row">
+			<footer>
+			<ul class="horiz">
+				<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+				<li class="horizl"><a href="www.Help.com">Help</a></li>
+				<li class="horizl"><a href="www.language.com">Language</a></li>
+				<li class="horizl"><a href="www.about.com">About</a></li>
+				<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+			</ul>
+			</footer>
+		</div>
+		</div>
+		</div>
+	
 </body>
 </html>

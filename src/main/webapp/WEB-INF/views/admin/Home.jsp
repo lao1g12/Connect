@@ -42,22 +42,27 @@
 
 		<div id="adminPage" class="row">
 			<br> <br>
-			<div class="col col3">
+			
+			<div class="col col2"> 
+				<div id="blankadminButton" > </div>
+			</div>
+			
+			<div class="col col2">
 				<form method="get" action="admin/goToAddUser">
 					<button id="adminButton" type="submit">Add User</button>
 				</form>
 			</div>
-			<div class="col col3">
+			<div class="col col2">
 				<form method="get" action="admin/viewAllUsers">
 					<button id="adminButton" type="submit">View all Users</button>
 				</form>
 			</div>
-			<div class="col col3">
+			<div class="col col2">
 				<form method="get" action="admin/viewAllGroups">
 					<button id="adminButton" type="submit">View all Groups</button>
 				</form>
 			</div>
-			<div class="col col3 last">
+			<div class="col col2 last">
 				<form method="get" action="admin/viewAllFlaggedPosts">
 					<button id="adminButton" type="submit">View all Flagged
 						Posts</button>
@@ -71,9 +76,9 @@
 			<div class="col col6">
 				<br> <br>
 				<form method="post" action="admin/addBadWords">
-					Enter Your new badwords : <input required type="text"
-						name="badWords" value="${flag.flagInfo}" /><br> <input
-						id="adminButton" type="submit" value="Update details" />
+					Enter block words : <input required type="text"
+						name="badWords" id="textboxid" value="${flag.flagInfo}" /><br> <input
+						id="adminButton" type="submit" value="Update" />
 				</form>
 			</div>
 			<div class="col col3 last">
