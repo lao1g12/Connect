@@ -33,37 +33,24 @@ public class MessageController {
 		this.notifDao = notifDao;
 		this.userDao = userDao;
 	}
-
-	@RequestMapping("user/goToSendMessage")
-	public String GoToSendMessage(@RequestParam String username, HttpServletRequest request, Model model){
-		
-		Notification notification = new Notification();
-		model.addAttribute(notification);
-		request.setAttribute("username", username);
-		
-		return "user/SendMessage";
-		
-	}
 	
 	@RequestMapping("user/sendMessage")
-	public String SendMessage(Notification notification, @RequestParam String recipient, HttpSession session, Principal principal, HttpServletRequest request){
+	public String SendMessage(Notification notification, @RequestParam String recipient, HttpSession session, Principal principal, HttpServletRequest request, Model model){
 		
-		MessageLogic ml = new MessageLogic();
 		User reciever = userDao.getUser(recipient);
 		User sender = (User) session.getAttribute("user");
-		
 		notification.setUser(reciever);
 		notification.setSender(sender);
 		notification.setRecipientUsername();
 		notification.setSenderUsername();
 		notifDao.addNotification(notification);
+		List<Notification> conversation = notifDao.getAllNotificationsByGroup(sender, reciever);
+		model.addAttribute("conversation", conversation);
+		notification = new Notification();
+		model.addAttribute(notification);
+		request.setAttribute("username", recipient);
 		
-		User user = userDao.getUser(principal.getName());
-		Set<User> contacts = ml.getContactList(user.getNotifications(), user.getNotificationsSent());
-		
-		request.setAttribute("contacts", contacts);
-		return "user/MyMessages";
-		
+		return "user/Messages";
 	}
 	
 	@RequestMapping("user/goToMyMessages")
@@ -77,12 +64,15 @@ public class MessageController {
 	}
 	
 	@RequestMapping("user/messages")
-	public String messageBox(@RequestParam String username, Principal principal, Model model){
-		MessageLogic ml = new MessageLogic();
+	public String messageBox(@RequestParam String username, Principal principal, Model model, HttpServletRequest request){
+
 		User user = userDao.getUser(username);
 		User curUsername = userDao.getUser(principal.getName());
 		List<Notification> conversation = notifDao.getAllNotificationsByGroup(user, curUsername);
 		model.addAttribute("conversation", conversation);
+		Notification notification = new Notification();
+		model.addAttribute(notification);
+		request.setAttribute("username", username);
 		return "user/Messages";
 		
 	}
