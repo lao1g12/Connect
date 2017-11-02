@@ -38,12 +38,16 @@ public class User {
 	private Set<Post> posts;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="reporter", cascade = CascadeType.REMOVE)
 	private List<Flag> flags;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy="users")
-	private Set<Group> groups= new HashSet<Group>();
+	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy="users")
+	private Set<Group> groups = new HashSet<Group>();
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.REMOVE)
 	private Set<Group> ownedGroups;
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="recipient", cascade = CascadeType.REMOVE)
 	private Set<Notification> notifications;
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="sender", cascade = CascadeType.REMOVE)
 	private Set<Notification> notificationsSent;
 	

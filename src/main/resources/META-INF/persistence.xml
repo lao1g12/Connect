@@ -23,6 +23,13 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.7.9.218:1521:xe" />
 			<property name="javax.persistence.jdbc.user" value="trainee1" />
 			<property name="javax.persistence.jdbc.password" value="!QAZSE4" />
+			
+			<!-- Connection pooling config -->
+			<property name="hibernate.c3p0.min_size" value="4" />
+			<property name="hibernate.c3p0.max_size" value="8" />
+			<property name="hibernate.c3p0.timeout" value="300" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="hibernate.c3p0.idle_test_period" value="3000" />
 
 			<!-- validate, create, create-drop, update -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />

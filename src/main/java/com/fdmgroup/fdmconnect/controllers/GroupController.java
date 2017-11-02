@@ -150,7 +150,6 @@ public class GroupController {
 		
 		User user = (User) session.getAttribute("user");
 		Group group = groupDao.getGroup(name);
-		System.out.println(group);
 		int notificationId = Integer.parseInt(nId);
 		
 		try {
