@@ -49,8 +49,8 @@
 			<a href="addGroupPost?name=${group.name}"><button>Add
 					Post To Group</button></a>
 		</div>
-		
-		
+
+
 		<c:choose>
 			<c:when test='${addGroupPost == "hello"}'>
 
@@ -107,16 +107,13 @@ Image : <sf:input type="text" path="imgUrl" />
 				</c:if>
 			</div>
 
-			<br />
+			<br /> 
 			${userErrorMessage}
 		</div>
-
-		<br /><br />
+		<br /> <br />
 
 <div>
-	
-				<!-- Notice Board -->
-					<div class="row">
+				<div class="row">
 				<div class="col col12 last, border">
 					<div class="boardtext">
 						<c:forEach items="${allPosts}" var="aP">
@@ -137,6 +134,58 @@ Image : <sf:input type="text" path="imgUrl" />
 			
 			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner.username}<br />
+							<br />
+							<c:if test="${viewComments != 'show'}">
+								<a href="goToViewGroupComments?postId=${aP.postId}">View
+									Comments</a>
+							</c:if>
+							<br />
+							<c:if test="${postId == aP.postId and viewComments == 'show' }">
+								<h3>Comments</h3>
+								<c:forEach items="${comments}" var="c">
+									${c.user.profile.firstName} ${c.user.profile.lastName} 
+									<br />
+									${c.getCommentDateFormatted()} 
+									<br />
+									<br />
+									${c.commentBody} 
+									<br />
+									<br />
+									<c:if
+										test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
+										<a href="doRemoveGroupComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
+									</c:if>
+
+									<c:if test="${username == c.user.getUsername()}">
+										<a
+											href="goToEditGroupComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
+										<br />
+										<c:if test="${postId == aP.postId and editComment == 'edit'}">
+											<form method="post"
+												action="doEditGroupComment?commentId=${c.commentId}">
+												<input type="text" name="commentBody" /> <br /> <input
+													type="submit" value="Update" />
+											</form>
+										</c:if>
+									</c:if>
+									<br />
+									${commentRemovedMessage}
+									<br />
+								</c:forEach>
+								<br />
+								<c:if test="${addComment != 'add'}">
+									<a href="goToAddGroupComment?postId=${aP.postId}">Add Comment</a>
+								</c:if>
+								<br />
+								<c:if test="${postId == aP.postId and addComment == 'add'}">
+									<h4>${badComment}</h4>
+									<form method="post"
+										action="doAddGroupComment?postId=${aP.postId}">
+										<input type="text" name="commentBody" /> <br /> <input
+											type="submit" value="Add Comment" />
+									</form>
+								</c:if>
+							</c:if>
 							<br />
 							<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
 							<br>
@@ -171,7 +220,7 @@ Image : <sf:input type="text" path="imgUrl" />
 			</div>
 		</div>
 		<div class="empty"></div>
-		
+
 			${postRemovedByAdmin }
 			<br>
  <br> <br>

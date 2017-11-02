@@ -11,39 +11,37 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
-import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.NotificationDAO;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 
 public class IndexControllerTest {
 	
-	private UserDAOImpl userDao;
-	private PostDAOImpl postDao;
+	private UserDAO userDao;
+	private PostDAO postDao;
+	private NotificationDAO notificationDao;
 	private IndexController index;
 	private HttpSession session;
 	private HttpServletRequest request;
 	private Principal principal;
 	private Calendar calendar;
 	private User user;
-	private FlagDAOImpl flagDao;
 	private Profile profile;
 
 	@Before
 	public void setUp() {
 		userDao = mock(UserDAOImpl.class);
 		postDao = mock(PostDAOImpl.class);
-		flagDao = mock(FlagDAOImpl.class);
-		index = new IndexController(userDao, postDao, flagDao);
+		index = new IndexController(userDao, postDao, notificationDao);
 		session = mock(HttpSession.class);
 		request = mock(HttpServletRequest.class);
 		principal = mock(Principal.class);

@@ -14,10 +14,6 @@ import com.fdmgroup.fdmconnect.entities.Post;
 
 public class SearchLogic {
 	
-	@Autowired
-	private EntityManagerFactory factory;
-
-	
 	public List<String> searchForListings(String badWords, String checkString){
 		badWords = badWords.replaceAll("[^a-zA-Z\\s]", " ");
 		badWords = badWords.toLowerCase();

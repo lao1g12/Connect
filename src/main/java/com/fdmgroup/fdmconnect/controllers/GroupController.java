@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
-import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
-import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
-import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
-import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.daos.CommentDAO;
+import com.fdmgroup.fdmconnect.daos.FlagDAO;
+import com.fdmgroup.fdmconnect.daos.GroupDAO;
+import com.fdmgroup.fdmconnect.daos.NotificationDAO;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
+import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
@@ -30,21 +32,23 @@ import com.fdmgroup.fdmconnect.entities.User;
 public class GroupController {
 
 	@Autowired
-	private PostDAOImpl postDao;
+	private PostDAO postDao;
 	@Autowired
-	private GroupDAOImpl groupDao;
+	private GroupDAO groupDao;
 	@Autowired
-	private UserDAOImpl userDao;
+	private UserDAO userDao;
 	@Autowired
-	private FlagDAOImpl flagDao;
+	private FlagDAO flagDao;
 	@Autowired
-	private NotificationDAOImpl notificationDao;
+	private NotificationDAO notificationDao;
+	@Autowired
+	private CommentDAO commentDao;
 
 	public GroupController() {
 	}
 
-	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao,
-			NotificationDAOImpl notificationDao) {
+	public GroupController(PostDAO postDao, UserDAO userDao, FlagDAO flagDao, GroupDAO groupDao,
+			NotificationDAO notificationDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
@@ -55,11 +59,11 @@ public class GroupController {
 
 	@RequestMapping(value = { "user/goToGroupHome", "admin/goToGroupHome" })
 
-	public String admin(Model model, @RequestParam String name) {
+	public String admin(Model model, HttpSession session, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
-		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
-		model.addAttribute("group", group);
+		session.setAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		session.setAttribute("group", group);
 		return "user/GroupHome";
 
 	}
@@ -113,10 +117,7 @@ public class GroupController {
         Group group =groupDao.getGroup(groupname);
         group.removeUser(user);
         session.setAttribute("user", user);
-	
-	 // group.setOwner(newowner);
-        
-       
+
        
        groupDao.updateGroup(group);
        ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
@@ -126,7 +127,33 @@ public class GroupController {
 		return "redirect:/user/goToMyGroups";
 
 	}
-	
+
+
+
+	@RequestMapping("/user/doSetNewOwner")
+	public String doSetNewOwner(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra, 
+			@RequestParam String username) {
+		User user = (User) session.getAttribute("user");
+		Group group =groupDao.getGroup(name);
+		User newOwner = userDao.getUser(username);
+		user.getOwnedGroups().remove(group);
+		newOwner.getOwnedGroups().add(group);
+		group.setOwner(newOwner);
+		group.getUsers().remove(newOwner);
+		group.getUsers().add(newOwner);
+		userDao.updateUser(newOwner);
+		groupDao.updateGroup(group);
+		userDao.updateUser(user);
+		
+
+
+
+		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
+		Logging.Log("post", "A new owner is:" + name);
+		return "redirect:/user/goToMyGroups";
+
+		
+	}
 	
 
 	@RequestMapping("/user/goToRemoveGroup")
@@ -146,12 +173,6 @@ public class GroupController {
 		
 	}
 	
-	
-	
-	
-	
-	
-
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name) {
 
@@ -174,14 +195,6 @@ public class GroupController {
 
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
-		
-	if (recipient == null) {
-			
-			model.addAttribute("userErrorMessage", "User with username "+username+" does not exist.");
-			return "user/GroupHome";
-			
-		}
-		
 
 		if (recipient == null) {
 			
@@ -249,8 +262,8 @@ public class GroupController {
 
 		Post post = new Post();
 		Group group = groupDao.getGroup(name);
-		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute("group", group);
+		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute(post);
 
 		request.setAttribute("addGroupPost", "hello");
@@ -287,6 +300,110 @@ public class GroupController {
 
 		return "redirect:/user/login";
 
+	}
+	
+	@RequestMapping(value = { "/user/goToViewGroupComments", "/admin/goToViewGroupComments" })
+	public String goToViewGroupComments(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
+		
+	    model.addAttribute("postId", postId);
+		model.addAttribute("viewComments", "show");
+		List<Comment> comments = commentDao.getAllCommentsByPost(postId);
+		model.addAttribute("comments", comments);
+		return "user/GroupHome";
+		
+	}
+
+	@RequestMapping(value = {"/user/goToAddGroupComment", "/admin/goToAddGroupComment"})
+	public String goToAddGroupComment(HttpSession session, Model model, HttpServletRequest request,
+			@ModelAttribute("postId") int postId) {
+		
+		if (postId == 0){
+			postId = Integer.parseInt(request.getParameter("postId"));
+		}
+		
+		model.addAttribute("postId", postId);
+		model.addAttribute("viewComments", "show");
+		model.addAttribute("addComment", "add");
+		return "user/GroupHome";
+		
+	}
+	
+	@RequestMapping(value = {"/user/doAddGroupComment", "/admin/doAddGroupComment"})
+	public String doAddGroupComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
+			@RequestParam(name = "commentBody") String commentBody, RedirectAttributes ra, HttpServletRequest request) {
+		
+		Comment comment = new Comment(commentBody);
+		SearchLogic bl = new SearchLogic();
+		Flag flag = flagDao.getFlag(1);
+		String badWords = flag.getFlagInfo();
+		List<String> checkedBadWords = bl.searchForListings(badWords, commentBody);
+		
+		if (checkedBadWords.size() > 0) {
+			StringBuffer sbReturn = new StringBuffer();
+			for (String badWord : checkedBadWords) {
+				sbReturn.append(badWord + " ");
+			}
+			String badWordString = sbReturn.toString();
+			ra.addFlashAttribute("badComment",
+					"You just tried to post an article with the following inappropriate words :" + badWordString);
+			ra.addFlashAttribute("postId", postId);
+			return "redirect:/user/goToAddGroupComment";
+		}
+		
+		comment.setUser((User) session.getAttribute("user"));
+		comment.setPost(postDao.getPost(postId));
+		
+		try {
+			commentDao.addComment(comment);
+		} catch (PersistenceException pe) {
+			model.addAttribute("addCommentErrorMessage", "Could not post comment at this time.");
+			return "user/GroupHome";
+		}
+		
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added a comment "+comment);
+		
+		
+		return "redirect:/user/goToGroupHome";
+			
+	}
+	
+	@RequestMapping(value = {"/user/doRemoveGroupComment", "/admin/doRemoveGroupComment"})
+	String doRemoveGroupComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId){
+		
+		commentDao.removeComment(commentId);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " removed a comment "+commentId);
+		
+		return "redirect:/user/goToGroupHome";
+		
+	}
+	
+	@RequestMapping(value = {"/user/goToEditGroupComment", "/admin/goToEditGroupComment"})
+	String goToEditGroupComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
+			@RequestParam(name = "commentId") int commentId) {
+		
+		model.addAttribute("postId", postId);
+		model.addAttribute("commentId", commentId);
+		model.addAttribute("viewComments", "show");
+		model.addAttribute("editComment", "edit");
+		List<Comment> comments = commentDao.getAllCommentsByPost(postId);
+		model.addAttribute("comments",comments);
+		
+		return "user/GroupHome";
+		
+	}
+	
+	@RequestMapping(value = {"/user/doEditGroupComment", "/admin/doEditGroupComment"})
+	String doEditGroupComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId, 
+			@RequestParam(name = "commentBody") String commentBody){
+		
+		Comment comment = commentDao.getComment(commentId);
+		comment.setCommentBody(commentBody);
+		
+		commentDao.updateComment(comment);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " edited a comment "+commentId);
+		
+		return "redirect:/user/goToGroupHome";
+		
 	}
 
 }

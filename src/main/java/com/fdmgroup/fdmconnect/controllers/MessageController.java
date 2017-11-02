@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
-import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.daos.NotificationDAO;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.entities.Notification;
 import com.fdmgroup.fdmconnect.entities.User;
 
@@ -22,13 +22,13 @@ import com.fdmgroup.fdmconnect.entities.User;
 public class MessageController {
 	
 	@Autowired
-	private NotificationDAOImpl notifDao;
+	private NotificationDAO notifDao;
 	@Autowired
-	private UserDAOImpl userDao;
+	private UserDAO userDao;
 	
 	public MessageController() {	}
 	
-	public MessageController(NotificationDAOImpl notifDao, UserDAOImpl userDao) {
+	public MessageController(NotificationDAO notifDao, UserDAO userDao) {
 		super();
 		this.notifDao = notifDao;
 		this.userDao = userDao;
@@ -48,7 +48,6 @@ public class MessageController {
 		model.addAttribute(notification);
 		request.setAttribute("username", recipient);
 		Logging.Log("info", "Message Controller: "+session.getAttribute("username")+" has sent a Message.");
-		
 		
 		return "user/Messages";
 	}

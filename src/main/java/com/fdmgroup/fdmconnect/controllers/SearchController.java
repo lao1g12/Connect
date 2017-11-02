@@ -12,21 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
-import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
-import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
 import com.fdmgroup.fdmconnect.entities.Post;
 
 @Controller
 public class SearchController {
 
 	@Autowired
-	private PostDAOImpl postDao;
+	private PostDAO postDao;
 
 	public SearchController() {
 	}
 
-	public SearchController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao) {
+	public SearchController(PostDAO postDao) {
 		super();
 		this.postDao = postDao;
 	}

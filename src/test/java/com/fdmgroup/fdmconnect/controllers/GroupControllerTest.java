@@ -19,10 +19,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.controllers.SearchLogic;
 import com.fdmgroup.fdmconnect.controllers.GroupController;
+import com.fdmgroup.fdmconnect.daos.FlagDAO;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
+import com.fdmgroup.fdmconnect.daos.GroupDAO;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
@@ -31,10 +35,10 @@ import com.fdmgroup.fdmconnect.entities.User;
 
 public class GroupControllerTest {
 
-	private UserDAOImpl userDao;
-	private PostDAOImpl postDao;
-	private FlagDAOImpl flagDao;
-	private GroupDAOImpl groupDao;
+	private UserDAO userDao;
+	private PostDAO postDao;
+	private FlagDAO flagDao;
+	private GroupDAO groupDao;
 	private NotificationDAOImpl notificationDao;
 	private HttpSession session;
 	private Model model;
