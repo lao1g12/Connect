@@ -31,6 +31,8 @@
 					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
 					<li class="horizl"><a href="account">Account</a></li>
 					<li class="horizl"><a href="submitPost">Add Post</a></li>
+					<li class="horizl"><a href="goToMyGroups">My Groups</a></li>
+					<li class="horizl"><a href="goToMyMessages">My Messages</a></li>
 					<li id="right" class="horizl"><a href="logout">Logout</a></li>
 				</ul>
 
@@ -47,6 +49,8 @@
 			<a href="addGroupPost?name=${group.name}"><button>Add
 					Post To Group</button></a>
 		</div>
+		
+		
 		<c:choose>
 			<c:when test='${addGroupPost == "hello"}'>
 
