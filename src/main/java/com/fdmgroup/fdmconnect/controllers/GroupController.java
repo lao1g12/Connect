@@ -64,7 +64,9 @@ public class GroupController {
 
 	}
 
-	@RequestMapping(value = { "/admin/goToMyGroups", "/user/goToMyGroups" })
+
+	@RequestMapping(value = { "/admin/goToMyGroups","user/goToMyGroups"})
+
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		Set<Group> groups = user.getGroups();
@@ -107,12 +109,18 @@ public class GroupController {
 			RedirectAttributes ra) {
 
 		User user = (User) session.getAttribute("user");
-		Group group = groupDao.getGroup(groupname);
-		group.removeUser(user);
-		session.setAttribute("user", user);
 
-		groupDao.updateGroup(group);
-		ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
+        Group group =groupDao.getGroup(groupname);
+        group.removeUser(user);
+        session.setAttribute("user", user);
+	
+	 // group.setOwner(newowner);
+        
+       
+       
+       groupDao.updateGroup(group);
+       ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
+
 
 		Logging.Log("info", "User left the group");
 		return "redirect:/user/goToMyGroups";
@@ -123,15 +131,24 @@ public class GroupController {
 	public String goToRemoveGroup(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra) {
 
 		User user = (User) session.getAttribute("user");
-		groupDao.removeGroup(name);
 
-		session.setAttribute("user", user);
+		
+		groupDao.removeGroup(name);
+	    session.setAttribute("user", user);
+
 
 		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
 		Logging.Log("post", "group removed succesfully by owner" + name);
 		return "redirect:/user/goToMyGroups";
 
+		
 	}
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name) {
@@ -155,6 +172,14 @@ public class GroupController {
 
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
+		
+	if (recipient == null) {
+			
+			model.addAttribute("userErrorMessage", "User with username "+username+" does not exist.");
+			return "user/GroupHome";
+			
+		}
+		
 
 		if (recipient == null) {
 			

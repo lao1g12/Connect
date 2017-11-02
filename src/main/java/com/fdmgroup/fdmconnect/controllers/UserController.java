@@ -91,6 +91,7 @@ public class UserController {
 		return "user/ViewAccount";
 
 	}
+	
 
 	@RequestMapping(value = { "/admin/submitPost", "/user/submitPost"})
 	public String submitPost(Model model, HttpSession session) {
@@ -134,12 +135,12 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/processRemovePostUser")
-	public String processRemovePostUser(@RequestParam int postId, Model model) {
+	public String processRemovePostUser(@RequestParam int postId, Model model, RedirectAttributes ra) {
 
 		postDao.removePost(postId);
 		Logging.Log("post", "post removed succesfully by admin" + postId);
-		model.addAttribute("postRemovedByUser", "Post removed succesfully.");
-		return "user/ViewAccount";
+		ra.addFlashAttribute("postRemovedByUser", "Post removed succesfully.");
+		return "redirect:/user/account";
 
 	}
 

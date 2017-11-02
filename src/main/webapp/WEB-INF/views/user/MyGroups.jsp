@@ -58,25 +58,51 @@
 
 			<br>
 			<c:choose>
+
 				<c:when test="${user.username != g.owner.username}">
-					<a href="goToLeaveGroup?name=${g.name}"
+					<a href="goToLeaveGroup?name=${g.name}">
 					onclick="return confirm('Are you sure you want to leave this group?')">Leave Group</a>
+				
+
 				</c:when>
+				<c:otherwise>
+
+				</c:otherwise>
+
 
 			</c:choose>
 			<br>
 			
+
 			<c:choose>
-				<c:when test='${user.username == g.owner.username}'>
-					<a href="goToRemoveGroup?name=${g.name}" 
-					onclick="return confirm('Are you sure you want to remove this group?')" >Remove Group</a>
-				</c:when>
+				<c:when test='${user.username  == g.owner.username}'>
+					<a href="goToRemoveGroup?name=${g.name }"
+					onclick="return confirm('Are you sure you want to remove this group?')" 
+					Remove Group</a>
+
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+			<br>
+			<br>
+			
+				<c:choose>
+				<c:when test='${user.username  == g.owner.username}'>
+				
+			<sf:form method="post" action="doSetNewOwner" modelAttribute="group">
+		 New Group Owner: <sf:input type="text" path="owner" />
+		</sf:form>
+		<br>
+				<a href="doSetNewOwner?name=${g.name }"><button>Set New Group  Owner</button></a>
+			</c:when>
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
 		</br> </br>
 
+   <br>
+    <br>
 		<sf:form method="post" action="doCreateGroup" modelAttribute="group">
 		Group Name: <sf:input type="text" path="name" />
 			<br>
