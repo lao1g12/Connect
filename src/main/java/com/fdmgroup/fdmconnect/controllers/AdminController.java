@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
-import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
-import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
-import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.daos.FlagDAO;
+import com.fdmgroup.fdmconnect.daos.GroupDAO;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
@@ -31,18 +31,18 @@ import com.fdmgroup.fdmconnect.controllers.Logging;
 public class AdminController {
 
 	@Autowired
-	private PostDAOImpl postDao;
+	private PostDAO postDao;
 	@Autowired
-	private UserDAOImpl userDao;
+	private UserDAO userDao;
 	@Autowired
-	private FlagDAOImpl flagDao;
+	private FlagDAO flagDao;
 	@Autowired
-	private GroupDAOImpl groupDao;
+	private GroupDAO groupDao;
 
 	public AdminController() {
 	}
 
-	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
+	public AdminController(PostDAO postDao, UserDAO userDao, FlagDAO flagDao, GroupDAO groupDao) {
 		super();
 		this.postDao = postDao;
 		this.userDao = userDao;

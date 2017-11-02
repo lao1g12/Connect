@@ -9,5 +9,9 @@ public interface PostDAO {
 	public void addPost(Post post);
 	public List<Post> getAllPosts();
 	public Post getPost(int postId);
+	public void removePost(int postId);
+	public List<Post> getAllPostsWhereGroupsAll();
+	public List<Post> getAllPostsByGroup(String name);
+	public void updatePost(Post post);
 
 }

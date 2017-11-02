@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fdmgroup.fdmconnect.daos.CommentDAOImpl;
-import com.fdmgroup.fdmconnect.daos.EducationDAOImpl;
-import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
-import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
-import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
-import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
-import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
-import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.daos.CommentDAO;
+import com.fdmgroup.fdmconnect.daos.EducationDAO;
+import com.fdmgroup.fdmconnect.daos.ExperienceDAO;
+import com.fdmgroup.fdmconnect.daos.FlagDAO;
+import com.fdmgroup.fdmconnect.daos.GroupDAO;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
+import com.fdmgroup.fdmconnect.daos.ProfileDAO;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Education;
 import com.fdmgroup.fdmconnect.entities.Experience;
@@ -38,27 +38,27 @@ import com.fdmgroup.fdmconnect.entities.User;
 public class UserController {
 
 	@Autowired
-	private UserDAOImpl userDao;
+	private UserDAO userDao;
 	@Autowired
-	private ProfileDAOImpl profileDao;
+	private ProfileDAO profileDao;
 	@Autowired
-	private FlagDAOImpl flagDao;
+	private FlagDAO flagDao;
 	@Autowired
-	private PostDAOImpl postDao;
+	private PostDAO postDao;
 	@Autowired
-	private EducationDAOImpl educationDao;
+	private EducationDAO educationDao;
 	@Autowired
-	private ExperienceDAOImpl experienceDao;
+	private ExperienceDAO experienceDao;
 	@Autowired
-	private CommentDAOImpl commentDao;
+	private CommentDAO commentDao;
 	@Autowired
-	private GroupDAOImpl groupDao;
+	private GroupDAO groupDao;
 
 	public UserController() {
 	}
 
-	public UserController(UserDAOImpl userDao, ProfileDAOImpl profileDao, FlagDAOImpl flagDao, PostDAOImpl postDao,
-			EducationDAOImpl educationDao, ExperienceDAOImpl experienceDao, CommentDAOImpl commentDao, GroupDAOImpl groupDao) {
+	public UserController(UserDAO userDao, ProfileDAO profileDao, FlagDAO flagDao, PostDAO postDao,
+			EducationDAO educationDao, ExperienceDAO experienceDao, CommentDAO commentDao, GroupDAO groupDao) {
 		
 		super();
 		this.userDao = userDao;
@@ -105,8 +105,7 @@ public class UserController {
 
 	@RequestMapping(value = { "user/addPost" })
 	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String groupName) {
-		
-
+	
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
 		Group group = groupDao.getGroup(groupName);

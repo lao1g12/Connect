@@ -10,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
-import com.fdmgroup.fdmconnect.daos.NotificationDAOImpl;
-import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
-import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
-import com.fdmgroup.fdmconnect.entities.Flag;
+import com.fdmgroup.fdmconnect.daos.NotificationDAO;
+import com.fdmgroup.fdmconnect.daos.PostDAO;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.entities.Profile;
 import com.fdmgroup.fdmconnect.entities.User;
 import com.fdmgroup.fdmconnect.controllers.Logging;
@@ -24,21 +22,19 @@ import com.fdmgroup.fdmconnect.controllers.Logging;
 public class IndexController {
 
 	@Autowired
-	private UserDAOImpl userDao;
+	private UserDAO userDao;
 	@Autowired
-	private PostDAOImpl postDao;
+	private PostDAO postDao;
 	@Autowired
-	private FlagDAOImpl flagDao;
-	@Autowired
-	private NotificationDAOImpl notificationDao;
+	private NotificationDAO notificationDao;
 	
 	public IndexController() {}
 
-	public IndexController(UserDAOImpl userDao, PostDAOImpl postDao, FlagDAOImpl flagDao) {
+	public IndexController(UserDAO userDao, PostDAO postDao, NotificationDAO notificationDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
-		this.flagDao = flagDao;
+		this.notificationDao = notificationDao;
 	}
 	
 	@RequestMapping("/")

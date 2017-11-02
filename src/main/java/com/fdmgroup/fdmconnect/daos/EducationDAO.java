@@ -6,6 +6,7 @@ public interface EducationDAO {
 	
 	public Education getEducation(int educationId);
 	public void removeEducation(int educationId);
+	public void addEducation(Education education);
 
 
 }
