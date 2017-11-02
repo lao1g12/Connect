@@ -92,7 +92,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping("user/submitPost")
+	@RequestMapping(value = { "/admin/submitPost", "/user/submitPost"})
 	public String submitPost(Model model, HttpSession session) {
 
 		Post post = new Post();
