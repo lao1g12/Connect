@@ -42,12 +42,14 @@ public class GroupController {
 
 	public GroupController() {	}
 
-	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
+	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao,
+			GroupDAOImpl groupDao, NotificationDAOImpl notificationDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
 		this.groupDao = groupDao;
 		this.flagDao = flagDao;
+		this.notificationDao = notificationDao;
 	}
 	
 	@RequestMapping(value={"user/goToGroupHome" , "admin/goToGroupHome"})
