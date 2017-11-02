@@ -52,7 +52,9 @@ public class GroupController {
 		this.notificationDao = notificationDao;
 	}
 	
-	@RequestMapping(value={"user/goToGroupHome" , "admin/goToGroupHome"})
+
+	@RequestMapping(value={"user/goToGroupHome", "admin/goToGroupHome"})
+
 	public String admin(Model model, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
@@ -65,10 +67,10 @@ public class GroupController {
 	@RequestMapping("user/goToMyGroups")
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		Set<Group> groups= user.getGroups();
+		Set<Group> groups = user.getGroups();
 		Group group = new Group();
 		model.addAttribute(group);
-		model.addAttribute("groups", groups);
+		model.addAttribute("groups",  groups);
 		Logging.Log("trace", "Group Controller:  My groups called.");
 		return "user/MyGroups";
 
@@ -91,21 +93,21 @@ public class GroupController {
 		return"redirect:/user/goToMyGroups";
 	}
 
-	
-//	@RequestMapping("user/goToLeaveGroup")
-//	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam(name="username" ) String username,  RedirectAttributes ra, Group groupId){
-//        Group group =(Group)session.getAttribute("group");
-//        List<User> users =userDao.getAllUsers();
-//       
-//        users.getGroup(groupId).getUsers().remove(username);
-//     
-//
-//		System.out.println("1234");
-//
-//		ra.addFlashAttribute("ownerLeftGroup", "Owner left group  successfully");
-//		return "redirect:/user/goToMyGroups";
-//	}
-	
+
+	@RequestMapping("user/goToLeaveGroup")
+	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname ){
+		User user = (User) session.getAttribute("user");
+        Group group =groupDao.getGroup(groupname);
+       group.removeUser(user);
+       session.setAttribute("user", user);
+		//System.out.println("1234");
+       groupDao.updateGroup(group);
+       model.addAttribute("userLeftGroup", "User left group  successfully");
+		Logging.Log("info", "User left the group");
+		return "redirect:/user/goToMyGroups";
+	}
+
+
 
 	
 	@RequestMapping("user/goToSendInvite")
@@ -115,9 +117,7 @@ public class GroupController {
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute("sendInvite", "send");
-		
 		return "user/GroupHome";
-		
 	}
 	
 	@RequestMapping("user/doSendInvite")
@@ -127,6 +127,9 @@ public class GroupController {
 		Group group = groupDao.getGroup(name);
 		User sender = (User) session.getAttribute("user");
 		User recipient = userDao.getUser(username);
+
+		
+
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		
@@ -141,6 +144,7 @@ public class GroupController {
 				" sent an invite to " + username);
 		
 		return "user/GroupHome";
+
 		
 	}
 	
@@ -180,9 +184,13 @@ public class GroupController {
 		}
 		
 		return "redirect:/user/goHome";
+
 		
 	}
+
 	
+	
+		
 	@RequestMapping("user/addGroupPost")
 	public String addGroupPost(Model model, @RequestParam String name,  HttpServletRequest request) { 
 		

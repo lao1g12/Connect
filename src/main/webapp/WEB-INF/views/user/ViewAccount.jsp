@@ -110,7 +110,11 @@
 					
 				
 			</div>
+<<<<<<< HEAD
 			<a href="message?username=${userCur.username}">Send Message</a>
+=======
+			<a href="messages?username=${userCur.username}">Send Message</a>
+>>>>>>> branch 'master' of http://git.fdmgroup.com/L-17-JAV05-B/FDMConnect.git
 			<div class="row">
 				<div class="col12">
 					<h2>Your Posts</h2>
