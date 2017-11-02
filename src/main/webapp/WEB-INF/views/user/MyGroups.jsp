@@ -71,17 +71,20 @@
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
-
 		</c:forEach>
 		</br> </br>
 
 		<sf:form method="post" action="doCreateGroup" modelAttribute="group">
 		Group Name: <sf:input type="text" path="name" />
+			<br>
+			<br>
 			
 		Group Description: <sf:input type="text" path="description" />
-			
+			<br>
+			<br>
 	    Group Picture<sf:input type="text" path="imageUrl" />
-			
+			<br>
+			<br>
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>

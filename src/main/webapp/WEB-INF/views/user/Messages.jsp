@@ -47,7 +47,7 @@
 	<div class="col col2 last">
 	<sf:form method="post" action="messages" modelAttribute="notification">
 			<input type="hidden" value="${username}" name="username"/>
-			<button type="submit" value="Refresh">Refresh</button>
+			<button id="update" type="submit" value="Refresh">Refresh</button>
 	</sf:form>
 	</div>
 	<br>
@@ -60,7 +60,7 @@
 			<div class="col col1">
 			<h3>${c.sender.getUsername()}:</h3>
 			</div>
-			<div class="col col7">
+			<div id="message" class="col col7">
 			${c.body}
 			</div>
 			<div class="col col3 last">
@@ -80,7 +80,7 @@
 		Message: <sf:input type="text" path="body" /> <br> 
 		<sf:hidden value="message" path="type"/>
 		<input type="hidden" value="${username}" name="recipient"/>
-		<button type="submit" value="Submit Post">Add post</button>
+		<button type="submit" value="Send Message">Send Message</button>
 	</sf:form>
 	</div>
 

@@ -102,7 +102,8 @@ public class GroupController {
 	}
 
 	@RequestMapping("user/goToLeaveGroup")
-	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname) {
+	
+	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname, RedirectAttributes ra){
 		
 		User user = (User) session.getAttribute("user");
 		Group group = groupDao.getGroup(groupname);
@@ -110,6 +111,7 @@ public class GroupController {
 		session.setAttribute("user", user);
 		groupDao.updateGroup(group);
 		model.addAttribute("userLeftGroup", "User left group successfully");
+		
 		Logging.Log("info", "User left the group");
 		return "redirect:/user/goToMyGroups";
 		
