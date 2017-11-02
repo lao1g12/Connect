@@ -221,7 +221,7 @@ public class GroupController {
 		Group group = groupDao.getGroup(name);
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		BusinessLogic bl = new BusinessLogic();
+		SearchLogic bl = new SearchLogic();
 		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();

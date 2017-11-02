@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fdmgroup.fdmconnect.controllers.BusinessLogic;
+import com.fdmgroup.fdmconnect.controllers.SearchLogic;
 import com.fdmgroup.fdmconnect.controllers.GroupController;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
@@ -46,7 +46,7 @@ public class GroupControllerTest {
 	private Set<Group> groups;
 	private Group group;
 	private GroupController groupController;
-	private BusinessLogic bl;
+	private SearchLogic bl;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -67,7 +67,7 @@ public class GroupControllerTest {
 		ra = mock(RedirectAttributes.class);
 		groups = mock(HashSet.class);
 		group = mock(Group.class);
-		bl = mock(BusinessLogic.class);
+		bl = mock(SearchLogic.class);
 	}
 
 	@Test
