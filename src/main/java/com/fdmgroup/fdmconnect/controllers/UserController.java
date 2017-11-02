@@ -91,6 +91,7 @@ public class UserController {
 		return "user/ViewAccount";
 
 	}
+	
 
 	@RequestMapping(value = { "/admin/submitPost", "/user/submitPost"})
 	public String submitPost(Model model, HttpSession session) {
@@ -452,10 +453,12 @@ public class UserController {
 		User user = userDao.getUserByProfile(profile);
 		Set<Education> education = profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
+		Set<Post> posts = user.getPosts();
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
 		request.setAttribute("userCur", user);
+		model.addAttribute("posts", posts);
 
 		return "user/ViewAccount";
 
