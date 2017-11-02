@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
-<title>Group Home</title>
+<title>MyGroup</title>
 </head>
 <body>
 	<!-- Top Menu -->
@@ -49,7 +49,7 @@
 	 
 	 Description: ${g.description } <br />
 
-			<img class="boarding" src="${g.imageUrl }">
+			<img class="groupImg" src="${g.imageUrl }">
 			<br />
 			<br>
 			<br>
@@ -61,7 +61,7 @@
 					<a href="goToLeaveGroup?name=${g.name}"
 					onclick="return confirm('Are you sure you want to leave this group?')">Leave Group</a>
 				</c:when>
-				</c:otherwise>
+			
 
 			</c:choose>
 			<br>
