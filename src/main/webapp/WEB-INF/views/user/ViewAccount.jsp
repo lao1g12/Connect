@@ -62,11 +62,11 @@
 					Hobbies: ${profile.hobbies } <br>
 				</div>
 				
-				<div class="col3 last, profileinfo">
+				<div class="col4 last, profileinfo">
 					<h2>FDM Training</h2>
-					Stream: ${profile.stream} <br> <br> StartDate:
-					${profile.getStartDateFormatted()} <br> <br> EndDate:
-					${profile.getEndDateFormatted()} <br> <br>
+					Stream: ${profile.stream}  <br> StartDate:
+					${profile.getStartDateFormatted()}  <br> EndDate:
+					${profile.getEndDateFormatted()}  <br>
 					</div>
 			</div>
 
@@ -110,7 +110,7 @@
 					
 				
 			</div>
-			<a href="goToSendMessage?username=${userCur.username}">Send Message</a>
+			<a href="message?username=${userCur.username}">Send Message</a>
 			<div class="row">
 				<div class="col12">
 					<h2>Your Posts</h2>
