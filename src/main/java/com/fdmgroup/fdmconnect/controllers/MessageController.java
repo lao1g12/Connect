@@ -51,7 +51,7 @@ public class MessageController {
 		return "user/Messages";
 	}
 	
-	@RequestMapping("user/goToMyMessages")
+	@RequestMapping(value = { "/admin/goToMyMessages", "/user/goToMyMessages"})
 	public String goToMyMessages(Principal principal, HttpServletRequest request){
 		MessageLogic ml = new MessageLogic();
 		User user = userDao.getUser(principal.getName());

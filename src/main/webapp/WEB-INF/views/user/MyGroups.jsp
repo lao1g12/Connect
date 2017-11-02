@@ -58,6 +58,7 @@
 
 			<br>
 			<c:choose>
+
 				<c:when test="${user.username != g.owner.username}">
 					<a href="goToLeaveGroup?name=${g.name}">
 					onclick="return confirm('Are you sure you want to leave this group?')">Leave Group</a>
@@ -68,15 +69,17 @@
 
 				</c:otherwise>
 
+
 			</c:choose>
 			<br>
 			
+
 			<c:choose>
 				<c:when test='${user.username  == g.owner.username}'>
 					<a href="goToRemoveGroup?name=${g.name }"
 					onclick="return confirm('Are you sure you want to remove this group?')" 
 					Remove Group</a>
-				</c:when>
+
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>

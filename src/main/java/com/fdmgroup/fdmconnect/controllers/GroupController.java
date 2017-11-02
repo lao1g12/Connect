@@ -64,7 +64,9 @@ public class GroupController {
 
 	}
 
+
 	@RequestMapping(value = { "/admin/goToMyGroups","user/goToMyGroups"})
+
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		Set<Group> groups = user.getGroups();
@@ -102,10 +104,12 @@ public class GroupController {
 	}
 
 	@RequestMapping("user/goToLeaveGroup")
-	
-	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname, RedirectAttributes ra){
+
+	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname,
+			RedirectAttributes ra) {
 
 		User user = (User) session.getAttribute("user");
+
         Group group =groupDao.getGroup(groupname);
         group.removeUser(user);
         session.setAttribute("user", user);
@@ -120,20 +124,23 @@ public class GroupController {
 
 		Logging.Log("info", "User left the group");
 		return "redirect:/user/goToMyGroups";
-		
+
 	}
 
 	@RequestMapping("/user/goToRemoveGroup")
 	public String goToRemoveGroup(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra) {
-		
+
 		User user = (User) session.getAttribute("user");
+
 		
 		groupDao.removeGroup(name);
 	    session.setAttribute("user", user);
 
+
 		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
 		Logging.Log("post", "group removed succesfully by owner" + name);
 		return "redirect:/user/goToMyGroups";
+
 		
 	}
 	
@@ -142,6 +149,7 @@ public class GroupController {
 	
 	
 	
+
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name) {
 
@@ -150,8 +158,8 @@ public class GroupController {
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
 		model.addAttribute("sendInvite", "send");
 		return "user/GroupHome";
+		
 	}
-	
 
 	@RequestMapping("user/doSendInvite")
 	public String doSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name,
@@ -160,6 +168,7 @@ public class GroupController {
 		Group group = groupDao.getGroup(name);
 		User sender = (User) session.getAttribute("user");
 		User recipient = userDao.getUser(username);
+		
 
 		model.addAttribute("group", group);
 		model.addAttribute("allPosts", postDao.getAllPostsByGroup(name));
@@ -172,9 +181,18 @@ public class GroupController {
 		}
 		
 
+		if (recipient == null) {
+			
+			model.addAttribute("userErrorMessage", "User with username "+username+" does not exist.");
+			return "user/GroupHome";
+			
+		}
+		
 		Notification notification = new Notification("Group Invite from " + sender.getUsername(), "invite", name);
 		notification.setUser(recipient);
 		notification.setSender(sender);
+		
+		
 		notificationDao.addNotification(notification);
 
 		model.addAttribute("inviteSentMessage", "A group invite has been sent to " + username);

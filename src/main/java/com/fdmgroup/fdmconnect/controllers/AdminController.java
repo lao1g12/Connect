@@ -42,8 +42,6 @@ public class AdminController {
 	public AdminController() {
 	}
 
-
-
 	public AdminController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
 		super();
 		this.postDao = postDao;
@@ -51,8 +49,6 @@ public class AdminController {
 		this.flagDao = flagDao;
 		this.groupDao = groupDao;
 	}
-
-
 
 	@RequestMapping("/admin")
 	public String admin(Model model) {
@@ -199,10 +195,6 @@ public class AdminController {
 		return "admin/DisplayAllGroups";
 
 	}
-	
-	
-	
-	
 	
 	@RequestMapping("/admin/processRemoveGroup")
 	public String processRemoveGroup(@RequestParam String name, Model model, RedirectAttributes ra) {

@@ -1,8 +1,6 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -93,8 +91,9 @@ public class UserController {
 		return "user/ViewAccount";
 
 	}
+	
 
-	@RequestMapping("user/submitPost")
+	@RequestMapping(value = { "/admin/submitPost", "/user/submitPost"})
 	public String submitPost(Model model, HttpSession session) {
 
 		Post post = new Post();
@@ -135,12 +134,6 @@ public class UserController {
 
 	}
 	
-
-	
-	
-	
-	
-
 	@RequestMapping("/user/processRemovePostUser")
 	public String processRemovePostUser(@RequestParam int postId, Model model) {
 
@@ -460,10 +453,12 @@ public class UserController {
 		User user = userDao.getUserByProfile(profile);
 		Set<Education> education = profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
+		Set<Post> posts = user.getPosts();
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
 		request.setAttribute("userCur", user);
+		model.addAttribute("posts", posts);
 
 		return "user/ViewAccount";
 

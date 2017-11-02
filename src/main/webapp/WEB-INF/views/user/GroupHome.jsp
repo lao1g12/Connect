@@ -107,11 +107,13 @@ Image : <sf:input type="text" path="imgUrl" />
 					</c:if>
 				</c:if>
 			</div>
-			
+
 			<br />
 			${userErrorMessage}
 		</div>
+
 		<br /><br />
+
 		<div class="row">
 			<div class="col col10 last">
 				<!-- Notice Board -->
