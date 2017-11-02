@@ -30,7 +30,12 @@
 					</c:choose>
 					<li class="horizl"><a href="admin/viewAllUsers">All Users</a></li>
 					<li class="horizl"><a href="admin/account">Account</a></li>
+					<li class="horizl"><a href="admin/submitPost">Add Post</a></li>
+					<li class="horizl"><a href="admin/goToMyGroups">My Groups</a></li>
+					<li class="horizl"><a href="admin/goToMyMessages">My Messages</a></li>
 					<li id="right" class="horizl"><a href="admin/logout">Logout</a></li>
+					
+
 				</ul>
 			</div>
 		</div>
