@@ -23,7 +23,9 @@ import com.fdmgroup.fdmconnect.daos.ExperienceDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAOImpl;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
+import com.fdmgroup.fdmconnect.daos.ProfileDAO;
 import com.fdmgroup.fdmconnect.daos.ProfileDAOImpl;
+import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
 import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Education;
@@ -38,9 +40,9 @@ import com.fdmgroup.fdmconnect.entities.User;
 public class UserController {
 
 	@Autowired
-	private UserDAOImpl userDao;
+	private UserDAO userDao;
 	@Autowired
-	private ProfileDAOImpl profileDao;
+	private ProfileDAO profileDao;
 	@Autowired
 	private FlagDAOImpl flagDao;
 	@Autowired

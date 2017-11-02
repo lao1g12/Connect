@@ -117,8 +117,23 @@
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>
-		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}
+	
+		
     <br>
+    	<footer> <br>
+
+	
+      ${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}
+
+
+		<ul class="horiz">
+			<li class="horizl"><a href="www.ContactUs.com">Contact Us</a></li>
+			<li class="horizl"><a href="www.Help.com">Help</a></li>
+			<li class="horizl"><a href="www.language.com">Language</a></li>
+			<li class="horizl"><a href="www.about.com">About</a></li>
+			<li class="horizl"><a href="www.SiteMap.com">Site Map</a></li>
+		</ul>
+		</footer>
 	</div>
 </body>
 </html>
