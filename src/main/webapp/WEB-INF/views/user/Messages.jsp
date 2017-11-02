@@ -10,6 +10,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<sf:form method="post" action="messages" modelAttribute="notification">
+			<input type="hidden" value="${username}" name="username"/>
+			<button type="submit" value="Refresh">Refresh</button>
+	</sf:form>
 		<c:forEach items="${conversation}" var="c">
 			<h3>
 				${c.getNotificationDateFormatted()}
