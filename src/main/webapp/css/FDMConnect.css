@@ -79,12 +79,35 @@ right: 0;
 }	
 
 
+
+.button {
+    background-color: #0000; 
+    border: none;
+    color: black;
+    padding: 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button4 {border-radius: 12px;}
+
+
 /*** View Account **/ 
 
 .profileImg { 
 	
 	width: 70%;
 	
+}
+
+.alluserImg { 
+	
+	width: 200px;
+	height: 150px;
 }
 
 .boardtext { 
@@ -99,6 +122,14 @@ right: 0;
 }
 
 
+
+
+.consulant { 
+	
+    margin-top: 100px;
+	
+	
+}
 
 
 

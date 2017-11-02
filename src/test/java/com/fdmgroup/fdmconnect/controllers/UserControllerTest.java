@@ -59,7 +59,7 @@ public class UserControllerTest {
 	private HttpServletRequest request;
 	private Experience experience;
 	private Post post;
-	private BusinessLogic bl = mock(BusinessLogic.class);
+	private BusinessLogic bl;
 	private CommentDAOImpl commentDao;
 	private Comment comment;
 	private Group group;
@@ -92,6 +92,7 @@ public class UserControllerTest {
 		post = mock(Post.class);
 		comment = mock(Comment.class);
 		group = mock(Group.class);
+		bl = mock(BusinessLogic.class);
 	}
 
 	@Test
@@ -337,26 +338,40 @@ public class UserControllerTest {
 
 	}
 
-//	@Test
-//	public void test_addNewPost_returnsUserAddPostIfCheckedBadWordsSizeMoreThanZero() {
-//		
-//		String groupName = "";
-//		String badWords = "a";
-//		String checkString = "a";
-//		List<String> checkedBadWords = new ArrayList<String>();
-//		checkedBadWords.add("a");
-//		
-//		when(groupDao.getGroup(groupName)).thenReturn(group);
-//		when(session.getAttribute("user")).thenReturn(user);
-//		when(post.getFullListOfKeyWords()).thenReturn(checkString);
-//		when(flagDao.getFlag(1)).thenReturn(flag);
-//		when(flag.getFlagInfo()).thenReturn(badWords);
-//		when(bl.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
-//		String result = userController.addNewPost(flaggedPost, session, request, groupName);
-//		
-//		assertEquals(result, "user/AddPost");
-//		
-//	}
+	@Test
+	public void test_addNewPost_returnsUserAddPostIfCheckedBadWordsSizeMoreThanZero() {
+		
+		String checkString = "a"; String badWords = "a";
+		List<String> checkedBadWords = new ArrayList<String>();
+		checkedBadWords.add(checkString);
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		when(post.getFullListOfKeyWords()).thenReturn(checkString);
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(bl.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
+		String result = userController.addNewPost(post, session, request);
+		
+		assertEquals(result, "user/AddPost");
+		
+	}
+	
+	@Test
+	public void test_addNewPost_returnsRedirectToUserLoginIfCheckedBadWordsSizeEqualZero() {
+		
+		String checkString = "b"; String badWords = "a";
+		List<String> checkedBadWords = new ArrayList<String>();
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		when(post.getFullListOfKeyWords()).thenReturn(checkString);
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(bl.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
+		String result = userController.addNewPost(post, session, request);
+		
+		assertEquals(result, "redirect:/user/login");
+		
+	}
 
 	@Test
 	public void test_processRemovePostUser_returnsUserViewAccount() {
