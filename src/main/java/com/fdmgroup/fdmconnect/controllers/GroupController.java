@@ -107,9 +107,13 @@ public class GroupController {
 
 		User user = (User) session.getAttribute("user");
         Group group =groupDao.getGroup(groupname);
-       group.removeUser(user);
-       session.setAttribute("user", user);
+        group.removeUser(user);
+        session.setAttribute("user", user);
 	
+	 // group.setOwner(newowner);
+        
+       
+       
        groupDao.updateGroup(group);
        ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
 
@@ -121,17 +125,22 @@ public class GroupController {
 
 	@RequestMapping("/user/goToRemoveGroup")
 	public String goToRemoveGroup(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra) {
+		
 		User user = (User) session.getAttribute("user");
+		
 		groupDao.removeGroup(name);
-
-	     session.setAttribute("user", user);
-	
+	    session.setAttribute("user", user);
 
 		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
 		Logging.Log("post", "group removed succesfully by owner" + name);
 		return "redirect:/user/goToMyGroups";
 		
 	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping("user/goToSendInvite")
 	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name) {
