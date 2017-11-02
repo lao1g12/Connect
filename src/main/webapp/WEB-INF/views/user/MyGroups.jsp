@@ -57,6 +57,15 @@
 
 			<br>
 			<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
+			
+				<c:choose>
+						<c:when test='${user.getRole() == "User"}'>
+							<a href="goToRemoveGroup?groupname=${g.name }">Remove Group</a></li>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
 
 
 		</c:forEach>
@@ -73,7 +82,7 @@
 			<br>
 		</sf:form>
 		${groupWasCreated} ${userLeftGroup }
-
+    <br>
 	</div>
 </body>
 </html>

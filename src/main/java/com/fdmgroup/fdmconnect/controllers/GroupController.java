@@ -65,10 +65,10 @@ public class GroupController {
 	@RequestMapping("user/goToMyGroups")
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		Set<Group> groups= user.getGroups();
+		Set<Group> groups = user.getGroups();
 		Group group = new Group();
 		model.addAttribute(group);
-		model.addAttribute("groups", groups);
+		model.addAttribute("groups",  groups);
 		Logging.Log("trace", "Group Controller:  My groups called.");
 		return "user/MyGroups";
 
