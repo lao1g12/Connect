@@ -72,7 +72,7 @@
 					<b> Hobbies </b> : ${profile.hobbies } <br>
 				</div>
 				
-				<div class="col4 last, profileinfo">
+				<div class="col4 last, profileinfo , fdmprofile">
 					<h2>FDM Training</h2> 
 					<b> Stream </b>  : ${profile.stream}  <br>
 					<b> StartDate </b>  : ${profile.getStartDateFormatted()} 

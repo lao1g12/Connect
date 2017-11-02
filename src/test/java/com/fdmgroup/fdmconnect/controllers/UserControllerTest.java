@@ -63,6 +63,7 @@ public class UserControllerTest {
 	private CommentDAOImpl commentDao;
 	private Comment comment;
 	private Group group;
+	private Set<Post> posts;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -80,6 +81,7 @@ public class UserControllerTest {
 		user = mock(User.class);
 		flag = mock(Flag.class);
 		users = mock(ArrayList.class);
+		posts = mock(HashSet.class);
 		principal = mock(Principal.class);
 		ra = mock(RedirectAttributes.class);
 		profile = mock(Profile.class);
@@ -281,8 +283,8 @@ public class UserControllerTest {
 		int profileId = 0;
 
 		when(profileDao.getProfile(profileId)).thenReturn(profile);
-		String result = userController.goToViewProfile(session, model,
-				profileId, request);
+		when(user.getPosts()).thenReturn(posts);
+		String result = userController.goToViewProfile(session, model, profileId, request);
 
 		assertEquals(result, "user/ViewAccount");
 
@@ -378,9 +380,9 @@ public class UserControllerTest {
 
 		int postId = 0;
 
-		String result = userController.processRemovePostUser(postId, model);
+		String result = userController.processRemovePostUser(postId, model, ra);
 
-		assertEquals(result, "user/ViewAccount");
+		assertEquals(result, "redirect:/user/account");
 
 	}
 
@@ -436,9 +438,9 @@ public class UserControllerTest {
 		
 		int postId = 0;
 		
-		String result = userController.goToViewComments(session, model, postId);
+		String result = userController.goToViewComments(session, model, postId, ra);
 		
-		assertEquals(result, "user/Home");
+		assertEquals(result, "redirect:/user/login");
 		
 	}
 	
@@ -454,7 +456,6 @@ public class UserControllerTest {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void test_doAddComment_returnsRedirectToUserGoToAddCommentIfCheckedBadWordsSizeMoreThanOne() {
 		
