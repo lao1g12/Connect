@@ -111,7 +111,7 @@
 				
 			</div>
 
-			<a href="message?username=${userCur.username}">Send Message</a>
+			<a href="messages?username=${userCur.username}">Send Message</a>
 
 			<div class="row">
 				<div class="col12">
