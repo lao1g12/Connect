@@ -138,7 +138,7 @@
 						</c:forEach>
 						<br />
 						<c:if test="${addComment != 'add'}">
-							<a href="goToAddComment?postId=${aP.postId}">Add Comment</a>
+							<a href="goToAddComment?postId=${aP.postId}"><button class="button button4">Add Comment</button></a>
 						</c:if>
 						<br />
 						<c:if test="${postId == aP.postId and addComment == 'add'}">
@@ -150,7 +150,8 @@
 						</c:if>
 					</c:if>
 					<br />
-					<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
+					
+					<a href="goToFlagPost?postId=${aP.postId}"><button class="button button4">Flag Post</button></a>
 					<c:if test="${postId == aP.postId and flagPost == 'flagged'}">
 						<sf:form method="post" action="doFlagPost?postId=${aP.postId}"
 							modelAttribute="flag">
@@ -159,12 +160,10 @@
 							<input type="submit" value="Send Report" />
 						</sf:form>
 					</c:if>
-					<br />
 					<c:choose>
 						<c:when test='${user.getRole() == "Admin"}'>
 							<a href="processRemovePostAdmin?postId=${aP.postId}"
-								onclick="return confirm('Are you sure you want to remove this post?')">Remove
-								Post</a>
+								onclick="return confirm('Are you sure you want to remove this post?')"><button class="button button4">Remove Post</button></a>
 						</c:when>
 						<c:otherwise>
 
