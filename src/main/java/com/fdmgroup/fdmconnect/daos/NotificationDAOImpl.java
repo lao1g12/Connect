@@ -71,7 +71,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		EntityManager manager = factory.createEntityManager();
 
 //		TypedQuery<Notification> query = manager.createQuery("select n from Notification n where (n.senderUsername=?1 AND n.recipientUsername=?2) OR (n.senderUsername=?3 AND n.recipientUsername=?4)", Notification.class);
-		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where (n.sender = ? AND n.recipient = ?) OR (n.sender = ? AND n.recipient = ?)", Notification.class);
+		TypedQuery<Notification> query = manager.createQuery("select n from Notification as n where (n.sender = ? AND n.recipient = ?) OR (n.sender = ? AND n.recipient = ?) order by n.dateAdded", Notification.class);
 		query.setParameter(1, sender);
 		query.setParameter(2, recipient);
 		query.setParameter(3, recipient);
