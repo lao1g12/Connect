@@ -100,7 +100,7 @@ public class GroupController {
         Group group =groupDao.getGroup(groupname);
        group.removeUser(user);
        session.setAttribute("user", user);
-		//System.out.println("1234");
+	
        groupDao.updateGroup(group);
        ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
 		Logging.Log("info", "User left the group");
@@ -114,8 +114,9 @@ public class GroupController {
 		User user = (User) session.getAttribute("user");
 		groupDao.removeGroup(name);
 	     session.setAttribute("user", user);
-		Logging.Log("post", "post removed succesfully by admin" + name);
+	
 		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
+		Logging.Log("post", "group removed succesfully by owner" + name);
 		return "redirect:/user/goToMyGroups";
 
 	}
