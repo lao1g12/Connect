@@ -119,6 +119,7 @@ public class GroupController {
 
 	@RequestMapping("/user/goToRemoveGroup")
 	public String goToRemoveGroup(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra) {
+		
 		User user = (User) session.getAttribute("user");
 		groupDao.removeGroup(name);
 		session.setAttribute("user", user);
@@ -221,7 +222,7 @@ public class GroupController {
 		Group group = groupDao.getGroup(name);
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
-		BusinessLogic bl = new BusinessLogic();
+		SearchLogic bl = new SearchLogic();
 		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
