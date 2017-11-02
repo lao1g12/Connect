@@ -217,3 +217,10 @@ li {
 	
 	float: right;
 }
+#message{
+	margin-top:22px;
+}
+#update{
+	margin-top:20px;
+	float:right;
+}
