@@ -59,7 +59,7 @@ public class UserControllerTest {
 	private HttpServletRequest request;
 	private Experience experience;
 	private Post post;
-	private BusinessLogic bl;
+	private SearchLogic bl;
 	private CommentDAOImpl commentDao;
 	private Comment comment;
 	private Group group;
@@ -92,7 +92,7 @@ public class UserControllerTest {
 		post = mock(Post.class);
 		comment = mock(Comment.class);
 		group = mock(Group.class);
-		bl = mock(BusinessLogic.class);
+		bl = mock(SearchLogic.class);
 	}
 
 	@Test

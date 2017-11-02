@@ -34,7 +34,7 @@ public class SearchController {
 	@RequestMapping("user/searchPosts")
 	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String input) {
 
-		BusinessLogic bl = new BusinessLogic();
+		SearchLogic bl = new SearchLogic();
 		input = input.replaceAll("[^a-zA-Z\\s]", " ");
 		input = input.toLowerCase();
 		List<String> keyWordList = new ArrayList<String>(Arrays.asList(input.split(" ")));

@@ -104,14 +104,16 @@ public class GroupController {
 	@RequestMapping("user/goToLeaveGroup")
 	
 	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname, RedirectAttributes ra){
-		
+
 		User user = (User) session.getAttribute("user");
-		Group group = groupDao.getGroup(groupname);
-		group.removeUser(user);
-		session.setAttribute("user", user);
-		groupDao.updateGroup(group);
-		model.addAttribute("userLeftGroup", "User left group successfully");
-		
+        Group group =groupDao.getGroup(groupname);
+       group.removeUser(user);
+       session.setAttribute("user", user);
+	
+       groupDao.updateGroup(group);
+       ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
+
+
 		Logging.Log("info", "User left the group");
 		return "redirect:/user/goToMyGroups";
 		
@@ -122,9 +124,12 @@ public class GroupController {
 		
 		User user = (User) session.getAttribute("user");
 		groupDao.removeGroup(name);
-		session.setAttribute("user", user);
-		Logging.Log("post", "post removed succesfully by admin" + name);
+
+	     session.setAttribute("user", user);
+	
+
 		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
+		Logging.Log("post", "group removed succesfully by owner" + name);
 		return "redirect:/user/goToMyGroups";
 		
 	}
