@@ -27,11 +27,14 @@ public class Group {
 	private String name; 
 	private String description;
 	private String imageUrl;
+	
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="group")
 	private Set<Post> posts = new HashSet<Post>();
+	
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinTable(name = "FC_USER_GROUPS")
 	private Set<User> users = new HashSet<User>();
+	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	private User owner;
 	
@@ -110,7 +113,7 @@ public class Group {
 	}
 	
 	public void addUser(User user){ 
-		this.users.add(user);
+		users.add(user);
 	}
 
 	public void removeUser(User user){

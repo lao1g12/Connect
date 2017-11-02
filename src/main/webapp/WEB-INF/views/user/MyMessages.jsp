@@ -12,7 +12,7 @@
 <body>
 		<c:forEach items="${contacts}" var="c">
 			<h3>
-				<a href="messages?username= ${c.username }">${c.username }</a><br />
+				<a href="messages?username=${c.username}">${c.username}</a><br />
 			</h3>
 
 

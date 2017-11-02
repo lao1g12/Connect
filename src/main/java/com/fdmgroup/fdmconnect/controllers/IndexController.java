@@ -62,7 +62,7 @@ public class IndexController {
 		
 		user.setLastLogin();
 		Logging.Log("info", "Index Controller: "+session.getAttribute("username")+" has logged in.");
-		session.setAttribute("allPosts", postDao.getAllPosts());
+		session.setAttribute("allPosts", postDao.getAllPostsWhereGroupsAll());
 		session.setAttribute("notifications", 
 				notificationDao.getAllNotificationsByUser(principal.getName()));
 		

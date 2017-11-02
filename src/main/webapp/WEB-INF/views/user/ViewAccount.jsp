@@ -34,8 +34,20 @@
 			</div>
 		</div>
 		</br> </br>
+		<div class="row">
+			<div class="col col6">
 		<h2>Welcome ${profile.firstName}</h2>
+		</div>
 		<br>
+		<div class="col col6 last, search">
+					<c:choose>
+				<c:when test='${userCur == session.user}'>
+					<a href="editProfile"><button class="button button5"> Edit Profile</button></a>
+				</c:when>
+			</c:choose>
+				</div>
+				</div>
+			
 		<div>
 
 			<!-- Profile -->
@@ -44,18 +56,25 @@
 				<div class="col3 ">
 					<img class="profileImg" src="${profile.imageUrl}" /> <br>
 				</div>
-				<div class="col6 last, profileinfo">
+				<div class="col3 last, profileinfo">
 					<br> First Name : ${profile.firstName} <br> Last Name :
 					${profile.lastName} <br> Description: ${profile.description} <br>
 					Hobbies: ${profile.hobbies } <br>
 				</div>
+				
+				<div class="col3 last, profileinfo">
+					<h2>FDM Training</h2>
+					Stream: ${profile.stream} <br> <br> StartDate:
+					${profile.getStartDateFormatted()} <br> <br> EndDate:
+					${profile.getEndDateFormatted()} <br> <br>
+					</div>
 			</div>
 
 
 			<!--  other Information  -->
 
 			<div class="row">
-				<div class="col12">
+				<div class="col8">
 					<h2>Education</h2>
 					<c:forEach items="${education}" var="edu">
 	Institution: ${edu.institution}<br>
@@ -66,23 +85,30 @@
 						<a href="deleteEducation?educationId=${edu.educationId}">Remove</a>
 						<br>
 					</c:forEach>
-					<br> <br>
-					<h2>Work Experience</h2>
+					</div>
+							<div class="col4 last">
+						<h2>Work Experience</h2>
 					<c:forEach items="${experience}" var="exp">
 	Company: ${exp.company}<br>
-	Role: ${edu.role}<br>
+	Role: ${exp.role}<br>
 	Start Date: ${exp.getStartDateFormatted()}<br>
 	End Date: ${exp.getEndDateFormatted()}<br>
 	Job Description: ${exp.description}<br>
 						<a href="deleteExperience?experienceId=${exp.experienceId}">Remove</a>
 						<br>
 					</c:forEach>
-
-					<h2>FDM Training</h2>
-					Stream: ${profile.stream} <br> <br> StartDate:
-					${profile.getStartDateFormatted()} <br> <br> EndDate:
-					${profile.getEndDateFormatted()} <br> <br>
-				</div>
+						</div>
+						</div>
+						
+						
+						
+						
+						
+						
+					<br/> <br/>
+				
+					
+				
 			</div>
 			<a href="goToSendMessage?username=${userCur.username}">Send Message</a>
 			<div class="row">
@@ -186,11 +212,7 @@
 			</div>
 
 			<br>
-			<c:choose>
-				<c:when test='${userCur == session.user}'>
-					<a href="editProfile">Edit Profile</a>
-				</c:when>
-			</c:choose>
+
 
 			<br> <br>
 

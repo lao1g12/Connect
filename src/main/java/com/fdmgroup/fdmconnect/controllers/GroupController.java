@@ -42,12 +42,14 @@ public class GroupController {
 
 	public GroupController() {	}
 
-	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao, GroupDAOImpl groupDao) {
+	public GroupController(PostDAOImpl postDao, UserDAOImpl userDao, FlagDAOImpl flagDao,
+			GroupDAOImpl groupDao, NotificationDAOImpl notificationDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
 		this.groupDao = groupDao;
 		this.flagDao = flagDao;
+		this.notificationDao = notificationDao;
 	}
 	
 
@@ -152,7 +154,6 @@ public class GroupController {
 		
 		User user = (User) session.getAttribute("user");
 		Group group = groupDao.getGroup(name);
-		System.out.println(group);
 		int notificationId = Integer.parseInt(nId);
 		
 		try {

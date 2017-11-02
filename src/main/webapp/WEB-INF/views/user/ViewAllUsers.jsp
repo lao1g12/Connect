@@ -49,21 +49,26 @@
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Trainee'}">
-			<img src="${u.profile.imageUrl}" />
+		<div class="row"> 
+		<div class="col3 ">
+			<img class="alluserImg" src="${u.profile.imageUrl}" />
 			<br>
-			<br>
+		</div>	
+			
+		<div class="col6 last, profileinfo">
+		<a href="viewProfile?profileId=${u.profile.profileId}">View Profile</a><br/>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 		Stream: ${u.profile.stream} <br />
-		Start Date: ${u.profile.getStartDateFormatted()} <br />
-		End Date: ${u.profile.getEndDateFormatted()} <br />
-			<br />
-			<a href="viewProfile?profileId=${u.profile.profileId}">View
-				Profile</a>
+		</div>
+		</div>
 		</c:if>
 	</c:forEach>
 	<br />
 	<br />
+	<br/>
+	<div class="consulant">
 	<h3>Consultants</h3>
+	</div>
 	<br />
 	<c:forEach items="${users}" var="u">
 		<c:if test="${u.job == 'Consultant'}">

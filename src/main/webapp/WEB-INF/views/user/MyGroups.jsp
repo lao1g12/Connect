@@ -57,7 +57,7 @@
 
 			<br>
 			<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
-			
+			<br>
 				<c:choose>
 						<c:when test='${user.getRole() == "User"}'>
 							<a href="goToRemoveGroup?groupname=${g.name }">Remove Group</a></li>
@@ -73,11 +73,11 @@
 
 		<sf:form method="post" action="doCreateGroup" modelAttribute="group">
 		Group Name: <sf:input type="text" path="name" />
-			<br>
+			
 		Group Description: <sf:input type="text" path="description" />
-			<br>
+			
 	    Group Picture<sf:input type="text" path="imageUrl" />
-			<br>
+			
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>

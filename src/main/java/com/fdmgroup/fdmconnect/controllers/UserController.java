@@ -105,11 +105,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "user/addPost" })
-	public String addNewPost(Post post, HttpSession session, HttpServletRequest request) {
+	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String groupName) {
 		
 
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
+		Group group = groupDao.getGroup(groupName);
 		BusinessLogic bl = new BusinessLogic();
 		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
@@ -126,7 +127,7 @@ public class UserController {
 					"You just tried to post an article with the following inappropriate words :" + badWordString);
 			return "user/AddPost";
 		}
-
+		post.setGroup(group);
 		postDao.addPost(post);
 		Logging.Log("info", "User Controller: " + session.getAttribute("username") + "added post" + post);
 

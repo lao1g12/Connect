@@ -46,6 +46,8 @@ public class Notification {
 		this.type = type;
 		this.body = body;
 	}
+	
+	
 
 	public String getBody() {
 		return body;
