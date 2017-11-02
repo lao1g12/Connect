@@ -103,6 +103,8 @@ Image : <sf:input type="text" path="imgUrl" />
 					</c:if>
 				</c:if>
 			</div>
+			<br />
+			${userErrorMessage}
 		</div>
 		<br /> <br />
 		<div class="row">
@@ -129,58 +131,6 @@ Image : <sf:input type="text" path="imgUrl" />
 			
 			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner.username}<br />
-							<br />
-							<c:if test="${viewComments != 'show'}">
-								<a href="goToViewComments?postId=${aP.postId}">View Comments</a>
-							</c:if>
-							<br />
-							<c:if test="${postId == aP.postId and viewComments == 'show' }">
-								<h3>Comments</h3>
-								<c:forEach items="${comments}" var="c">
-							${c.user.profile.firstName} ${c.user.profile.lastName} 
-							<br />
-							${c.getCommentDateFormatted()} 
-							<br />
-									<br />
-							${c.commentBody} 
-							<br />
-									<br />
-									<c:if
-										test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
-										<a
-											href="doRemoveComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
-									</c:if>
-
-									<c:if test="${username == c.user.getUsername()}">
-										<a
-											href="goToEditComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
-										<br />
-										<c:if test="${postId == aP.postId and editComment == 'edit'}">
-											<form method="post"
-												action="doEditComment?commentId=${c.commentId}">
-												<input type="text" name="commentBody" /> <br /> <input
-													type="submit" value="Update" />
-											</form>
-										</c:if>
-									</c:if>
-									<br />
-							${commentRemovedMessage}
-							<br />
-								</c:forEach>
-								<br />
-								<c:if test="${addComment != 'add'}">
-									<a href="goToAddComment?postId=${aP.postId}"><button
-											class="button button4">Add Comment</button></a>
-								</c:if>
-								<br />
-								<c:if test="${postId == aP.postId and addComment == 'add'}">
-									<h4>${badComment}</h4>
-									<form method="post" action="doAddComment?postId=${aP.postId}">
-										<input type="text" name="commentBody" /> <br /> <input
-											type="submit" value="Add Comment" />
-									</form>
-								</c:if>
-							</c:if>
 							<br />
 							<a href="goToFlagPost?postId=${aP.postId}">Flag Post</a>
 							<br>
