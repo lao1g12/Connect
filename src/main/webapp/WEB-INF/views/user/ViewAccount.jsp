@@ -99,20 +99,12 @@
 					</c:forEach>
 						</div>
 						</div>
-						
-						
-						
-						
-						
-						
-					<br/> <br/>
-				
 					
-				
+					<br/> <br/>
 			</div>
-
-			<a href="messages?username=${userCur.username}">Send Message</a>
-
+			<c:if test="${user.username != userCur.username}">
+				<a href="messages?username=${userCur.username}">Send Message</a>
+			</c:if>
 			<div class="row">
 				<div class="col12">
 					<h2>Your Posts</h2>
@@ -146,7 +138,7 @@
 							</c:if>
 						</c:if>
 						
-						<!-- Comments 
+						<!-- Comments -->
 						
 						<c:if test="${viewComments != 'show'}">
 							<a href="goToViewComments?postId=${p.postId}">View Comments</a>
@@ -198,7 +190,7 @@
 							</c:if>
 						</c:if>
 						
-					    Remove Post -->
+					    <!-- Remove Post -->
 						
 						<c:if test='${userCur == session.user}'>
 							<a href="processRemovePostUser?postId=${p.postId}"

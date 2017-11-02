@@ -56,17 +56,21 @@
 			<a href="goToGroupHome?name=${g.name}">Go To Group</a>
 
 			<br>
-			<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
+			<c:choose>
+				<c:when test="${user != group.owner}">
+					<a href="goToLeaveGroup?name=${g.name}">Leave Group</a>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
 			<br>
-				<c:choose>
-						<c:when test='${user.getRole() == "User"}'>
-							<a href="goToRemoveGroup?groupname=${g.name }">Remove Group</a></li>
-						</c:when>
-						<c:otherwise>
-
-						</c:otherwise>
-					</c:choose>
-
+			<c:choose>
+				<c:when test='${user == group.owner}'>
+					<a href="goToRemoveGroup?name=${g.name }">Remove Group</a>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
 
 		</c:forEach>
 		</br> </br>
@@ -81,7 +85,7 @@
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>
-		${groupWasCreated} ${userLeftGroup }
+		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}
     <br>
 	</div>
 </body>
