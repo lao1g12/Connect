@@ -20,6 +20,15 @@
 
 
 		</c:forEach>
+		
+	<sf:form method="post" action="sendMessage" modelAttribute="notification">
+
+		Title : <sf:input type="text" path="title" /> <br> 
+		BodyText: <sf:input type="text" path="body" /> <br> 
+		<sf:hidden value="message" path="type"/>
+		<input type="hidden" value="${username}" name="recipient"/>
+		<button type="submit" value="Submit Post">Add post</button>
+	</sf:form>
 
 </body>
 </html>

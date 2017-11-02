@@ -20,23 +20,19 @@ import com.fdmgroup.fdmconnect.entities.User;
 
 @Controller
 public class MessageController {
+	
 	@Autowired
 	private NotificationDAOImpl notifDao;
 	@Autowired
 	private UserDAOImpl userDao;
 	
-
 	public MessageController() {	}
 	
-	
-
 	public MessageController(NotificationDAOImpl notifDao, UserDAOImpl userDao) {
 		super();
 		this.notifDao = notifDao;
 		this.userDao = userDao;
 	}
-
-
 
 	@RequestMapping("user/goToSendMessage")
 	public String GoToSendMessage(@RequestParam String username, HttpServletRequest request, Model model){
@@ -55,15 +51,19 @@ public class MessageController {
 		MessageLogic ml = new MessageLogic();
 		User reciever = userDao.getUser(recipient);
 		User sender = (User) session.getAttribute("user");
+		
 		notification.setUser(reciever);
 		notification.setSender(sender);
 		notification.setRecipientUsername();
 		notification.setSenderUsername();
 		notifDao.addNotification(notification);
+		
 		User user = userDao.getUser(principal.getName());
 		Set<User> contacts = ml.getContactList(user.getNotifications(), user.getNotificationsSent());
+		
 		request.setAttribute("contacts", contacts);
 		return "user/MyMessages";
+		
 	}
 	
 	@RequestMapping("user/goToMyMessages")
