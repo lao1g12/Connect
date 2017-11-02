@@ -49,6 +49,7 @@ BodyText: <sf:input type="text" path="bodyText" /> <br>
 Link: <sf:input type="text" path="link" /> <br>
 Category: <sf:input type="text" path="category" />  <br>
 Image : <sf:input type="text" path="imgUrl"/> <br>
+		<sf:hidden value="all" path="group"/>
 
 
 <button type="submit" value="Submit Post">Add post</button>

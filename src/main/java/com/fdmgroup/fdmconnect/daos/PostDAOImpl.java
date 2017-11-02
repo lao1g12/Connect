@@ -48,11 +48,11 @@ public class PostDAOImpl implements PostDAO {
 		
 	}
 	
-	public List<Post> getAllPostsWhereGroupsIsNull(){
+	public List<Post> getAllPostsWhereGroupsAll(){
 		
 		EntityManager manager = factory.createEntityManager();
 		TypedQuery<Post> query = manager.createQuery("select p from Post p where p.group =?", Post.class);
-		query.setParameter(1, null);
+		query.setParameter(1, "all");
 		List<Post> posts = query.getResultList();
 		Logging.Log("info", "PostDAOImpl: All posts have been retrieved from the database.");
 		return posts;
