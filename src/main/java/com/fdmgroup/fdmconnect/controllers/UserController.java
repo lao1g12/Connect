@@ -302,13 +302,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/user/goToViewComments", "/admin/goToViewComments" })
-	public String goToViewComments(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
+	public String goToViewComments(HttpSession session, Model model, @RequestParam(name = "postId") int postId, 
+			RedirectAttributes ra) {
 		
-		model.addAttribute("postId", postId);
-		model.addAttribute("viewComments", "show");
+		ra.addFlashAttribute("postId", postId);
+		ra.addFlashAttribute("viewComments", "show");
 		List<Comment> comments = commentDao.getAllCommentsByPost(postId);
-		model.addAttribute("comments",comments);
-		return "user/Home";
+		ra.addFlashAttribute("comments", comments);
+		return "redirect:/user/login";
 		
 	}
 
@@ -452,10 +453,12 @@ public class UserController {
 		User user = userDao.getUserByProfile(profile);
 		Set<Education> education = profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
+		Set<Post> posts = user.getPosts();
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);
 		request.setAttribute("userCur", user);
+		model.addAttribute("posts", posts);
 
 		return "user/ViewAccount";
 

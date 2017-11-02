@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
-<title>View User Account</title>
+<title>View Account</title>
 </head>
 <body>
 	<!-- Top Menu -->
@@ -43,12 +43,12 @@
 		</div>
 		<br>
 			<div class="col col4, message">
-			<c:if test="${user.username != userCur.username}">
+			<c:if test="${session.user != userCur}">
 				<a href="messages?username=${userCur.username}"><button class="button button5"> Send Message</button></a>
 			</c:if>
 			</div>
 		
-		<div class="col col3 last, search">
+		<div class="col col3 last, account">
 					<c:choose>
 				<c:when test='${userCur == session.user}'>
 					<a href="editProfile"><button class="button button5"> Edit Profile</button></a>
@@ -66,16 +66,17 @@
 					<img class="profileImg" src="${profile.imageUrl}" /> <br>
 				</div>
 				<div class="col3 last, profileinfo">
-					<br> First Name : ${profile.firstName} <br> Last Name :
-					${profile.lastName} <br> Description: ${profile.description} <br>
-					Hobbies: ${profile.hobbies } <br>
+					<br> <b> First Name </b> : ${profile.firstName} 
+					<br> <b> Last Name </b> : ${profile.lastName} 
+					<br> <b> Description </b> : ${profile.description} <br>
+					<b> Hobbies </b> : ${profile.hobbies } <br>
 				</div>
 				
 				<div class="col4 last, profileinfo">
-					<h2>FDM Training</h2>
-					Stream: ${profile.stream}  <br> StartDate:
-					${profile.getStartDateFormatted()}  <br> EndDate:
-					${profile.getEndDateFormatted()}  <br>
+					<h2>FDM Training</h2> 
+					<b> Stream </b>  : ${profile.stream}  <br>
+					<b> StartDate </b>  : ${profile.getStartDateFormatted()} 
+					  <br> <b> EndDate </b>  : ${profile.getEndDateFormatted()}  <br>
 					</div>
 			</div>
 
@@ -119,7 +120,14 @@
 						<h3>${p.title}</h3>
 						<br />
 					Category: ${p.category}<br />
-						<img class="boardimg" src="${p.imgUrl}">
+						<c:choose>
+							<c:when test='${aP.imgUrl == null}'>
+							</c:when>
+							<c:otherwise>
+								<img class="boardimg" src="${aP.imgUrl}">
+								<br>
+							</c:otherwise>
+						</c:choose><br>
 						<br>${p.bodyText}<br />
 						<a href="${p.link}">For more info click here!</a>
 						<br />
@@ -151,52 +159,6 @@
 							<a href="goToViewComments?postId=${p.postId}">View Comments</a>
 						</c:if>
 						<br />
-						<c:if test="${postId == p.postId and viewComments == 'show' }">
-							<h3>Comments</h3>
-							<c:forEach items="${p.comments}" var="c">
-							${c.user.profile.firstName} ${c.user.profile.lastName} 
-							<br />
-							${c.getCommentDateFormatted()} 
-							<br />
-								<br />
-							${c.commentBody} 
-							<br />
-								<br />
-								<c:if
-									test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
-									<a
-										href="doRemoveComment?commentId=${c.commentId}&postId=${p.postId}">Remove</a>
-								</c:if>
-
-								<c:if test="${username == c.user.getUsername()}">
-									<a
-										href="goToEditComment?commentId=${c.commentId}&postId=${p.postId}">Edit</a>
-									<br />
-									<c:if test="${postId == p.postId and editComment == 'edit'}">
-										<form method="post"
-											action="doEditComment?commentId=${c.commentId}">
-											<input type="text" name="commentBody" /> <br /> <input
-												type="submit" value="Update" />
-										</form>
-									</c:if>
-								</c:if>
-								<br />
-							${commentRemovedMessage}
-							<br />
-							</c:forEach>
-							<br />
-							<c:if test="${addComment != 'add'}">
-								<a href="goToAddComment?postId=${p.postId}">Add Comment</a>
-							</c:if>
-							<br />
-							<c:if test="${postId == p.postId and addComment == 'add'}">
-								<form method="post" action="doAddComment?postId=${p.postId}">
-									<input type="text" name="commentBody" /> <br /> <input
-										type="submit" value="Add Comment" />
-								</form>
-							</c:if>
-						</c:if>
-						
 					    <!-- Remove Post -->
 						
 						<c:if test='${userCur == session.user}'>
