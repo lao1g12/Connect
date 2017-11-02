@@ -80,7 +80,7 @@ public class GroupControllerTest {
 		String name = "";
 
 		when(groupDao.getGroup(name)).thenReturn(group);
-		String result = groupController.admin(model, name);
+		String result = groupController.admin(model, session, name);
 
 		assertEquals(result, "user/GroupHome");
 
@@ -150,7 +150,7 @@ public class GroupControllerTest {
 		String result = groupController.doAcceptInvite(session, model, nId,
 				name, ra);
 
-		assertEquals(result, "redirect:/user/goHome");
+		assertEquals(result, "redirect:/user/login");
 
 	}
 
@@ -161,7 +161,7 @@ public class GroupControllerTest {
 
 		String result = groupController.doDeclineInvite(session, model, nId, ra);
 
-		assertEquals(result, "redirect:/user/goHome");
+		assertEquals(result, "redirect:/user/login");
 
 	}
 	
