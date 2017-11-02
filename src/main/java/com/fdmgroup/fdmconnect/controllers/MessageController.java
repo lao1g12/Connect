@@ -41,8 +41,6 @@ public class MessageController {
 		User sender = (User) session.getAttribute("user");
 		notification.setUser(reciever);
 		notification.setSender(sender);
-		notification.setRecipientUsername();
-		notification.setSenderUsername();
 		notifDao.addNotification(notification);
 		List<Notification> conversation = notifDao.getAllNotificationsByGroup(sender, reciever);
 		model.addAttribute("conversation", conversation);
