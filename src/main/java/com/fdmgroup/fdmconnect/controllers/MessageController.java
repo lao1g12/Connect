@@ -47,6 +47,8 @@ public class MessageController {
 		notification = new Notification();
 		model.addAttribute(notification);
 		request.setAttribute("username", recipient);
+		Logging.Log("info", "Message Controller: "+session.getAttribute("username")+" has sent a Message.");
+		
 		
 		return "user/Messages";
 	}
@@ -57,6 +59,8 @@ public class MessageController {
 		User user = userDao.getUser(principal.getName());
 		Set<User> contacts = ml.getContactList(user.getNotifications(), user.getNotificationsSent());
 		request.setAttribute("contacts", contacts);
+		Logging.Log("info", "Message Controller: "+user.getUsername()+" is going to Messages." );
+		
 		return "user/MyMessages";
 		
 	}
@@ -71,6 +75,7 @@ public class MessageController {
 		Notification notification = new Notification();
 		model.addAttribute(notification);
 		request.setAttribute("username", username);
+		Logging.Log("info", "Message Controller: "+ "showing " +user.getUsername()+ " their messages");
 		return "user/Messages";
 		
 	}
