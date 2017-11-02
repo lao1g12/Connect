@@ -50,7 +50,14 @@
 	 
 	 Description: ${g.description } <br />
 
-			<img class="groupImg" src="${g.imageUrl }">
+			<c:choose>
+				<c:when test='${g.imageUrl == null}'>
+				</c:when>
+				<c:otherwise>
+					<img class="groupImg" src="${g.imageUrl}">
+					<br>
+				</c:otherwise>
+			</c:choose>
 			<br />
 			<br>
 			<br>
@@ -61,8 +68,9 @@
 
 				<c:when test="${user.username != g.owner.username}">
 					<a href="goToLeaveGroup?name=${g.name}"
-					onclick="return confirm('Are you sure you want to leave this group?')">Leave Group</a>
-				
+						onclick="return confirm('Are you sure you want to leave this group?')">Leave
+						Group</a>
+
 
 				</c:when>
 				<c:otherwise>
@@ -72,37 +80,48 @@
 
 			</c:choose>
 			<br>
-			
+
 
 			<c:choose>
 				<c:when test='${user.username  == g.owner.username}'>
 					<a href="goToRemoveGroup?name=${g.name }"
-					onclick="return confirm('Are you sure you want to remove this group?')" >Remove Group</a>
-					</c:when>
+						onclick="return confirm('Are you sure you want to remove this group?')">Remove
+						Group</a>
+				</c:when>
 
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
 			<br>
 			<br>
-			
-				<c:choose>
+
+			<c:choose>
 				<c:when test='${user.username  == g.owner.username}'>
-				
-			<sf:form method="post" action="doSetNewOwner" modelAttribute="group">
+
+					<sf:form method="post" action="doSetNewOwner"
+						modelAttribute="group">
 		 New Group Owner: <sf:input type="text" path="owner" />
-		</sf:form>
-		<br>
-				<a href="doSetNewOwner?name=${g.name }"><button>Set New Group  Owner</button></a>
-			</c:when>
+					</sf:form>
+					<br>
+					<a href="doSetNewOwner?name=${g.name }"><button>Set
+							New Group Owner</button></a>
+							<br>
+				</c:when>
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		</br> </br>
+		<br>
+		
 
-   <br>
-    <br>
+		
+	<div class="border" > 
+	<h3> Create A New Group</h3>
+		</br>  <br>
+		
+		
+		
+	
 		<sf:form method="post" action="doCreateGroup" modelAttribute="group">
 		Group Name: <sf:input type="text" path="name" />
 			<br>
@@ -117,13 +136,15 @@
 			<input type="submit" value="Create group" />
 			<br>
 		</sf:form>
-	
+		<br>
 		
-    <br>
-    	<footer> <br>
 
-	
-      ${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}
+</div>	
+		<br>
+		<footer> <br>
+
+
+		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}
 
 
 		<ul class="horiz">
