@@ -341,7 +341,7 @@ public class UserControllerTest {
 	@Test
 	public void test_addNewPost_returnsUserAddPostIfCheckedBadWordsSizeMoreThanZero() {
 		
-		String checkString = "a"; String badWords = "a";
+		String checkString = "a"; String badWords = "a"; String name = "";
 		List<String> checkedBadWords = new ArrayList<String>();
 		checkedBadWords.add(checkString);
 		
@@ -350,7 +350,7 @@ public class UserControllerTest {
 		when(flagDao.getFlag(1)).thenReturn(flag);
 		when(flag.getFlagInfo()).thenReturn(badWords);
 		when(bl.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
-		String result = userController.addNewPost(post, session, request);
+		String result = userController.addNewPost(post, session, request, name);
 		
 		assertEquals(result, "user/AddPost");
 		
@@ -359,7 +359,7 @@ public class UserControllerTest {
 	@Test
 	public void test_addNewPost_returnsRedirectToUserLoginIfCheckedBadWordsSizeEqualZero() {
 		
-		String checkString = "b"; String badWords = "a";
+		String checkString = "b"; String badWords = "a"; String name = "";
 		List<String> checkedBadWords = new ArrayList<String>();
 		
 		when(session.getAttribute("user")).thenReturn(user);
@@ -367,7 +367,7 @@ public class UserControllerTest {
 		when(flagDao.getFlag(1)).thenReturn(flag);
 		when(flag.getFlagInfo()).thenReturn(badWords);
 		when(bl.searchForListings(badWords, checkString)).thenReturn(checkedBadWords);
-		String result = userController.addNewPost(post, session, request);
+		String result = userController.addNewPost(post, session, request, name);
 		
 		assertEquals(result, "redirect:/user/login");
 		

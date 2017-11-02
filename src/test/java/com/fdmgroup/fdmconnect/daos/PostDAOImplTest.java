@@ -146,11 +146,11 @@ public class PostDAOImplTest {
 	}
 	
 	@Test
-	public void test_getAllPostsWhereGroupIsNull_returnsPosts() {
+	public void test_getAllPostsWhereGroupIsAll_returnsPosts() {
 		
-		when(manager.createQuery("select p from Post p where p.group =?", Post.class)).thenReturn(query);
+		when(manager.createQuery("select p from Post p where p.group.name =?", Post.class)).thenReturn(query);
 		when(query.getResultList()).thenReturn(posts);
-		List<Post> retrievedPosts = postDao.getAllPostsWhereGroupsIsNull();
+		List<Post> retrievedPosts = postDao.getAllPostsWhereGroupsAll();
 		
 		assertEquals(retrievedPosts, posts);
 		
