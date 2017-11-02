@@ -39,7 +39,13 @@
 		<h2>Welcome ${profile.firstName}</h2>
 		</div>
 		<br>
-		<div class="col col6 last, search">
+			<div class="col col4, message">
+			<c:if test="${user.username != userCur.username}">
+				<a href="messages?username=${userCur.username}"><button class="button button5"> Send Message</button></a>
+			</c:if>
+			</div>
+		
+		<div class="col col3 last, search">
 					<c:choose>
 				<c:when test='${userCur == session.user}'>
 					<a href="editProfile"><button class="button button5"> Edit Profile</button></a>
@@ -99,20 +105,10 @@
 					</c:forEach>
 						</div>
 						</div>
-						
-						
-						
-						
-						
-						
-					<br/> <br/>
-				
 					
-				
+					<br/> <br/>
 			</div>
-
-			<a href="messages?username=${userCur.username}">Send Message</a>
-
+		
 			<div class="row">
 				<div class="col12">
 					<h2>Your Posts</h2>
@@ -146,7 +142,7 @@
 							</c:if>
 						</c:if>
 						
-						<!-- Comments 
+						<!-- Comments -->
 						
 						<c:if test="${viewComments != 'show'}">
 							<a href="goToViewComments?postId=${p.postId}">View Comments</a>
@@ -198,7 +194,7 @@
 							</c:if>
 						</c:if>
 						
-					    Remove Post -->
+					    <!-- Remove Post -->
 						
 						<c:if test='${userCur == session.user}'>
 							<a href="processRemovePostUser?postId=${p.postId}"

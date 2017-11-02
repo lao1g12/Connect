@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.entities.Post;
 
-public class BusinessLogic {
+public class SearchLogic {
 	
 	@Autowired
 	private EntityManagerFactory factory;

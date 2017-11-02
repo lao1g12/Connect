@@ -111,7 +111,7 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 		post.setPostOwner(user);
 		Group group = groupDao.getGroup(groupName);
-		BusinessLogic bl = new BusinessLogic();
+		SearchLogic bl = new SearchLogic();
 		String checkString = post.getFullListOfKeyWords();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
@@ -337,7 +337,7 @@ public class UserController {
 			@RequestParam(name = "commentBody") String commentBody, RedirectAttributes ra, HttpServletRequest request) {
 		
 		Comment comment = new Comment(commentBody);
-		BusinessLogic bl = new BusinessLogic();
+		SearchLogic bl = new SearchLogic();
 		Flag flag = flagDao.getFlag(1);
 		String badWords = flag.getFlagInfo();
 		List<String> checkedBadWords = bl.searchForListings(badWords, commentBody);
