@@ -98,15 +98,14 @@
 			<c:choose>
 				<c:when test='${user.username  == g.owner.username}'>
 
-					<sf:form method="post" action="doSetNewOwner"
-						modelAttribute="group">
-		 New Group Owner: <sf:input type="text" path="owner" />
-					</sf:form>
-					<br>
-					<a href="doSetNewOwner?name=${g.name }"><button>Set
-							New Group Owner</button></a>
-							<br>
-				</c:when>
+			<form method="post" action="doSetNewOwner" modelAttribute="group">
+		 New Group Owner: <input type="text" name="username" />
+		 <input type="hidden" value="${g.name}" name="name"/>
+		 <input type="submit" value="Change Owner"/>
+		</form>
+		<br>
+			</c:when>
+
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
