@@ -83,7 +83,7 @@
 						<h3>${aP.title}<br />
 						</h3>
 				
-				Category: ${aP.category}<br />
+				Category: ${aP.category}<br/> <br>
 						<c:choose>
 							<c:when test='${aP.imgUrl == null}'>
 							</c:when>
@@ -91,11 +91,11 @@
 								<img class="boardimg" src="${aP.imgUrl}">
 								<br>
 							</c:otherwise>
-						</c:choose>
+						</c:choose><br>
 
-				${aP.bodyText}<br />
+				${aP.bodyText}<br/><br>
 						<a href="${aP.link}">For more info click here!</a>
-						<br />
+						<br/><br>
 			
 			Posted: ${aP.getPostDateFormatted()}<br />
 			Posted By: ${aP.postOwner.username}<br />

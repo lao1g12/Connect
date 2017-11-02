@@ -78,6 +78,13 @@ right: 0;
 	
 }	
 
+.account{ 
+	
+	margin-top: -35px;
+	margin-left: 80.5%;
+	
+}	
+
 .message{ 
 	
 	margin-left : 150px;
@@ -147,6 +154,11 @@ right: 0;
 a {
       text-decoration:none;
    }
+   
+b { 
+	
+	
+}
 
 
 .row{

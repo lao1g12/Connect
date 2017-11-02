@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../css/FDMConnect.css" type="text/css" />
-<title>View User Account</title>
+<title>View Account</title>
 </head>
 <body>
 	<!-- Top Menu -->
@@ -48,7 +48,7 @@
 			</c:if>
 			</div>
 		
-		<div class="col col3 last, search">
+		<div class="col col3 last, account">
 					<c:choose>
 				<c:when test='${userCur == session.user}'>
 					<a href="editProfile"><button class="button button5"> Edit Profile</button></a>
@@ -66,16 +66,17 @@
 					<img class="profileImg" src="${profile.imageUrl}" /> <br>
 				</div>
 				<div class="col3 last, profileinfo">
-					<br> First Name : ${profile.firstName} <br> Last Name :
-					${profile.lastName} <br> Description: ${profile.description} <br>
-					Hobbies: ${profile.hobbies } <br>
+					<br> <b> First Name </b> : ${profile.firstName} 
+					<br> <b> Last Name </b> : ${profile.lastName} 
+					<br> <b> Description </b> : ${profile.description} <br>
+					<b> Hobbies </b> : ${profile.hobbies } <br>
 				</div>
 				
 				<div class="col4 last, profileinfo">
-					<h2>FDM Training</h2>
-					Stream: ${profile.stream}  <br> StartDate:
-					${profile.getStartDateFormatted()}  <br> EndDate:
-					${profile.getEndDateFormatted()}  <br>
+					<h2>FDM Training</h2> 
+					<b> Stream </b>  : ${profile.stream}  <br>
+					<b> StartDate </b>  : ${profile.getStartDateFormatted()} 
+					  <br> <b> EndDate </b>  : ${profile.getEndDateFormatted()}  <br>
 					</div>
 			</div>
 
@@ -119,7 +120,14 @@
 						<h3>${p.title}</h3>
 						<br />
 					Category: ${p.category}<br />
-						<img class="boardimg" src="${p.imgUrl}">
+						<c:choose>
+							<c:when test='${aP.imgUrl == null}'>
+							</c:when>
+							<c:otherwise>
+								<img class="boardimg" src="${aP.imgUrl}">
+								<br>
+							</c:otherwise>
+						</c:choose><br>
 						<br>${p.bodyText}<br />
 						<a href="${p.link}">For more info click here!</a>
 						<br />
