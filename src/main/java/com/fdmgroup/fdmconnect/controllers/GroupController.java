@@ -64,7 +64,7 @@ public class GroupController {
 
 	}
 
-	@RequestMapping("user/goToMyGroups")
+	@RequestMapping(value = { "/admin/goToMyGroups", "/user/goToMyGroups" })
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		Set<Group> groups = user.getGroups();
