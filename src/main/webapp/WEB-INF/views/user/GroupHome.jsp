@@ -110,12 +110,9 @@ Image : <sf:input type="text" path="imgUrl" />
 			<br /> 
 			${userErrorMessage}
 		</div>
-
 		<br /> <br />
 
 <div>
-			
-				<!-- Notice Board -->
 				<div class="row">
 				<div class="col col12 last, border">
 					<div class="boardtext">

@@ -130,6 +130,8 @@ public class GroupController {
 		return "redirect:/user/goToMyGroups";
 
 	}
+	
+	
 
 	@RequestMapping("/user/goToRemoveGroup")
 	public String goToRemoveGroup(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra) {
