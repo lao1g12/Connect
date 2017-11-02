@@ -69,11 +69,15 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	public void updateGroup(Group group) {
-		
+
 		EntityManager manager = factory.createEntityManager();
 		manager.getTransaction().begin();
 		manager.merge(group);
 		manager.getTransaction().commit();
+		Logging.Log("info", "GroupDAOImpl: " + group
+				+ " has been updated");
+
+
 		
 	}
 
