@@ -49,7 +49,7 @@
 			</h3>
 	 
 	 Description: ${g.description } <br />
-
+              <br>
 			<c:choose>
 				<c:when test='${g.imageUrl == null}'>
 				</c:when>
