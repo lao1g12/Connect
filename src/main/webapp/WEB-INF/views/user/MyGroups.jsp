@@ -49,7 +49,7 @@
 			</h3>
 	 
 	 Description: ${g.description } <br />
-
+              <br>
 			<c:choose>
 				<c:when test='${g.imageUrl == null}'>
 				</c:when>
@@ -143,7 +143,7 @@
 		<footer> <br>
 
 
-		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}
+		${groupWasCreated}${userLeftGroup}${groupAlreadyExists}${groupRemovedByOwner}${OwnerWasChanged}
 
 
 		<ul class="horiz">

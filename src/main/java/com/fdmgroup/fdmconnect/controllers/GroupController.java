@@ -48,18 +48,20 @@ public class GroupController {
 	}
 
 	public GroupController(PostDAO postDao, UserDAO userDao, FlagDAO flagDao, GroupDAO groupDao,
-			NotificationDAO notificationDao) {
+			NotificationDAO notificationDao, CommentDAO commentDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
 		this.groupDao = groupDao;
 		this.flagDao = flagDao;
 		this.notificationDao = notificationDao;
+		this.commentDao = commentDao;
 	}
 
 	@RequestMapping(value = { "user/goToGroupHome", "admin/goToGroupHome" })
 
-	public String admin(Model model, HttpSession session, @RequestParam String name) {
+	public String admin(Model model, HttpSession session, 
+			@RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
 		session.setAttribute("allPosts", postDao.getAllPostsByGroup(name));
@@ -83,7 +85,8 @@ public class GroupController {
 	}
 
 	@RequestMapping("user/doCreateGroup")
-	public String doCreateGroup(Model model, Group group, HttpSession session, RedirectAttributes ra) {
+	public String doCreateGroup(Model model, Group group, HttpSession session,
+			RedirectAttributes ra) {
 
 		User owner = (User) session.getAttribute("user");
 
@@ -95,12 +98,15 @@ public class GroupController {
 
 			groupDao.createGroup(group);
 			ra.addFlashAttribute("groupWasCreated", "Group was created successfully");
-			Logging.Log("info", "Group Controller: " + session.getAttribute("username") + "created a group" + group);
+			Logging.Log("info",
+					"Group Controller: " + session.getAttribute("username") 
+					+ "created a group" + group);
 			return "redirect:/user/goToMyGroups";
 
 		} else {
 
-			ra.addFlashAttribute("groupAlreadyExists", "Group already exists with that name.");
+			ra.addFlashAttribute("groupAlreadyExists", 
+					"Group already exists with that name.");
 			return "redirect:/user/goToMyGroups";
 
 		}
@@ -109,7 +115,8 @@ public class GroupController {
 
 	@RequestMapping("user/goToLeaveGroup")
 
-	public String goToLeaveGroup(Model model, HttpSession session, @RequestParam("name") String groupname,
+	public String goToLeaveGroup(Model model, HttpSession session, 
+			@RequestParam("name") String groupname,
 			RedirectAttributes ra) {
 
 		User user = (User) session.getAttribute("user");
@@ -129,10 +136,10 @@ public class GroupController {
 	}
 
 
-
 	@RequestMapping("/user/doSetNewOwner")
-	public String doSetNewOwner(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra, 
-			@RequestParam String username) {
+	public String doSetNewOwner(@RequestParam String name, HttpSession session,
+			Model model, RedirectAttributes ra, @RequestParam String username) {
+		
 		User user = (User) session.getAttribute("user");
 		Group group =groupDao.getGroup(name);
 		User newOwner = userDao.getUser(username);
@@ -148,8 +155,8 @@ public class GroupController {
 
 
 
-		ra.addFlashAttribute("groupRemovedByOwner", "Group removed succesfully.");
-		Logging.Log("post", "A new owner is:" + name);
+		ra.addFlashAttribute("OwnerWasChanged", "You have a new group owner.");
+		Logging.Log("info", "A new owner is:" + name);
 		return "redirect:/user/goToMyGroups";
 
 		
@@ -157,7 +164,8 @@ public class GroupController {
 	
 
 	@RequestMapping("/user/goToRemoveGroup")
-	public String goToRemoveGroup(@RequestParam String name, HttpSession session, Model model, RedirectAttributes ra) {
+	public String goToRemoveGroup(@RequestParam String name, 
+			HttpSession session, Model model, RedirectAttributes ra) {
 
 		User user = (User) session.getAttribute("user");
 
@@ -174,7 +182,8 @@ public class GroupController {
 	}
 	
 	@RequestMapping("user/goToSendInvite")
-	public String goToSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name) {
+	public String goToSendInvite(HttpSession session, Model model, 
+			@RequestParam(name = "groupName") String name) {
 
 		Group group = groupDao.getGroup(name);
 		model.addAttribute("group", group);
@@ -185,7 +194,8 @@ public class GroupController {
 	}
 
 	@RequestMapping("user/doSendInvite")
-	public String doSendInvite(HttpSession session, Model model, @RequestParam(name = "groupName") String name,
+	public String doSendInvite(HttpSession session, Model model, 
+			@RequestParam(name = "groupName") String name,
 			@RequestParam(name = "username") String username) {
 
 		Group group = groupDao.getGroup(name);
@@ -198,12 +208,14 @@ public class GroupController {
 
 		if (recipient == null) {
 			
-			model.addAttribute("userErrorMessage", "User with username "+username+" does not exist.");
+			model.addAttribute("userErrorMessage", "User with username "
+			+username+" does not exist.");
 			return "user/GroupHome";
 			
 		}
 		
-		Notification notification = new Notification("Group Invite from " + sender.getUsername(), "invite", name);
+		Notification notification = new Notification("Group Invite from "
+		+ sender.getUsername(), "invite", name);
 		notification.setUser(recipient);
 		notification.setSender(sender);
 		
@@ -218,7 +230,8 @@ public class GroupController {
 	}
 
 	@RequestMapping("user/doAcceptInvite")
-	public String doAcceptInvite(HttpSession session, Model model, @RequestParam(name = "notificationId") String nId,
+	public String doAcceptInvite(HttpSession session, Model model,
+			@RequestParam(name = "notificationId") String nId,
 			@RequestParam(name = "groupName") String name, RedirectAttributes ra) {
 
 		User user = (User) session.getAttribute("user");
@@ -228,26 +241,31 @@ public class GroupController {
 		try {
 			group.addUser(user);
 			groupDao.updateGroup(group);
+			Logging.Log("info", "Group Controller: User "+user+" accepted invite to group "+name);
 			notificationDao.removeNotification(notificationId);
 		} catch (PersistenceException pe) {
-			ra.addFlashAttribute("inviteAcceptError", "You already exist as a member in this group.");
+			ra.addFlashAttribute("inviteAcceptError", 
+					"You already exist as a member in this group.");
 			notificationDao.removeNotification(notificationId);
 			return "redirect:/user/goHome";
 		}
 
-		ra.addFlashAttribute("userAddedToGroupMessage", "You have been added to the group " + name);
+		ra.addFlashAttribute("userAddedToGroupMessage",
+				"You have been added to the group " + name);
 		return "redirect:/user/login";
 
 	}
 
 	@RequestMapping("user/doDeclineInvite")
-	public String doDeclineInvite(HttpSession session, Model model, @RequestParam(name = "notificationId") String nId,
+	public String doDeclineInvite(HttpSession session, Model model, 
+			@RequestParam(name = "notificationId") String nId,
 			RedirectAttributes ra) {
 
 		int notificationId = Integer.parseInt(nId);
 
 		try {
 			notificationDao.removeNotification(notificationId);
+			Logging.Log("info", "Group Controller: Notification removed "+nId);
 		} catch (PersistenceException pe) {
 			ra.addFlashAttribute("inviteDeclineError", "Invite no longer exists.");
 			return "redirect:/user/goHome";
@@ -258,7 +276,8 @@ public class GroupController {
 	}
 
 	@RequestMapping("user/addGroupPost")
-	public String addGroupPost(Model model, @RequestParam String name, HttpServletRequest request) {
+	public String addGroupPost(Model model, @RequestParam String name, 
+			HttpServletRequest request) {
 
 		Post post = new Post();
 		Group group = groupDao.getGroup(name);
@@ -272,7 +291,8 @@ public class GroupController {
 	}
 
 	@RequestMapping(value = { "user/groupPost" })
-	public String addNewPost(Post post, HttpSession session, HttpServletRequest request, @RequestParam String name) {
+	public String addNewPost(Post post, HttpSession session, 
+			HttpServletRequest request, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
 		User user = (User) session.getAttribute("user");
@@ -290,20 +310,23 @@ public class GroupController {
 			}
 			String badWordString = sbReturn.toString();
 			request.setAttribute("badPost",
-					"You just tried to post an article with the following inappropriate words :" + badWordString);
+					"You just tried to post an article with the following inappropriate words :" 
+			+ badWordString);
 			return "user/AddPost";
 		}
 
 		post.setGroup(group);
 		postDao.addPost(post);
-		Logging.Log("info", "User Controller: " + session.getAttribute("username") + "added post" + post);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + 
+				"added post" + post);
 
 		return "redirect:/user/login";
 
 	}
 	
 	@RequestMapping(value = { "/user/goToViewGroupComments", "/admin/goToViewGroupComments" })
-	public String goToViewGroupComments(HttpSession session, Model model, @RequestParam(name = "postId") int postId) {
+	public String goToViewGroupComments(HttpSession session, Model model, 
+			@RequestParam(name = "postId") int postId) {
 		
 	    model.addAttribute("postId", postId);
 		model.addAttribute("viewComments", "show");
@@ -345,7 +368,8 @@ public class GroupController {
 			}
 			String badWordString = sbReturn.toString();
 			ra.addFlashAttribute("badComment",
-					"You just tried to post an article with the following inappropriate words :" + badWordString);
+					"You just tried to post an article with the following inappropriate words :"
+			+ badWordString);
 			ra.addFlashAttribute("postId", postId);
 			return "redirect:/user/goToAddGroupComment";
 		}
@@ -356,29 +380,36 @@ public class GroupController {
 		try {
 			commentDao.addComment(comment);
 		} catch (PersistenceException pe) {
-			model.addAttribute("addCommentErrorMessage", "Could not post comment at this time.");
+			model.addAttribute("addCommentErrorMessage", 
+					"Could not post comment at this time.");
 			return "user/GroupHome";
 		}
 		
-		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added a comment "+comment);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") 
+		+ " added a comment "+comment);
 		
 		
 		return "redirect:/user/goToGroupHome";
 			
 	}
 	
-	@RequestMapping(value = {"/user/doRemoveGroupComment", "/admin/doRemoveGroupComment"})
-	String doRemoveGroupComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId){
+	@RequestMapping(value = {"/user/doRemoveGroupComment", 
+			"/admin/doRemoveGroupComment"})
+	String doRemoveGroupComment(HttpSession session, Model model,
+			@RequestParam(name = "commentId") int commentId){
 		
 		commentDao.removeComment(commentId);
-		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " removed a comment "+commentId);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username")
+		+ " removed a comment "+commentId);
 		
 		return "redirect:/user/goToGroupHome";
 		
 	}
 	
-	@RequestMapping(value = {"/user/goToEditGroupComment", "/admin/goToEditGroupComment"})
-	String goToEditGroupComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
+	@RequestMapping(value = {"/user/goToEditGroupComment",
+			"/admin/goToEditGroupComment"})
+	String goToEditGroupComment(HttpSession session, Model model, 
+			@RequestParam(name = "postId") int postId,
 			@RequestParam(name = "commentId") int commentId) {
 		
 		model.addAttribute("postId", postId);
@@ -392,8 +423,10 @@ public class GroupController {
 		
 	}
 	
-	@RequestMapping(value = {"/user/doEditGroupComment", "/admin/doEditGroupComment"})
-	String doEditGroupComment(HttpSession session, Model model, @RequestParam(name = "commentId") int commentId, 
+	@RequestMapping(value = {"/user/doEditGroupComment", 
+			"/admin/doEditGroupComment"})
+	String doEditGroupComment(HttpSession session, Model model,
+			@RequestParam(name = "commentId") int commentId, 
 			@RequestParam(name = "commentBody") String commentBody){
 		
 		Comment comment = commentDao.getComment(commentId);
