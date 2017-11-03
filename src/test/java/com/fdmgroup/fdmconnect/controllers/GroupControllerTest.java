@@ -320,7 +320,7 @@ public class GroupControllerTest {
 	@Test
 	public void test_doAddGroupComment_returnsRedirectToUserGoToAddCommentIfCheckedBadWordsSizeMoreThanOne() {
 		
-		String badWords = "a";
+		String badWords = "a"; String name = "";
 		String commentBody = "a";
 		int postId = 0;
 		List<String> checkedBadWords = new ArrayList<String>();
@@ -329,7 +329,7 @@ public class GroupControllerTest {
 		when(flagDao.getFlag(1)).thenReturn(flag);
 		when(flag.getFlagInfo()).thenReturn(badWords);
 		when(bl.searchForListings(badWords, commentBody)).thenReturn(checkedBadWords);
-		String result = groupController.doAddGroupComment(session, model, postId, commentBody, ra, request);
+		String result = groupController.doAddGroupComment(session, model, postId, commentBody, ra, request, name);
 		
 		assertEquals(result, "redirect:/user/goToAddGroupComment");
 		
@@ -338,7 +338,7 @@ public class GroupControllerTest {
 	@Test
 	public void test_doAddGroupComment_returnsRedirectToUserGoToGroupHomeIfCheckedBadWordsSizeEqualsZero() {
 		
-		String badWords = "a";
+		String badWords = "a"; String name = "";
 		String commentBody = "b";
 		int postId = 0;
 		List<String> checkedBadWords = new ArrayList<String>();
@@ -346,7 +346,7 @@ public class GroupControllerTest {
 		when(flagDao.getFlag(1)).thenReturn(flag);
 		when(flag.getFlagInfo()).thenReturn(badWords);
 		when(bl.searchForListings(badWords, commentBody)).thenReturn(checkedBadWords);
-		String result = groupController.doAddGroupComment(session, model, postId, commentBody, ra, request);
+		String result = groupController.doAddGroupComment(session, model, postId, commentBody, ra, request, name);
 		
 		assertEquals(result, "redirect:/user/goToGroupHome");
 		

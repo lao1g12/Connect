@@ -25,7 +25,6 @@
 							<li class="horizl"><a href="goToAdmin">Admin</a></li>
 						</c:when>
 						<c:otherwise>
-
 						</c:otherwise>
 					</c:choose>
 					<li class="horizl"><a href="viewAllUsers">All Users</a></li>
@@ -136,8 +135,8 @@ Image : <sf:input type="text" path="imgUrl" />
 			Posted By: ${aP.postOwner.username}<br />
 							<br />
 							<c:if test="${viewComments != 'show'}">
-								<a href="goToViewGroupComments?postId=${aP.postId}">View
-									Comments</a>
+								<a href="goToViewGroupComments?postId=${aP.postId}"><button
+										class="button button4">View Comments</button></a>
 							</c:if>
 							<br />
 							<c:if test="${postId == aP.postId and viewComments == 'show' }">
@@ -153,17 +152,19 @@ Image : <sf:input type="text" path="imgUrl" />
 									<br />
 									<c:if
 										test="${user.getRole() == 'Admin' or username == c.user.getUsername()}">
-										<a href="doRemoveGroupComment?commentId=${c.commentId}&postId=${aP.postId}">Remove</a>
+										<a href="doRemoveGroupComment?commentId=${c.commentId}&postId=${aP.postId}"><button
+										class="button button4">Remove</button></a>
 									</c:if>
 
 									<c:if test="${username == c.user.getUsername()}">
 										<a
-											href="goToEditGroupComment?commentId=${c.commentId}&postId=${aP.postId}">Edit</a>
+											href="goToEditGroupComment?commentId=${c.commentId}&postId=${aP.postId}"><button
+										class="button button4">Edit</button></a>
 										<br />
 										<c:if test="${postId == aP.postId and editComment == 'edit'}">
 											<form method="post"
 												action="doEditGroupComment?commentId=${c.commentId}">
-												<input type="text" name="commentBody" /> <br /> <input
+												<input type="text" name="commentBody" /> <br /> <br /> <input
 													type="submit" value="Update" />
 											</form>
 										</c:if>
@@ -174,14 +175,15 @@ Image : <sf:input type="text" path="imgUrl" />
 								</c:forEach>
 								<br />
 								<c:if test="${addComment != 'add'}">
-									<a href="goToAddGroupComment?postId=${aP.postId}">Add Comment</a>
+									<a href="goToAddGroupComment?postId=${aP.postId}"><button
+										class="button button4">Add Comment</button></a>
 								</c:if>
 								<br />
 								<c:if test="${postId == aP.postId and addComment == 'add'}">
 									<h4>${badComment}</h4>
 									<form method="post"
 										action="doAddGroupComment?postId=${aP.postId}&name=${group.name}">
-										<input type="text" name="commentBody" /> <br /> <input
+										<input type="text" name="commentBody" /> <br /> <br /> <input
 											type="submit" value="Add Comment" />
 									</form>
 								</c:if>
