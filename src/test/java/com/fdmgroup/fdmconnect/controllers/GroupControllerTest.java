@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fdmgroup.fdmconnect.controllers.SearchLogic;
 import com.fdmgroup.fdmconnect.controllers.GroupController;
+import com.fdmgroup.fdmconnect.daos.CommentDAO;
+import com.fdmgroup.fdmconnect.daos.CommentDAOImpl;
 import com.fdmgroup.fdmconnect.daos.FlagDAO;
 import com.fdmgroup.fdmconnect.daos.FlagDAOImpl;
 import com.fdmgroup.fdmconnect.daos.GroupDAO;
@@ -28,6 +30,7 @@ import com.fdmgroup.fdmconnect.daos.PostDAO;
 import com.fdmgroup.fdmconnect.daos.PostDAOImpl;
 import com.fdmgroup.fdmconnect.daos.UserDAO;
 import com.fdmgroup.fdmconnect.daos.UserDAOImpl;
+import com.fdmgroup.fdmconnect.entities.Comment;
 import com.fdmgroup.fdmconnect.entities.Flag;
 import com.fdmgroup.fdmconnect.entities.Group;
 import com.fdmgroup.fdmconnect.entities.Post;
@@ -51,6 +54,8 @@ public class GroupControllerTest {
 	private Group group;
 	private GroupController groupController;
 	private SearchLogic bl;
+	private CommentDAO commentDao;
+	private Comment comment;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -59,9 +64,10 @@ public class GroupControllerTest {
 		postDao = mock(PostDAOImpl.class);
 		flagDao = mock(FlagDAOImpl.class);
 		groupDao = mock(GroupDAOImpl.class);
+		commentDao = mock(CommentDAOImpl.class);
 		notificationDao = mock(NotificationDAOImpl.class);
 		groupController = new GroupController(postDao, userDao, flagDao,
-				groupDao, notificationDao);
+				groupDao, notificationDao, commentDao);
 		session = mock(HttpSession.class);
 		model = mock(Model.class);
 		user = mock(User.class);
@@ -71,6 +77,7 @@ public class GroupControllerTest {
 		ra = mock(RedirectAttributes.class);
 		groups = mock(HashSet.class);
 		group = mock(Group.class);
+		comment = mock(Comment.class);
 		bl = mock(SearchLogic.class);
 	}
 
@@ -80,7 +87,7 @@ public class GroupControllerTest {
 		String name = "";
 
 		when(groupDao.getGroup(name)).thenReturn(group);
-		String result = groupController.admin(model, name);
+		String result = groupController.admin(model, session, name);
 
 		assertEquals(result, "user/GroupHome");
 
@@ -98,9 +105,24 @@ public class GroupControllerTest {
 	}
 
 	@Test
-	public void test_doCreateGroup_returnsRedirectToUserGoToMyGroups() {
+	public void test_doCreateGroup_returnsRedirectToUserGoToMyGroupsIfGroupNameIsNull() {
 
 		when(session.getAttribute("user")).thenReturn(user);
+		when(group.getName()).thenReturn("name");
+		when(groupDao.getGroup("name")).thenReturn(null);
+		String result = groupController
+				.doCreateGroup(model, group, session, ra);
+
+		assertEquals(result, "redirect:/user/goToMyGroups");
+
+	}
+	
+	@Test
+	public void test_doCreateGroup_returnsRedirectToUserGoToMyGroupsIfGroupNameNotNull() {
+
+		when(session.getAttribute("user")).thenReturn(user);
+		when(group.getName()).thenReturn("name");
+		when(groupDao.getGroup("name")).thenReturn(group);
 		String result = groupController
 				.doCreateGroup(model, group, session, ra);
 
@@ -121,7 +143,7 @@ public class GroupControllerTest {
 	}
 
 	@Test
-	public void test_doSendInvite_returnsUserGroupHome() {
+	public void test_doSendInvite_returnsUserGroupHomeIfRecipientNotNull() {
 
 		String name = "";
 		String username = "";
@@ -131,6 +153,24 @@ public class GroupControllerTest {
 		when(groupDao.getGroup(name)).thenReturn(group);
 		when(session.getAttribute("user")).thenReturn(sender);
 		when(userDao.getUser(username)).thenReturn(recipient);
+		when(sender.getUsername()).thenReturn(username);
+		String result = groupController.doSendInvite(session, model, name,
+				username);
+
+		assertEquals(result, "user/GroupHome");
+
+	}
+	
+	@Test
+	public void test_doSendInvite_returnsUserGroupHomeIfRecipientIsNull() {
+
+		String name = "";
+		String username = "";
+		User sender = mock(User.class);
+
+		when(groupDao.getGroup(name)).thenReturn(group);
+		when(session.getAttribute("user")).thenReturn(sender);
+		when(userDao.getUser(username)).thenReturn(null);
 		when(sender.getUsername()).thenReturn(username);
 		String result = groupController.doSendInvite(session, model, name,
 				username);
@@ -150,7 +190,7 @@ public class GroupControllerTest {
 		String result = groupController.doAcceptInvite(session, model, nId,
 				name, ra);
 
-		assertEquals(result, "redirect:/user/goHome");
+		assertEquals(result, "redirect:/user/login");
 
 	}
 
@@ -161,7 +201,7 @@ public class GroupControllerTest {
 
 		String result = groupController.doDeclineInvite(session, model, nId, ra);
 
-		assertEquals(result, "redirect:/user/goHome");
+		assertEquals(result, "redirect:/user/login");
 
 	}
 	
@@ -214,4 +254,139 @@ public class GroupControllerTest {
 		
 	}
 
+	@Test
+	public void test_goToLeaveGroup_returnsRedirectToUserGoToMyGroups() {
+		
+		String groupname = "";
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		when(groupDao.getGroup(groupname)).thenReturn(group);
+		String result = groupController.goToLeaveGroup(model, session, groupname, ra);
+		
+		assertEquals(result, "redirect:/user/goToMyGroups");
+		
+	}
+	
+	@Test
+	public void test_doSetNewOwner_returnsRedirectToUserGoToMyGroups() {
+		
+		String name = ""; String username = "";
+		User newOwner = mock(User.class);
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		when(groupDao.getGroup(name)).thenReturn(group);
+		when(userDao.getUser(username)).thenReturn(newOwner);
+		String result = groupController.doSetNewOwner(name, session, model, ra, username);
+		
+		assertEquals(result, "redirect:/user/goToMyGroups");
+		
+	}
+	
+	@Test
+	public void test_goToRemoveGroup_returnsRedirectToUserGoToMyGroups() {
+		
+		String name = "";
+		
+		when(session.getAttribute("user")).thenReturn(user);
+		String result = groupController.goToRemoveGroup(name, session, model, ra);
+		
+		assertEquals(result, "redirect:/user/goToMyGroups");
+		
+	}
+	
+	@Test
+	public void test_goToViewGroupComments_returnsGroupHome() {
+		
+		int postId = 0;
+		
+		String result = groupController.goToViewGroupComments(session, model, postId);
+		
+		assertEquals(result, "user/GroupHome");
+		
+	}
+	
+	@Test
+	public void test_goToAddGroupComment_returnsGroupHome() {
+		
+		int postId = 0;
+		
+		when(request.getParameter("postId")).thenReturn("0");
+		String result = groupController.goToAddGroupComment(session, model, request, postId);
+		
+		assertEquals(result, "user/GroupHome");
+		
+	}
+	
+	@Test
+	public void test_doAddGroupComment_returnsRedirectToUserGoToAddCommentIfCheckedBadWordsSizeMoreThanOne() {
+		
+		String badWords = "a";
+		String commentBody = "a";
+		int postId = 0;
+		List<String> checkedBadWords = new ArrayList<String>();
+		checkedBadWords.add("a");
+		
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(bl.searchForListings(badWords, commentBody)).thenReturn(checkedBadWords);
+		String result = groupController.doAddGroupComment(session, model, postId, commentBody, ra, request);
+		
+		assertEquals(result, "redirect:/user/goToAddGroupComment");
+		
+	}
+	
+	@Test
+	public void test_doAddGroupComment_returnsRedirectToUserGoToGroupHomeIfCheckedBadWordsSizeEqualsZero() {
+		
+		String badWords = "a";
+		String commentBody = "b";
+		int postId = 0;
+		List<String> checkedBadWords = new ArrayList<String>();
+		
+		when(flagDao.getFlag(1)).thenReturn(flag);
+		when(flag.getFlagInfo()).thenReturn(badWords);
+		when(bl.searchForListings(badWords, commentBody)).thenReturn(checkedBadWords);
+		String result = groupController.doAddGroupComment(session, model, postId, commentBody, ra, request);
+		
+		assertEquals(result, "redirect:/user/goToGroupHome");
+		
+	}
+
+	@Test
+	public void test_doRemoveGroupComment_returnsRedirectToUserGoToGroupHome() {
+		
+		int commentId = 0;
+		
+		String result = groupController.doRemoveGroupComment(session, model, commentId);
+		
+		assertEquals(result, "redirect:/user/goToGroupHome");
+		
+	}
+	
+	@Test
+	public void test_goToEditGroupComment_returnsGroupHome() {
+		
+		int postId = 0; int commentId = 0;
+		
+		String result = groupController.goToEditGroupComment(session, model, postId, commentId);
+		
+		assertEquals(result, "user/GroupHome");
+		
+	}
+	
+	@Test
+	public void test_doEditGroupComment_returnsRedirectToUserGoToGroupHome() {
+		
+		int commentId = 0;
+		String commentBody = "";
+		
+		when(commentDao.getComment(commentId)).thenReturn(comment);
+		String result = groupController.doEditGroupComment(session, model, commentId, commentBody);
+		
+		assertEquals(result, "redirect:/user/goToGroupHome");
+		
+	}
+	
 }
+
+	
