@@ -80,7 +80,7 @@ public class UserController {
 		Profile profile = user.getProfile();
 		Set<Education> education = profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
-		Set<Post> posts = user.getPosts();
+		List<Post> posts = postDao.getAllPostsByUserAndAll(user);
 
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
@@ -454,7 +454,7 @@ public class UserController {
 		User user = userDao.getUserByProfile(profile);
 		Set<Education> education = profile.getEducation();
 		Set<Experience> experience = profile.getExperiences();
-		Set<Post> posts = user.getPosts();
+		List<Post> posts = postDao.getAllPostsByUserAndAll(user);
 		model.addAttribute("profile", profile);
 		model.addAttribute("education", education);
 		model.addAttribute("experience", experience);

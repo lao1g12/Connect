@@ -3,6 +3,7 @@ package com.fdmgroup.fdmconnect.daos;
 import java.util.List;
 
 import com.fdmgroup.fdmconnect.entities.Post;
+import com.fdmgroup.fdmconnect.entities.User;
 
 public interface PostDAO {
 	
@@ -13,5 +14,6 @@ public interface PostDAO {
 	public List<Post> getAllPostsWhereGroupsAll();
 	public List<Post> getAllPostsByGroup(String name);
 	public void updatePost(Post post);
+	public List<Post> getAllPostsByUserAndAll(User user);
 
 }
