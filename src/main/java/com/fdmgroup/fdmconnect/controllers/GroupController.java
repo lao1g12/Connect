@@ -445,21 +445,13 @@ public class GroupController {
 		
 	}
 	
-	@RequestMapping(value = {"/user/goToEditGroupComment",
-			"/admin/goToEditGroupComment"})
-	String goToEditGroupComment(HttpSession session, Model model, 
-			@RequestParam(name = "postId") int postId,
-			@RequestParam(name = "commentId") int commentId) {
-
-		commentDao.removeComment(commentId);
-		Logging.Log("info", "User Controller: " + session.getAttribute("username")
-						+ " removed a comment " + commentId);
-
-		return "redirect:/user/goToGroupHome";
-
-	}
 
 
+	@RequestMapping(value = { "/user/goToEditGroupComment",
+	"/admin/goToEditGroupComment" })
+String goToEditGroupComment(HttpSession session, Model model,
+	@RequestParam(name = "postId") int postId,
+	@RequestParam(name = "commentId") int commentId) {
 		model.addAttribute("postId", postId);
 		model.addAttribute("commentId", commentId);
 		model.addAttribute("viewComments", "show");
