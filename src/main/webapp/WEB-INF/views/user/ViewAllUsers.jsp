@@ -80,7 +80,7 @@
 			<br>
 		${u.profile.firstName} ${u.profile.lastName} <br />
 		Stream: ${u.profile.stream} <br />
-			<a href="viewProfile?profileId=${u.profile.profileId}">View
+			<a id="alluser" href="viewProfile?profileId=${u.profile.profileId}">View
 				Profile</a>
 		</c:if>
 	</c:forEach>
