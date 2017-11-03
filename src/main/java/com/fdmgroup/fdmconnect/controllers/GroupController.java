@@ -124,7 +124,7 @@ public class GroupController {
 		groupDao.updateGroup(group);
 		ra.addFlashAttribute("userLeftGroup", "User left group  successfully");
 
-		Logging.Log("info", "User left the group");
+		Logging.Log("info", "User left the group "+user);
 		return "redirect:/user/goToMyGroups";
 
 	}
@@ -147,7 +147,7 @@ public class GroupController {
 
 		ra.addFlashAttribute("groupRemovedByOwner",
 				"Group removed succesfully.");
-		Logging.Log("post", "A new owner is:" + name);
+		Logging.Log("info", "New owner set for group " + name);
 		return "redirect:/user/goToMyGroups";
 
 	}
@@ -163,7 +163,7 @@ public class GroupController {
 
 		ra.addFlashAttribute("groupRemovedByOwner",
 				"Group removed succesfully.");
-		Logging.Log("post", "group removed succesfully by owner" + name);
+		Logging.Log("info", "Group removed succesfully " + name);
 		return "redirect:/user/goToMyGroups";
 
 	}
@@ -228,6 +228,7 @@ public class GroupController {
 		try {
 			group.addUser(user);
 			groupDao.updateGroup(group);
+			Logging.Log("info", "Group Controller: User "+user+" accepted invite to group "+name);
 			notificationDao.removeNotification(notificationId);
 		} catch (PersistenceException pe) {
 			ra.addFlashAttribute("inviteAcceptError",
@@ -251,6 +252,7 @@ public class GroupController {
 
 		try {
 			notificationDao.removeNotification(notificationId);
+			Logging.Log("info", "Group Controller: Notification removed "+nId);
 		} catch (PersistenceException pe) {
 			ra.addFlashAttribute("inviteDeclineError",
 					"Invite no longer exists.");
@@ -304,6 +306,7 @@ public class GroupController {
 
 		post.setGroup(group);
 		postDao.addPost(post);
+		
 		Logging.Log("info",
 				"User Controller: " + session.getAttribute("username")
 						+ "added post" + post);
@@ -379,8 +382,7 @@ public class GroupController {
 			return "user/GroupHome";
 		}
 
-		Logging.Log("info",
-				"User Controller: " + session.getAttribute("username")
+		Logging.Log("info", "User Controller: " + session.getAttribute("username")
 						+ " added a comment " + comment);
 
 		return "redirect:/user/goToGroupHome";
@@ -393,8 +395,7 @@ public class GroupController {
 			@RequestParam(name = "commentId") int commentId) {
 
 		commentDao.removeComment(commentId);
-		Logging.Log("info",
-				"User Controller: " + session.getAttribute("username")
+		Logging.Log("info", "User Controller: " + session.getAttribute("username")
 						+ " removed a comment " + commentId);
 
 		return "redirect:/user/goToGroupHome";
@@ -428,8 +429,7 @@ public class GroupController {
 		comment.setCommentBody(commentBody);
 
 		commentDao.updateComment(comment);
-		Logging.Log("info",
-				"User Controller: " + session.getAttribute("username")
+		Logging.Log("info", "User Controller: " + session.getAttribute("username")
 						+ " edited a comment " + commentId);
 
 		return "redirect:/user/goToGroupHome";

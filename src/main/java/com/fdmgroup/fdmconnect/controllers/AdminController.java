@@ -183,6 +183,8 @@ public class AdminController {
 		Flag flag = flagDao.getFlag(1);
 		flag.setFlagInfo(badWords);
 		flagDao.updateFlag(flag);
+		Logging.Log("info", "Admin Controller: Bad words updated.");
+
 		return "redirect:/admin";
 
 	}

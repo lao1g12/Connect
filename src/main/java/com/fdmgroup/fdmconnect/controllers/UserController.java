@@ -406,8 +406,8 @@ public class UserController {
 	public String updateProfile(Principal principal, Profile profile, HttpSession session, HttpServletRequest request) {
 
 		profileDao.updateProfile(profile);
-		Logging.Log("info",
-				"User Controller: " + session.getAttribute("username") + " updated their profile.");
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") +
+				" updated their profile.");
 
 		return "redirect:/user/account";
 
@@ -501,8 +501,8 @@ public class UserController {
 		}
 
 		model.addAttribute("profiles", profiles);
-		Logging.Log("info",
-				"User Controller: " + session.getAttribute("username") + " searched for user by name " + name);
+		Logging.Log("info", "User Controller: " + session.getAttribute("username") + 
+				" searched for user by name " + name);
 
 		return "user/SearchResults";
 
