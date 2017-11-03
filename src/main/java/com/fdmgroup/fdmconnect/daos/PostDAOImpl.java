@@ -117,9 +117,9 @@ public class PostDAOImpl implements PostDAO {
 		
 		EntityManager manager = factory.createEntityManager();
 		Group group = manager.find(Group.class, "all");
-		TypedQuery<Post> query = manager.createQuery("select p from Post as p where p.user = ? AND p.group = ?", Post.class);
-		query.setParameter("1", user);
-		query.setParameter("2", group);
+		TypedQuery<Post> query = manager.createQuery("select p from Post as p where p.postOwner = ? AND p.group = ?", Post.class);
+		query.setParameter(1, user);
+		query.setParameter(2, group);
 		List<Post> posts = query.getResultList();
 		
 		return posts;
