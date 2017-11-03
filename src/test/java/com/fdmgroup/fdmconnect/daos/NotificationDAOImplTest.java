@@ -101,18 +101,18 @@ public class NotificationDAOImplTest {
 		
 	}
 	
-	@Test
-	public void test_getAllNotificationsByGroup_returnsListOfNotifications() {
-		
-		User sender = mock(User.class); User recipient = mock(User.class);
-		
-		when(manager.createQuery("select n from Notification as n where n.sender = ? "
-				+"AND n.recipient = ?", Notification.class)).thenReturn(query);
-		when(query.getResultList()).thenReturn(notifications);
-		List<Notification> retrievedNotifications = notificationDao.getAllNotificationsByGroup(sender, recipient);
-		
-		assertEquals(retrievedNotifications, notifications);
-		
-	}
+//	@Test
+//	public void test_getAllNotificationsByGroup_returnsListOfNotifications() {
+//		
+//		User sender = mock(User.class); User recipient = mock(User.class);
+//		
+//		when(manager.createQuery("select n from Notification as n where n.sender = ? "
+//				+"AND n.recipient = ?", Notification.class)).thenReturn(query);
+//		when(query.getResultList()).thenReturn(notifications);
+//		List<Notification> retrievedNotifications = notificationDao.getAllNotificationsByGroup(sender, recipient);
+//		
+//		assertEquals(retrievedNotifications, notifications);
+//		
+//	}
 
 }

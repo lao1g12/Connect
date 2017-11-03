@@ -64,6 +64,8 @@ public class UserControllerTest {
 	private Comment comment;
 	private Group group;
 	private Set<Post> posts;
+	private Set<Education> educations;
+	private Set<Experience> experiences;
 
 	@SuppressWarnings("unchecked")
 	@Before
@@ -89,8 +91,10 @@ public class UserControllerTest {
 				educationDao, experienceDao, commentDao, groupDao);
 		flaggedPost = mock(Post.class);
 		education = mock(Education.class);
+		educations = mock(HashSet.class);
 		request = mock(HttpServletRequest.class);
 		experience = mock(Experience.class);
+		experiences = mock(HashSet.class);
 		post = mock(Post.class);
 		comment = mock(Comment.class);
 		group = mock(Group.class);
@@ -283,6 +287,9 @@ public class UserControllerTest {
 		int profileId = 0;
 
 		when(profileDao.getProfile(profileId)).thenReturn(profile);
+		when(userDao.getUserByProfile(profile)).thenReturn(user);
+		when(profile.getEducation()).thenReturn(educations);
+		when(profile.getExperiences()).thenReturn(experiences);
 		when(user.getPosts()).thenReturn(posts);
 		String result = userController.goToViewProfile(session, model, profileId, request);
 
