@@ -180,7 +180,7 @@ Image : <sf:input type="text" path="imgUrl" />
 								<c:if test="${postId == aP.postId and addComment == 'add'}">
 									<h4>${badComment}</h4>
 									<form method="post"
-										action="doAddGroupComment?postId=${aP.postId}">
+										action="doAddGroupComment?postId=${aP.postId}&name=${group.name}">
 										<input type="text" name="commentBody" /> <br /> <input
 											type="submit" value="Add Comment" />
 									</form>

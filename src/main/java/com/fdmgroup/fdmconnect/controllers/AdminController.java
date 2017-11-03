@@ -121,6 +121,7 @@ public class AdminController {
 
 		if (!user.getPassword().equals(user.getConfirmPassword())) {
 			model.addAttribute("passwordErrorMessage", "Passwords do not match");
+			Logging.Log("warn", "Passwords did not match");
 			return "admin/AddUser";
 		}
 
@@ -182,6 +183,8 @@ public class AdminController {
 		Flag flag = flagDao.getFlag(1);
 		flag.setFlagInfo(badWords);
 		flagDao.updateFlag(flag);
+		Logging.Log("info", "Admin Controller: Bad words updated.");
+
 		return "redirect:/admin";
 
 	}
