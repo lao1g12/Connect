@@ -48,17 +48,17 @@ public class GroupController {
 	}
 
 	public GroupController(PostDAO postDao, UserDAO userDao, FlagDAO flagDao, GroupDAO groupDao,
-			NotificationDAO notificationDao) {
+			NotificationDAO notificationDao, CommentDAO commentDao) {
 		super();
 		this.userDao = userDao;
 		this.postDao = postDao;
 		this.groupDao = groupDao;
 		this.flagDao = flagDao;
 		this.notificationDao = notificationDao;
+		this.commentDao = commentDao;
 	}
 
 	@RequestMapping(value = { "user/goToGroupHome", "admin/goToGroupHome" })
-
 	public String admin(Model model, HttpSession session, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
@@ -70,7 +70,6 @@ public class GroupController {
 
 
 	@RequestMapping(value = { "/admin/goToMyGroups","user/goToMyGroups"})
-
 	public String goToViewAllGroups(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		Set<Group> groups = user.getGroups();
@@ -307,7 +306,8 @@ public class GroupController {
 	
 	@RequestMapping(value = {"/user/doAddGroupComment", "/admin/doAddGroupComment"})
 	public String doAddGroupComment(HttpSession session, Model model, @RequestParam(name = "postId") int postId,
-			@RequestParam(name = "commentBody") String commentBody, RedirectAttributes ra, HttpServletRequest request) {
+			@RequestParam(name = "commentBody") String commentBody, RedirectAttributes ra, HttpServletRequest request,
+			@RequestParam(name = "name") String name) {
 		
 		Comment comment = new Comment(commentBody);
 		SearchLogic bl = new SearchLogic();
@@ -339,6 +339,7 @@ public class GroupController {
 		
 		Logging.Log("info", "User Controller: " + session.getAttribute("username") + " added a comment "+comment);
 		
+		ra.addFlashAttribute("name", name);
 		
 		return "redirect:/user/goToGroupHome";
 			
