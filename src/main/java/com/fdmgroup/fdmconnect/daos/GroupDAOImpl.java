@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdmgroup.fdmconnect.controllers.Logging;
 import com.fdmgroup.fdmconnect.entities.Group;
+import com.fdmgroup.fdmconnect.entities.User;
 
 public class GroupDAOImpl implements GroupDAO {
 
@@ -76,9 +77,16 @@ public class GroupDAOImpl implements GroupDAO {
 		manager.getTransaction().commit();
 		Logging.Log("info", "GroupDAOImpl: " + group
 				+ " has been updated");
-
-
 		
+	}
+
+	@Override
+	public List<Group> getAllGroupsByUser(User user) {
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<Group> query = manager.createQuery("select g from Group as g where :user member of g.users", Group.class);
+		query.setParameter("user", user);
+		List<Group> groups = query.getResultList();
+		return groups;
 	}
 
 }

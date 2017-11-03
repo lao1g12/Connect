@@ -1,7 +1,6 @@
 package com.fdmgroup.fdmconnect.controllers;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +46,6 @@ public class GroupController {
 	public GroupController() {
 	}
 
-
 	public GroupController(PostDAO postDao, UserDAO userDao, FlagDAO flagDao, GroupDAO groupDao,
 
 			NotificationDAO notificationDao, CommentDAO commentDao) {
@@ -63,10 +61,7 @@ public class GroupController {
 
 
 	@RequestMapping(value = { "user/goToGroupHome", "admin/goToGroupHome" })
-
-	public String admin(Model model, HttpSession session, 
-			@RequestParam String name) {
-
+	public String admin(Model model, HttpSession session, @RequestParam String name) {
 
 		Group group = groupDao.getGroup(name);
 		session.setAttribute("allPosts", postDao.getAllPostsByGroup(name));
@@ -75,11 +70,11 @@ public class GroupController {
 
 	}
 
-
 	@RequestMapping(value = { "/admin/goToMyGroups","user/goToMyGroups"})
 	public String goToViewAllGroups(Model model, HttpSession session) {
+		
 		User user = (User) session.getAttribute("user");
-		Set<Group> groups = user.getGroups();
+		List<Group> groups = groupDao.getAllGroupsByUser(user);
 		Group group = new Group();
 		model.addAttribute(group);
 		model.addAttribute("groups", groups);
@@ -159,10 +154,7 @@ public class GroupController {
 		userDao.updateUser(newOwner);
 		groupDao.updateGroup(group);
 		userDao.updateUser(user);
-
-
-
-
+		
 		ra.addFlashAttribute("OwnerWasChanged", "You have a new group owner.");
 		Logging.Log("info", "A new owner is:" + name);
 
@@ -338,6 +330,7 @@ public class GroupController {
 			+ badWordString);
 
 			return "user/AddPost";
+			
 		}
 
 		post.setGroup(group);

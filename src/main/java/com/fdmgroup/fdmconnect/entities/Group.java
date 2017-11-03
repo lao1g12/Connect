@@ -28,7 +28,7 @@ public class Group {
 	private String description;
 	private String imageUrl;
 	
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="group")
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.REMOVE, mappedBy="group")
 	private Set<Post> posts = new HashSet<Post>();
 	
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
